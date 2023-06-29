@@ -65,3 +65,52 @@ VALUES ('Apfel', 'Apple', 'Eine runde Frucht zum Essen.', 2, 25, 1)""")
 # Änderungen speichern und Verbindung schließen
 conn.commit()
 conn.close()
+
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableView
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlQueryModel
+
+
+def create_connection():
+    # Verbindung zur SQLite-Datenbank herstellen
+    db = QSqlDatabase.addDatabase('QSQLITE')
+    db.setDatabaseName('vocitrainerdb.db')
+
+    if not db.open():
+        print('Fehler beim Öffnen der Datenbank')
+        return False
+
+    return True
+
+
+def create_table_view():
+    # Modell für das QTableView erstellen
+    model = QSqlQueryModel()
+    query = QSqlQuery()
+
+    # SQL-Abfrage, um alle Daten aus der Tabelle 'karte' abzurufen
+    query.exec_("SELECT * FROM karte")
+    model.setQuery(query)
+
+    # QTableView erstellen und das Modell zuweisen
+    table_view = QTableView()
+    table_view.setModel(model)
+
+    return table_view
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+
+    if not create_connection():
+        sys.exit(1)
+
+    table_view = create_table_view()
+
+    # Hauptfenster erstellen und den QTableView hinzufügen
+    main_window = QMainWindow()
+    main_window.setCentralWidget(table_view)
+    main_window.resize(800, 600)
+    main_window.show()
+
+    sys.exit(app.exec_())

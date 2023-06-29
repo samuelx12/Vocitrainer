@@ -3,6 +3,8 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from models import KartenModel
+import sqlite3
 
 
 class Hauptfenster(QMainWindow):
@@ -10,6 +12,19 @@ class Hauptfenster(QMainWindow):
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("Vocitrainer")
+
+        # Tabellen Model erstellen und zuweisen
+        self.conn = sqlite3.connect('vocitrainerdb.db')
+        print("Datenbankverbindung wurde erstellt")
+        self.kartenModel = KartenModel(dbconn=self.conn)
+        print("Model wurde erstellt")
+
+        # Tabellen Model Daten laden
+        self.kartenModel.lade_daten(1)
+
+        # Model zuweisen
+        self.tbv_Liste.setModel(self.kartenModel)
+        print("Model wurde zugewiesen")
 
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
