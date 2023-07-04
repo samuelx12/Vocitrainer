@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+setupdb.py
+Ein Skript, das eine frische, saubere Datenbank erstellt und mit Testdaten befüllt.
+Fallst die Datenbank bereits besteht, werden einfach noch mehr Testdaten eingefüllt.
+"""
+
 import sqlite3
 
 # Verbindung zur Datenbank herstellen (erstellt die Datenbank, wenn sie nicht existiert)

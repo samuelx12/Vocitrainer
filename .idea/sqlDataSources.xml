@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="6a1962ad-11a5-4684-bcab-3c5df73c35f1" name="vocitrainerdb Mapping">
+      <data-sources db="d7ea5f9d-46a7-4363-8bcf-1fbac6c9cf3d" />
+      <scope>
+        <node negative="1">
+          <node kind="database" negative="1" />
+          <node kind="schema" qname="main" />
+        </node>
+      </scope>
+    </mapping>
+  </component>
+</project>

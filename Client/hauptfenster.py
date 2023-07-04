@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+"""
+hauptfenster.py
+Diese Datei enthält eigentlich nur die Klasse Hauptfenster, welche von QMainWindow erbt. Das Hauptfenster ist das erste
+Fenster, welches aufgeht. Das Programm läuft weiter, wenn Signale auftreten, welche mit einem Slot (Funktion) verbunden
+wurden (Qt-Konzept)
+"""
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -27,6 +33,7 @@ class Hauptfenster(QMainWindow):
         print("Model wurde zugewiesen")
 
     def setupUi(self, MainWindow):
+        """Hier steht der ganze Gugus, der alle Widgets im Fenster erstellt und platziert."""
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(651, 561)
@@ -83,7 +90,7 @@ class Hauptfenster(QMainWindow):
         self.trv_Explorer = QTreeView(self.splitter_ExplorerListe)
         self.trv_Explorer.setObjectName(u"trv_Explorer")
         self.splitter_ExplorerListe.addWidget(self.trv_Explorer)
-        self.tbv_Liste = QColumnView(self.splitter_ExplorerListe)
+        self.tbv_Liste = QTableView(self.splitter_ExplorerListe)
         self.tbv_Liste.setObjectName(u"tbv_Liste")
         self.splitter_ExplorerListe.addWidget(self.tbv_Liste)
 
@@ -119,6 +126,10 @@ class Hauptfenster(QMainWindow):
     # setupUi
 
     def retranslateUi(self, MainWindow):
+        """
+        Vorsorglich vom QT-Designer automatisch angelegte Funktion, welche später helfen kann, das Programm in anderen
+        Sprachen zu benutzen.
+        """
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.mn_Ueber.setText(QCoreApplication.translate("MainWindow", u"\u00dcber", None))
         self.mn_NeuesSet.setText(QCoreApplication.translate("MainWindow", u"Neues Set", None))
