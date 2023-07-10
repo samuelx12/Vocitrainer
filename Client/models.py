@@ -67,6 +67,27 @@ class KartenModel(QAbstractTableModel):
 
         print(karte_liste)
 
+    def setData(self, index: QModelIndex, value: typing.Any, role: int = ...) -> bool:
+        """
+        Vorgegebene Funktion welche es ermöglicht, den Inhalt der Tabelle direkt in dieser zu bearbeiten.
+        Dazu wird zu erst die Karten Id in Erfahrung gebracht (In den Daten immer der erste Eintrag der zweiten Ebene).
+        Mit dieser wird die Änderung gleich in die Datenbank geschrieben, und dann mit lade_daten auch in die
+        self.daten Liste übernommen, von wo aus sie angezeigt wird.
+        """
+        if role in (Qt.DisplayRole, Qt.EditRole):
+            print(f"Bearbeite: {index.row()}, {index.column()}")
+
+            # Wenn die neue Version leer ist:
+            if not value:
+                return False
+
+            # Zuerst muss die Karten ID herausgefunden werden,
+            # damit die Änderung direkt in der Datenbank vorgenommen werden kann und
+            # dann über die lade_daten Funktion auch in der Liste, der geladenen Karten gespeichert wird.
+            karten_ID = self.daten[index.row][0]
+
+        return True
+
 
 if __name__ == '__main__':
     # Debug Skript, falls das File direkt ausgeführt wird.
