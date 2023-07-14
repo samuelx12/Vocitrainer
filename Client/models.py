@@ -8,6 +8,7 @@ Der Vollständigkeit halber sei erwähnt, dass es auch sogenannte itembased Widg
 aussehen aber die in sich enthaltenen Daten anders verwalten.
 """
 from PyQt5.QtCore import QAbstractTableModel, QModelIndex, Qt
+from PyQt5 import QtCore
 import typing
 import sqlite3
 
@@ -26,12 +27,12 @@ class KartenModel(QAbstractTableModel):
 
     def rowCount(self, parent: QModelIndex = ...) -> int:
         """Vorgegebene Funktion welche die Anzahl Zeilen zurückgeben muss."""
-        print("rowCount: ", len(self.daten))
+        # print("rowCount: ", len(self.daten))
         return len(self.daten)
 
     def columnCount(self, parent: QModelIndex = ...) -> int:
         """Vorgegebene Funktion welche die Anzahl Spalten zurückgeben muss."""
-        print("columnCount: 5")
+        # print("columnCount: 5")
         return 5
 
     def data(self, index: QModelIndex, role: int = ...) -> typing.Any:
@@ -39,10 +40,10 @@ class KartenModel(QAbstractTableModel):
         Vorgegebene Funktion welche für einen Feld mit den Koordinaten (index.row() | index.column()) normalerweise
         den Inhalt (Wenn role = Qt.DisplayRole) erfragt.
         """
-        if role == Qt.DisplayRole:
+        if role in (Qt.DisplayRole, Qt.EditRole):
             reihe = index.row()
             spalte = index.column()
-            print(f"Reihe: {reihe} Spalte: {spalte} Rückgabe: {self.daten[reihe][spalte]}")
+            # print(f"Reihe: {reihe} Spalte: {spalte} Rückgabe: {self.daten[reihe][spalte]}")
             return self.daten[reihe][spalte]
 
     def lade_daten(self, set_id):
@@ -66,6 +67,17 @@ class KartenModel(QAbstractTableModel):
         self.geladenesSet = set_id  # Das aktuelle geladene Set anhand seiner ID abspeichern.
 
         print(karte_liste)
+
+    def flags(self, index: QModelIndex) -> Qt.ItemFlags:
+        """
+        Vorgegebene Funktion, welche als Antwort die Eigenschaft des Feldes (Aktiv, Bearbeitbar...) zurück gibt.
+        """
+        flags =\
+            QtCore.Qt.ItemFlag.ItemIsEditable |\
+            QtCore.Qt.ItemFlag.ItemIsEnabled |\
+            QtCore.Qt.ItemFlag.ItemIsSelectable
+
+        return flags
 
     def setData(self, index: QModelIndex, value: typing.Any, role: int = ...) -> bool:
         """
