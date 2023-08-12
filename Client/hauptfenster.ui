@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>651</width>
+    <height>561</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="pb_SetLernen">
+        <property name="toolTip">
+         <string>Dieses Set lernen</string>
+        </property>
+        <property name="statusTip">
+         <string>Jetzt lernen</string>
+        </property>
+        <property name="text">
+         <string>Set lernen</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pb_AusgewaehlteLernen">
+        <property name="text">
+         <string>Ausgewählte lernen</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="hs_Menu">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pb_Beenden">
+        <property name="text">
+         <string>Beenden</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line_UnterMenu">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSplitter" name="splitter_ExplorerListe">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="opaqueResize">
+       <bool>true</bool>
+      </property>
+      <property name="handleWidth">
+       <number>7</number>
+      </property>
+      <property name="childrenCollapsible">
+       <bool>true</bool>
+      </property>
+      <widget class="QTreeView" name="trv_Explorer"/>
+      <widget class="QTableView" name="tbv_Liste"/>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>651</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuVocitrainer">
+    <property name="title">
+     <string>Vocitrainer</string>
+    </property>
+    <addaction name="mn_NeuesSet"/>
+    <addaction name="mn_NeuerOrdner"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuLernen">
+    <property name="title">
+     <string>Lernen</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_Extra">
+    <property name="title">
+     <string>Extra</string>
+    </property>
+    <addaction name="mn_Einstellungen"/>
+    <addaction name="mn_Ueber"/>
+   </widget>
+   <addaction name="menuVocitrainer"/>
+   <addaction name="menuLernen"/>
+   <addaction name="menu_Extra"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="mn_Ueber">
+   <property name="text">
+    <string>Über</string>
+   </property>
+  </action>
+  <action name="mn_NeuesSet">
+   <property name="text">
+    <string>Neues Set</string>
+   </property>
+  </action>
+  <action name="mn_NeuerOrdner">
+   <property name="text">
+    <string>Neuer Ordner</string>
+   </property>
+  </action>
+  <action name="mn_Einstellungen">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Einstellungen</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

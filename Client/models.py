@@ -97,6 +97,7 @@ class KartenModel(QAbstractTableModel):
             # damit die Änderung direkt in der Datenbank vorgenommen werden kann und
             # dann über die lade_daten Funktion auch in der Liste, der geladenen Karten gespeichert wird.
             karten_ID = self.daten[index.row][0]
+            print(karten_ID)
 
         return True
 
