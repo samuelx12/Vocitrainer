@@ -9,11 +9,16 @@ Signalen und Slots weiter.
 from PyQt5.QtWidgets import QApplication
 import sys
 from hauptfenster import Hauptfenster
+from trainingsfenster import Trainingsfenster
 
 app = QApplication(sys.argv)
+app.setStyle("fusion")
 
 window = Hauptfenster()
 window.show()
+
+trainingsfenster = Trainingsfenster()
+trainingsfenster.show()
 
 # Start der Event loop
 app.exec()
