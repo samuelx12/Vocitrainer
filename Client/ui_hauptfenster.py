@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'hauptfensterkGgPAh.ui'
+## Form generated from reading UI file 'hauptfensterSZFSpH.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -33,24 +33,24 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.pb_SetLernen = QPushButton(self.centralwidget)
-        self.pb_SetLernen.setObjectName(u"pb_SetLernen")
+        self.cmd_SetLernen = QPushButton(self.centralwidget)
+        self.cmd_SetLernen.setObjectName(u"cmd_SetLernen")
 
-        self.horizontalLayout.addWidget(self.pb_SetLernen)
+        self.horizontalLayout.addWidget(self.cmd_SetLernen)
 
-        self.pb_AusgewaehlteLernen = QPushButton(self.centralwidget)
-        self.pb_AusgewaehlteLernen.setObjectName(u"pb_AusgewaehlteLernen")
+        self.cmd_AusgewaehlteLernen = QPushButton(self.centralwidget)
+        self.cmd_AusgewaehlteLernen.setObjectName(u"cmd_AusgewaehlteLernen")
 
-        self.horizontalLayout.addWidget(self.pb_AusgewaehlteLernen)
+        self.horizontalLayout.addWidget(self.cmd_AusgewaehlteLernen)
 
         self.hs_Menu = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout.addItem(self.hs_Menu)
 
-        self.pb_Beenden = QPushButton(self.centralwidget)
-        self.pb_Beenden.setObjectName(u"pb_Beenden")
+        self.cmd_Beenden = QPushButton(self.centralwidget)
+        self.cmd_Beenden.setObjectName(u"cmd_Beenden")
 
-        self.horizontalLayout.addWidget(self.pb_Beenden)
+        self.horizontalLayout.addWidget(self.cmd_Beenden)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -114,14 +114,14 @@ class Ui_MainWindow(object):
         self.mn_NeuerOrdner.setText(QCoreApplication.translate("MainWindow", u"Neuer Ordner", None))
         self.mn_Einstellungen.setText(QCoreApplication.translate("MainWindow", u"Einstellungen", None))
 #if QT_CONFIG(tooltip)
-        self.pb_SetLernen.setToolTip(QCoreApplication.translate("MainWindow", u"Dieses Set lernen", None))
+        self.cmd_SetLernen.setToolTip(QCoreApplication.translate("MainWindow", u"Dieses Set lernen", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(statustip)
-        self.pb_SetLernen.setStatusTip(QCoreApplication.translate("MainWindow", u"Jetzt lernen", None))
+        self.cmd_SetLernen.setStatusTip(QCoreApplication.translate("MainWindow", u"Jetzt lernen", None))
 #endif // QT_CONFIG(statustip)
-        self.pb_SetLernen.setText(QCoreApplication.translate("MainWindow", u"Set lernen", None))
-        self.pb_AusgewaehlteLernen.setText(QCoreApplication.translate("MainWindow", u"Ausgew\u00e4hlte lernen", None))
-        self.pb_Beenden.setText(QCoreApplication.translate("MainWindow", u"Beenden", None))
+        self.cmd_SetLernen.setText(QCoreApplication.translate("MainWindow", u"Set lernen", None))
+        self.cmd_AusgewaehlteLernen.setText(QCoreApplication.translate("MainWindow", u"Ausgew\u00e4hlte lernen", None))
+        self.cmd_Beenden.setText(QCoreApplication.translate("MainWindow", u"Beenden", None))
         self.menuVocitrainer.setTitle(QCoreApplication.translate("MainWindow", u"Vocitrainer", None))
         self.menuLernen.setTitle(QCoreApplication.translate("MainWindow", u"Lernen", None))
         self.menu_Extra.setTitle(QCoreApplication.translate("MainWindow", u"Extra", None))

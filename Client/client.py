@@ -17,8 +17,8 @@ app.setStyle("fusion")
 window = Hauptfenster()
 window.show()
 
-trainingsfenster = Trainingsfenster()
-trainingsfenster.show()
+# trainingsfenster = Trainingsfenster()
+# trainingsfenster.show()
 
 # Start der Event loop
 app.exec()

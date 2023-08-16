@@ -13,6 +13,7 @@ from models import KartenModel
 from PyQt5.uic import loadUi
 import sqlite3
 from ui_hauptfenster import Ui_MainWindow
+from trainingsfenster import Trainingsfenster
 
 
 class Hauptfenster(QMainWindow, Ui_MainWindow):
@@ -38,3 +39,16 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # Model zuweisen
         self.tbv_Liste.setModel(self.kartenModel)
         print("Model wurde zugewiesen")
+
+        # Signals und Slots verbinden
+        self.cmd_Beenden.clicked.connect(self.cmd_beenden_clicked)
+        self.cmd_SetLernen.clicked.connect(self.cmd_Setlernen_clicked)
+
+    def cmd_beenden_clicked(self):
+        self.close()
+
+    def cmd_Setlernen_clicked(self):
+        trainingsfenster = Trainingsfenster()
+        trainingsfenster.setModal(True)
+
+        trainingsfenster.exec_()
