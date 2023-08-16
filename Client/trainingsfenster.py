@@ -39,6 +39,10 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         # Erste Frage laden
         self.frage_laden()
 
+        self.setStyleSheet(
+            """font: 14pt "MS Shell Dlg 2";"""
+        )
+
     def frage_laden(self):
         # Frage Info vom Kontroller empfangen
         frage = self.controler.frage()
@@ -50,6 +54,24 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.a_lbl_deutsch_wort.setText(antwort[0])
         self.a_lbl_fremdsprache_wort.setText(antwort[1])
         self.a_lbl_deutsch_beschreibung.setText(str(antwort[2]))
+        if antwort[2]:
+            self.a_lbl_fremdsprache_wort.setStyleSheet(
+                """
+                background-color: rgb(197, 225, 196);
+                border: 3px solid;
+                border-radius: 3px;
+                border-color: rgb(197, 225, 196);
+                """
+            )
+        else:
+            self.a_lbl_fremdsprache_wort.setStyleSheet(
+                """
+                background-color: rgb(225, 171, 171);
+                border: 3px solid;
+                border-radius: 3px;
+                border-color: rgb(225, 171, 171);
+                """
+            )
         self.stackedWidget.setCurrentIndex(1)
 
     def f_cmd_abbrechen_clicked(self):
