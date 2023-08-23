@@ -16,6 +16,9 @@
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
   </property>
@@ -146,10 +149,10 @@ border-color: rgb(201, 220, 225);</string>
        <item>
         <widget class="QLabel" name="a_lbl_fremdsprache_wort">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(201, 220, 225);
+          <string notr="true">background-color: rgb(225, 171, 171);
 border: 3px solid;
 border-radius: 3px;
-border-color: rgb(201, 220, 225);</string>
+border-color: rgb(225, 171, 171);</string>
          </property>
          <property name="text">
           <string>TextLabel</string>

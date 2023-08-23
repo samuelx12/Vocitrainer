@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import QApplication
 import sys
 from hauptfenster import Hauptfenster
 from trainingsfenster import Trainingsfenster
+import exception
 
 app = QApplication(sys.argv)
 app.setStyle("fusion")

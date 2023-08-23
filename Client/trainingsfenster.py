@@ -13,7 +13,7 @@ from models import KartenModel
 from PyQt5.uic import loadUi
 import sqlite3
 from ui_trainingsfenster import Ui_Trainingsfenster
-from training import TestTraining
+from trainingscontroller import TestTraining, TC_Einfach
 
 
 class Trainingsfenster(QDialog, Ui_Trainingsfenster):
@@ -34,7 +34,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.a_cmd_abbrechen.clicked.connect(self.a_cmd_abbrechen_clicked)
 
         # Training Controller laden
-        self.controler = TestTraining()
+        self.controller = TC_Einfach()
 
         # Erste Frage laden
         self.frage_laden()
@@ -45,16 +45,18 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
 
     def frage_laden(self):
         # Frage Info vom Kontroller empfangen
-        frage = self.controler.frage()
-        self.f_lbl_deutsch_wort.setText(frage[0])
+        frage = self.controller.frage()
+        self.f_txt_fremdsprache.setText("")
+
+        self.f_lbl_deutsch_wort.setText(frage[0][1])
 
     def f_cmd_pruefen_clicked(self):
-        """PRÜFEN geklickt"""
-        antwort = self.controler.antwort(self.f_txt_fremdsprache.text())
-        self.a_lbl_deutsch_wort.setText(antwort[0])
-        self.a_lbl_fremdsprache_wort.setText(antwort[1])
-        self.a_lbl_deutsch_beschreibung.setText(str(antwort[2]))
-        if antwort[2]:
+        """PRÜFEN GEKLICKT"""
+        antwort = self.controller.antwort(self.f_txt_fremdsprache.text())
+        self.a_lbl_deutsch_wort.setText(antwort[0][1])
+        self.a_lbl_fremdsprache_wort.setText(antwort[0][2])
+        self.a_lbl_deutsch_beschreibung.setText(str(antwort[1]))
+        if antwort[1]:
             self.a_lbl_fremdsprache_wort.setStyleSheet(
                 """
                 background-color: rgb(197, 225, 196);
@@ -75,10 +77,14 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.stackedWidget.setCurrentIndex(1)
 
     def f_cmd_abbrechen_clicked(self):
+        """ABBRECHEN (F) GEKLICKT"""
         self.close()
 
     def a_cmd_weiter_clicked(self):
+        """WEITER GEKLICKT"""
+        self.frage_laden()
         self.stackedWidget.setCurrentIndex(0)
 
     def a_cmd_abbrechen_clicked(self):
+        """ABBRECHEN (A) GEKLICKT"""
         self.close()

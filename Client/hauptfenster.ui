@@ -16,50 +16,6 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QPushButton" name="cmd_SetLernen">
-        <property name="toolTip">
-         <string>Dieses Set lernen</string>
-        </property>
-        <property name="statusTip">
-         <string>Jetzt lernen</string>
-        </property>
-        <property name="text">
-         <string>Set lernen</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="cmd_AusgewaehlteLernen">
-        <property name="text">
-         <string>Ausgewählte lernen</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="hs_Menu">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="cmd_Beenden">
-        <property name="text">
-         <string>Beenden</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
      <widget class="Line" name="line_UnterMenu">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -88,6 +44,50 @@
       </property>
       <widget class="QTreeView" name="trv_Explorer"/>
       <widget class="QTableView" name="tbv_Liste"/>
+      <widget class="QWidget" name="">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="cmd_SetLernen">
+          <property name="toolTip">
+           <string>Dieses Set lernen</string>
+          </property>
+          <property name="statusTip">
+           <string>Jetzt lernen</string>
+          </property>
+          <property name="text">
+           <string>Set lernen</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="cmd_AusgewaehlteLernen">
+          <property name="text">
+           <string>Ausgewählte lernen</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="hs_Menu">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="cmd_Beenden">
+          <property name="text">
+           <string>Beenden</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
