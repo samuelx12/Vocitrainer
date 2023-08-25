@@ -16,6 +16,24 @@ from ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
 
 
+class ExplorerItem(QTreeWidgetItem):
+    """
+    Das Explorer Item ist eine Zeile in der Übersicht der Lernsets, die rechts angezeigt wird.
+    """
+    def __init__(self, txt):
+        """
+        @param txt: Der Text den das Item zeigt
+        """
+        super().__init__()
+        self.setText(0, txt)
+        icon = QIcon()
+        icon.addPixmap(QPixmap("res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
+        icon.addPixmap(QPixmap("res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
+        icon.addPixmap(QPixmap("res/icons/folder_FILL1_wght500_GRAD0_opsz40.svg"), QIcon.Selected, QIcon.Off)
+        icon.addPixmap(QPixmap("res/icons/folder_open_FILL1_wght500_GRAD0_opsz40.svg"), QIcon.Selected, QIcon.On)
+        self.setIcon(0, icon)
+
+
 class Hauptfenster(QMainWindow, Ui_MainWindow):
     """
     Diese Klasse repräsentiert das Hauptfenster. Sie erbt das Aussehen von der vom Qt-Designer exportierten Klasse.
@@ -44,6 +62,10 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.cmd_Beenden.clicked.connect(self.cmd_beenden_clicked)
         self.cmd_SetLernen.clicked.connect(self.cmd_Setlernen_clicked)
 
+        # Explorer vorbereiten
+        self.rootNode = self.trw_Explorer.invisibleRootItem()
+        self.load_explorer()
+
     def cmd_beenden_clicked(self):
         self.close()
 
@@ -52,3 +74,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         trainingsfenster.setModal(True)
 
         trainingsfenster.exec_()
+
+    def load_explorer(self):
+        test = ExplorerItem("Ordner")
+        self.rootNode.addChild(test)

@@ -44,4 +44,9 @@ class TC_Einfach:
         # Wenn beim letzten Wort -> Counter wieder auf 0
         if self.i + 1 > len(self.lernliste):
             self.i = 0
+
+        # Wenn kein Wort mehr übrig
+        if len(self.lernliste) == 0:
+            pass
+
         return return_info
