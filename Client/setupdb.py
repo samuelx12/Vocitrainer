@@ -51,14 +51,15 @@ cursor.execute('''
 ''')
 
 # Testdaten in die Tabelle 'ordner' einfügen
-cursor.execute("INSERT INTO ordner (ordner_name, farbe, urordner_id) VALUES ('Hauptordner', 'Blau', NULL)")
+cursor.execute("INSERT INTO ordner (ordner_name, farbe, urordner_id) VALUES ('ROOT', 'Normal', NULL)")
 cursor.execute("INSERT INTO ordner (ordner_name, farbe, urordner_id) VALUES ('Unterordner', 'Grün', 1)")
+cursor.execute("INSERT INTO ordner (ordner_name, farbe, urordner_id) VALUES ('U2 Ordner', 'Grün', 2)")
 
 # Testdaten in die Tabelle 'set' einfügen
 cursor.execute(
-"INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES ('Set 1', 'Beschreibung Set 1', 'Deutsch', 1)")
+"INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES ('Set 1', 'Beschreibung Set 1', 'Englisch', 1)")
 cursor.execute(
-"INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES ('Set 2', 'Beschreibung Set 2', 'Englisch', 2)")
+"INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES ('Set 2', 'Beschreibung Set 2 Fraben', 'Englisch', 2)")
 
 # Testdaten in die Tabelle 'karte' einfügen
 cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
@@ -66,7 +67,14 @@ VALUES ('Haus', 'House', 'Eine Unterkunft für Menschen.', 1, 50, 1)""")
 cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
 VALUES ('Auto', 'Car', 'Ein Fahrzeug mit vier Rädern.', 1, 75, 0)""")
 cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
-VALUES ('Apfel', 'Apple', 'Eine runde Frucht zum Essen.', 2, 25, 1)""")
+VALUES ('Apfel', 'Apple', 'Eine runde Frucht zum Essen.', 1, 25, 1)""")
+
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
+VALUES ('Blau', 'blue', 'Die Frabe des Himmels.', 2, 50, 1)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
+VALUES ('Grün', 'green', 'Die Farbe der Pflanzen.', 2, 75, 0)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
+VALUES ('Rot', 'red', 'Die Farbe der Liebe.', 2, 25, 1)""")
 
 
 # Änderungen speichern und Verbindung schließen

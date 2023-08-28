@@ -97,6 +97,16 @@ selection-color: rgb(0, 0, 0);</string>
           <string>Unterelement</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Vociset</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</normaloff>
+           <selectedoff>res/icons/note_stack_FILL1_wght500_GRAD0_opsz40.svg</selectedoff>res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</iconset>
+         </property>
+        </item>
        </item>
       </widget>
       <widget class="QTableView" name="tbv_Liste"/>

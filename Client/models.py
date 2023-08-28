@@ -51,6 +51,7 @@ class KartenModel(QAbstractTableModel):
         Eigene Funktion, welche die Daten temporär aus der Datenbank lädt und in der Variable 'self.daten' speichert.
         Vorsicht: Muss immer (manuell) aufgerufen werden, wenn sich etwas an den Daten geändert hat.
         """
+        self.beginResetModel()
         cursor = self.dbconn.cursor()
 
         # SQL-Abfrage, um bestimmte Spalten aus der Tabelle karte abzurufen
@@ -65,6 +66,8 @@ class KartenModel(QAbstractTableModel):
 
         self.daten = karte_liste
         self.geladenesSet = set_id  # Das aktuelle geladene Set anhand seiner ID abspeichern.
+
+        self.endResetModel()
 
         print(karte_liste)
 
