@@ -14,12 +14,14 @@ from PyQt5.uic import loadUi
 import sqlite3
 from ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
+from typing import List
 
 
 class ExplorerItem(QTreeWidgetItem):
     """
     Das Explorer Item ist eine Zeile in der Übersicht der Lernsets, die rechts angezeigt wird.
     """
+
     def __init__(self, txt, typ, id, parent: QTreeWidgetItem = None):
         """
         @param txt: Der Text den das Item zeigt
@@ -29,6 +31,7 @@ class ExplorerItem(QTreeWidgetItem):
         icon = QIcon()
         self.id = id
         self.typ = typ
+        self.txt = txt
         if typ == "ordner":
             icon.addPixmap(QPixmap("res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
             icon.addPixmap(QPixmap("res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
@@ -65,7 +68,7 @@ class ExplorerItem(QTreeWidgetItem):
                 icon.addPixmap(QPixmap("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal,
                                QIcon.Off)
             elif self.typ == "ordner":
-                icon.addPixmap(QPixmap("res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
+                icon.addPixmap(QPixmap("res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
                 icon.addPixmap(QPixmap("res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
 
         self.setIcon(0, icon)
@@ -77,6 +80,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
     Dieses befindet sich in einer eigenen Datei, was den Workflow erheblich erleichtert, weil gleich die ganze
     Datei ohne Gefahr neu überschrieben werden kann.
     """
+
     def __init__(self, *args, obj=None, **kwargs):
         super(Hauptfenster, self).__init__(*args, **kwargs)
         self.setupUi(self)
@@ -95,14 +99,21 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.tbv_Liste.setModel(self.kartenModel)
         print("Model wurde zugewiesen")
 
+        # Explorer vorbereiten
+        self.rootNode = self.trw_Explorer.invisibleRootItem()
+        self.load_explorer()
+        self.trw_Explorer.setDragEnabled(True)
+        self.trw_Explorer.setAcceptDrops(True)
+        self.trw_Explorer.setDropIndicatorShown(True)
+        self.trw_Explorer.setDefaultDropAction(Qt.MoveAction)
+        self.trw_Explorer.setSelectionMode(QTreeWidget.ExtendedSelection)
+
         # Signals und Slots verbinden
         self.cmd_Beenden.clicked.connect(self.cmd_beenden_clicked)
         self.cmd_SetLernen.clicked.connect(self.cmd_Setlernen_clicked)
         self.trw_Explorer.doubleClicked.connect(self.trw_Explorer_doubleClicked)
-
-        # Explorer vorbereiten
-        self.rootNode = self.trw_Explorer.invisibleRootItem()
-        self.load_explorer()
+        self.trw_Explorer.dragEnterEvent = self.trw_Explorer_dragEnterEvent
+        self.trw_Explorer.dropEvent = self.trw_Explorer_dropEvent
 
         # Aktives Element im Explorer speichern
         self.aktiveItems = []
@@ -176,3 +187,53 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         item.setActive(True)
         self.aktiveItems.append(item)
         item = item.parent()
+
+    def trw_Explorer_dragEnterEvent(self, event: QDragEnterEvent):
+        """Funktion, die ausgeführt wird, wenn der Benutzer eine DragAndDrop beginnt."""
+        if event.source() == self.trw_Explorer:
+            event.acceptProposedAction()
+        else:
+            print("dragEnterEvent nicht zugelassen")
+
+    def trw_Explorer_dropEvent(self, event: QDropEvent):
+        """Dies ist die essenzielle DragAndDrop Funktion."""
+        # Quell- und Zielitem ermitteln
+        # quell_item: ExplorerItem = event.source().currentItem()
+        ziel_item: ExplorerItem = self.trw_Explorer.itemAt(event.pos())
+
+        # Wenn ins nichts gezogen wurde..
+        if not ziel_item:
+            ziel_item = ExplorerItem("ROOT_NODE", "ordner", 1, None)
+
+        if ziel_item.typ == "vociset":
+            if ziel_item.parent():
+                neue_id = ziel_item.parent().id
+            else:  # Das RootItem gibt hier None zurück, es hat die Id 1
+                neue_id = 1
+        else:
+            neue_id = ziel_item.id
+
+        quell_items = []
+        ausgewaehlte_items: List[ExplorerItem] = self.trw_Explorer.selectedItems()
+
+        # SQL-Cursor erstellen
+        cursor = self.conn.cursor()
+
+        for ausgewaehltes_item in ausgewaehlte_items:
+            id = ausgewaehltes_item.id
+            typ = ausgewaehltes_item.typ
+
+            if typ == "ordner":
+                query = "UPDATE ordner SET urordner_id = ? WHERE ordner_id = ?"
+            elif typ == "vociset":
+                query = "UPDATE vociset SET urordner_id = ? WHERE set_id = ?"
+            else:
+                print("Fehler, DropItem hat kein korrekter Typ")
+                return
+
+            cursor.execute(query, (neue_id, id))
+
+        self.trw_Explorer.clear()
+        self.load_explorer()
+
+        event.acceptProposedAction()

@@ -11,6 +11,10 @@ import sys
 from hauptfenster import Hauptfenster
 from trainingsfenster import Trainingsfenster
 import exception
+from rich import traceback
+
+# Für Debugzwecke: Schönes Traceback installieren
+traceback.install()
 
 app = QApplication(sys.argv)
 app.setStyle("fusion")
