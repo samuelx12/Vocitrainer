@@ -85,6 +85,16 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         super(Hauptfenster, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Vocitrainer")
+        self.setWindowIcon(QIcon("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"))
+
+        # Bildschirmgrösse setzen
+        bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
+        breite = bildschirm_geometrie.width()
+        hoehe = bildschirm_geometrie.height()
+        self.setGeometry(breite/6, hoehe/6, breite*2/3, hoehe*2/3)
+        # Splitter richtig einteilen
+        self.splitter.setSizes([100, 300])
+        self.splitter.updateGeometry()
 
         # Tabellen Model erstellen und zuweisen
         self.conn = sqlite3.connect('vocitrainerdb.db')
@@ -94,6 +104,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
         # Tabellen Model Daten laden
         self.kartenModel.lade_daten(1)
+        self.geladenes_set_explorer_item = None
 
         # Model zuweisen
         self.tbv_Liste.setModel(self.kartenModel)
@@ -114,6 +125,10 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.trw_Explorer.doubleClicked.connect(self.trw_Explorer_doubleClicked)
         self.trw_Explorer.dragEnterEvent = self.trw_Explorer_dragEnterEvent
         self.trw_Explorer.dropEvent = self.trw_Explorer_dropEvent
+
+        # Kontextmenüs aktivieren
+        self.trw_Explorer.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.trw_Explorer.customContextMenuRequested.connect(self.trw_Explorer_Kontextmenu)
 
         # Aktives Element im Explorer speichern
         self.aktiveItems = []
@@ -142,6 +157,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             # Vocisets dieser Ebene laden
             query = "SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE urordner_id = ?"
             lade_cursor.execute(query, (parent_id,))
+            print(parent_id)
             result = lade_cursor.fetchall()
 
             # Resultat in Liste umwandeln
@@ -157,8 +173,6 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
                 neues_vociset = ExplorerItem(i_vociset[1], "vociset", i_vociset[0], parent=parent)
 
         lade_cursor = self.conn.cursor()
-        test = ExplorerItem("Ordner", "ordner", 0)
-        self.rootNode.addChild(test)
         explorer_index = []
         ebene_laden(self.rootNode, 1)
 
@@ -174,6 +188,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # Wenn ein Vociset doppeltgeklickt wurde, sollten die entsprechenden Daten geladen werden
         if item.typ == "vociset":
             self.kartenModel.lade_daten(item.id)
+            self.geladenes_set_explorer_item = item
 
         # Alte Aktive entfernen
         for altesAktivesItem in self.aktiveItems:
@@ -186,7 +201,6 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             item = item.parent()
         item.setActive(True)
         self.aktiveItems.append(item)
-        item = item.parent()
 
     def trw_Explorer_dragEnterEvent(self, event: QDragEnterEvent):
         """Funktion, die ausgeführt wird, wenn der Benutzer eine DragAndDrop beginnt."""
@@ -223,6 +237,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             id = ausgewaehltes_item.id
             typ = ausgewaehltes_item.typ
 
+            # ****** Änderung an der Datenbank vornehmen ******
             if typ == "ordner":
                 query = "UPDATE ordner SET urordner_id = ? WHERE ordner_id = ?"
             elif typ == "vociset":
@@ -233,7 +248,75 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
             cursor.execute(query, (neue_id, id))
 
-        self.trw_Explorer.clear()
-        self.load_explorer()
+            # ****** Änderung im Explorer vornehmen ******
+
+            # Alte Aktive entfernen
+            for altesAktivesItem in self.aktiveItems:
+                altesAktivesItem.setActive(False)
+
+            # Wenn im Ursprungsrdner danach keine Items mehr sind, Ordner als geschlossen anzeigen
+            if ausgewaehltes_item.parent():
+                print("Das geht")
+                print(ausgewaehltes_item.parent().childCount())
+                if ausgewaehltes_item.parent().childCount() == 1:
+                    ausgewaehltes_item.parent().setExpanded(False)
+
+            # Item am alten Ort löschen
+            if ausgewaehltes_item.parent():
+                ausgewaehltes_item.parent().removeChild(ausgewaehltes_item)
+            else:  # RootNode
+                self.rootNode.removeChild(ausgewaehltes_item)
+
+            # Item am neuen Ort hinzufügen
+            if ziel_item.typ == "ordner":
+                if ziel_item.id == 1:  # Root Ordner
+                    self.rootNode.addChild(ausgewaehltes_item)
+                else:  # Normaler Ordner
+                    ziel_item.addChild(ausgewaehltes_item)
+
+            elif ziel_item.typ == "vociset":
+                # Wenn über einem Vociset gedroppt wird, soll das Item im selben Ordner landen
+                if ziel_item.parent():
+                    ziel_item.parent().addChild(ausgewaehltes_item)
+                else:  # Der übergeordnete Ordner ist der Root Ordner
+                    self.rootNode.addChild(ausgewaehltes_item)
+
+            # Aktiv Setzen vom Set und der Hirarchie darüber
+            item = self.geladenes_set_explorer_item
+            try:
+                while item.parent():
+                    item.setActive(True)
+                    self.aktiveItems.append(item)
+                    item = item.parent()
+                item.setActive(True)
+                self.aktiveItems.append(item)
+                item = item.parent()
+            except AttributeError:  # Am Root Node angekommen
+                pass
+
+        # Prozess abschliessen
+        cursor.close()
+        self.conn.commit()
+
+        # Explorer komplett neu aktualisieren
+        # self.trw_Explorer.clear()
+        # self.load_explorer()
 
         event.acceptProposedAction()
+
+    def trw_Explorer_Kontextmenu(self, point: QPoint):
+        """Das Kontextmenü für den Explorer anzeigen"""
+        kontext = QMenu(self)
+        kontext.setStyleSheet("")  # todo Stylesheet
+
+        aktualisieren = QAction("Aktualisieren", self)
+        aktualisieren.setIcon(QIcon("res/icons/refresh_FILL0_wght500_GRAD0_opsz40.svg"))
+        aktualisieren.triggered.connect(self.trw_Explorer_Kontextmenu_Aktualisieren)
+
+        kontext.addAction(aktualisieren)
+        kontext.exec_(self.trw_Explorer.viewport().mapToGlobal(point))
+
+    def trw_Explorer_Kontextmenu_Aktualisieren(self):
+        """'Aktualisieren' Option aus dem Kontextmenu ausführen"""
+        self.trw_Explorer.clear()
+        self.load_explorer()

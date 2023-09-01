@@ -17,50 +17,83 @@ class Ui_MainWindow(object):
         MainWindow.resize(641, 543)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
         self.cmd_SetLernen = QtWidgets.QPushButton(self.centralwidget)
         self.cmd_SetLernen.setObjectName("cmd_SetLernen")
-        self.horizontalLayout_2.addWidget(self.cmd_SetLernen)
+        self.horizontalLayout.addWidget(self.cmd_SetLernen)
         self.cmd_AusgewaehlteLernen = QtWidgets.QPushButton(self.centralwidget)
         self.cmd_AusgewaehlteLernen.setObjectName("cmd_AusgewaehlteLernen")
-        self.horizontalLayout_2.addWidget(self.cmd_AusgewaehlteLernen)
+        self.horizontalLayout.addWidget(self.cmd_AusgewaehlteLernen)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_2.addItem(spacerItem)
+        self.horizontalLayout.addItem(spacerItem)
+        self.aktion = QtWidgets.QFrame(self.centralwidget)
+        self.aktion.setStyleSheet("QFrame {\n"
+"    background-color: #FFFFFF;\n"
+"    border-radius: 6px;\n"
+"    border: 1px solid #AAAAAA;\n"
+"}\n"
+"\n"
+"QFrame:hover {\n"
+"    border: 2px solid rgb(44, 76, 116);\n"
+"    background-color: #EEEEEE;\n"
+"}\n"
+"\n"
+"QFrame:focus {\n"
+"    border: 4px solid #00FF00;\n"
+"}\n"
+"\n"
+"QLabel{\n"
+"    border: 0px;\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}\n"
+"\n"
+"QLabel:hover {\n"
+"    border: 0px;\n"
+"    background-color: rgba(0, 0, 0, 0);\n"
+"}")
+        self.aktion.setFrameShape(QtWidgets.QFrame.Box)
+        self.aktion.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.aktion.setLineWidth(1)
+        self.aktion.setObjectName("aktion")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.aktion)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.label = QtWidgets.QLabel(self.aktion)
+        self.label.setText("")
+        self.label.setPixmap(QtGui.QPixmap("res/icons/logout_FILL0_wght500_GRAD0_opsz40.svg"))
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.verticalLayout.addWidget(self.label)
+        self.label_2 = QtWidgets.QLabel(self.aktion)
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout.addWidget(self.label_2)
+        self.horizontalLayout.addWidget(self.aktion)
         self.cmd_Beenden = QtWidgets.QPushButton(self.centralwidget)
         self.cmd_Beenden.setObjectName("cmd_Beenden")
-        self.horizontalLayout_2.addWidget(self.cmd_Beenden)
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.horizontalLayout.addWidget(self.cmd_Beenden)
+        self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.line_UnterMenu = QtWidgets.QFrame(self.centralwidget)
         self.line_UnterMenu.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_UnterMenu.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_UnterMenu.setObjectName("line_UnterMenu")
-        self.verticalLayout.addWidget(self.line_UnterMenu)
+        self.verticalLayout_2.addWidget(self.line_UnterMenu)
         self.splitter = QtWidgets.QSplitter(self.centralwidget)
+        font = QtGui.QFont()
+        font.setStyleStrategy(QtGui.QFont.PreferAntialias)
+        self.splitter.setFont(font)
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
         self.splitter.setObjectName("splitter")
         self.trw_Explorer = QtWidgets.QTreeWidget(self.splitter)
         self.trw_Explorer.setStyleSheet("selection-background-color: rgb(201, 220, 225);\n"
 "selection-color: rgb(0, 0, 0);")
         self.trw_Explorer.setObjectName("trw_Explorer")
-        item_0 = QtWidgets.QTreeWidgetItem(self.trw_Explorer)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon.addPixmap(QtGui.QPixmap("res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QtGui.QIcon.Normal, QtGui.QIcon.On)
-        icon.addPixmap(QtGui.QPixmap("res/icons/folder_FILL1_wght500_GRAD0_opsz40.svg"), QtGui.QIcon.Selected, QtGui.QIcon.Off)
-        icon.addPixmap(QtGui.QPixmap("res/icons/folder_open_FILL1_wght500_GRAD0_opsz40.svg"), QtGui.QIcon.Selected, QtGui.QIcon.On)
-        item_0.setIcon(0, icon)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon1.addPixmap(QtGui.QPixmap("res/icons/note_stack_FILL1_wght500_GRAD0_opsz40.svg"), QtGui.QIcon.Selected, QtGui.QIcon.Off)
-        item_1.setIcon(0, icon1)
+        self.trw_Explorer.headerItem().setText(0, "1")
         self.tbv_Liste = QtWidgets.QTableView(self.splitter)
         self.tbv_Liste.setObjectName("tbv_Liste")
-        self.verticalLayout.addWidget(self.splitter)
+        self.verticalLayout_2.addWidget(self.splitter)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 641, 22))
@@ -103,14 +136,8 @@ class Ui_MainWindow(object):
         self.cmd_SetLernen.setStatusTip(_translate("MainWindow", "Jetzt lernen"))
         self.cmd_SetLernen.setText(_translate("MainWindow", "Set lernen"))
         self.cmd_AusgewaehlteLernen.setText(_translate("MainWindow", "Ausgewählte lernen"))
+        self.label_2.setText(_translate("MainWindow", "Aktion"))
         self.cmd_Beenden.setText(_translate("MainWindow", "Beenden"))
-        self.trw_Explorer.headerItem().setText(0, _translate("MainWindow", "1"))
-        __sortingEnabled = self.trw_Explorer.isSortingEnabled()
-        self.trw_Explorer.setSortingEnabled(False)
-        self.trw_Explorer.topLevelItem(0).setText(0, _translate("MainWindow", "ELEMENT"))
-        self.trw_Explorer.topLevelItem(0).child(0).setText(0, _translate("MainWindow", "Unterelement"))
-        self.trw_Explorer.topLevelItem(0).child(1).setText(0, _translate("MainWindow", "Vociset"))
-        self.trw_Explorer.setSortingEnabled(__sortingEnabled)
         self.menuVocitrainer.setTitle(_translate("MainWindow", "Vocitrainer"))
         self.menuLernen.setTitle(_translate("MainWindow", "Lernen"))
         self.menu_Extra.setTitle(_translate("MainWindow", "Extra"))

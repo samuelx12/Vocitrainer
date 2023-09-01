@@ -24,6 +24,13 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         super(Trainingsfenster, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Training")
+
+        # Bildschirmgrösse setzen
+        bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
+        breite = bildschirm_geometrie.width()
+        hoehe = bildschirm_geometrie.height()
+        self.setGeometry(breite * 4/12, hoehe * 3/8, breite * 1/3, hoehe * 1/6)
+
         # self.setCentralWidget(self.stackedWidget)
         self.stackedWidget.setCurrentIndex(0)
 

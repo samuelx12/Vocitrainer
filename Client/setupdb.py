@@ -59,7 +59,7 @@ cursor.execute("INSERT INTO ordner (ordner_name, farbe, urordner_id) VALUES ('U2
 cursor.execute(
 "INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES ('Set 1', 'Beschreibung Set 1', 'Englisch', 1)")
 cursor.execute(
-"INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES ('Set 2', 'Beschreibung Set 2 Fraben', 'Englisch', 2)")
+"INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES ('Set 2', 'Beschreibung Set 2 Farben', 'Englisch', 2)")
 
 # Testdaten in die Tabelle 'karte' einfügen
 cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
