@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 exception.py
 In dieser Datei befindet sich ein wenig Code, der Exceptions, die geworfen werden während PyQt läuft, anzeigt.

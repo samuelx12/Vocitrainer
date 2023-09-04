@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 trainingscontroller.py
 Hierhin kommen die Kontroll-Klassen für das Training

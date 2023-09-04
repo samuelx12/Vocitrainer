@@ -91,7 +91,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
         breite = bildschirm_geometrie.width()
         hoehe = bildschirm_geometrie.height()
-        self.setGeometry(breite/6, hoehe/6, breite*2/3, hoehe*2/3)
+        self.setGeometry(int(breite/6), int(hoehe/6), int(breite*2/3), int(hoehe*2/3))
         # Splitter richtig einteilen
         self.splitter.setSizes([100, 300])
         self.splitter.updateGeometry()
@@ -251,7 +251,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             # ****** Änderung im Explorer vornehmen ******
 
             # Alte Aktive entfernen
-            for altesAktivesItem in self.aktiveItems:
+            for altesAktivesItem in self.aktiveItems:  # todo nur einmal ausführen
                 altesAktivesItem.setActive(False)
 
             # Wenn im Ursprungsrdner danach keine Items mehr sind, Ordner als geschlossen anzeigen
