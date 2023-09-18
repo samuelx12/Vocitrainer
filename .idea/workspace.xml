@@ -4,16 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="Drag&amp;Drop weiter verbessert&#10;Kontextmenu für den Explorer erstellt&#10;Startgrösse des Fensters angepasst">
-      <change afterPath="$PROJECT_DIR$/Server/server.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/session.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Vocitrainer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Vocitrainer.iml" afterDir="false" />
+    <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Client/mp_herunterladen.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/mp_herunterladen.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/network.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/ui_mp_herunterladen.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dokumentation/Netzwerk Kommunikation.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/setupdb.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/exception.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/exception.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/trainingscontroller.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/trainingscontroller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/trainingsfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/trainingsfenster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/hauptfenster.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/ui_hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ui_hauptfenster.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/vocitrainerdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Client/vocitrainerdb.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/session.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,42 +69,73 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2QNqw9yoIRi1L9C6DzywXTbKZ0B" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/media/samuel/Local Disk/Users/Samuel/PycharmProjects/Vocitrainer&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Samuel/PycharmProjects/Vocitrainer/Server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;HTML&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "HTML"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
       <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Client" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
+      <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server\certificate" />
       <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer" />
       <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Client" />
     </key>
   </component>
   <component name="RunManager" selected="Python.Client">
+    <configuration name="Client Network Test" type="PythonConfigurationType" factoryName="Python">
+      <module name="Vocitrainer" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.8 (base)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Client/network.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Client" type="PythonConfigurationType" factoryName="Python">
       <module name="Vocitrainer" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -118,6 +153,29 @@
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="true" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Server" type="PythonConfigurationType" factoryName="Python">
+      <module name="Vocitrainer" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.8 (base)" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Server/server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
@@ -147,6 +205,8 @@
     </configuration>
     <list>
       <item itemvalue="Python.Client" />
+      <item itemvalue="Python.Server" />
+      <item itemvalue="Python.Client Network Test" />
       <item itemvalue="Python.Setup DB" />
     </list>
   </component>
@@ -191,7 +251,14 @@
       <workItem from="1693682524478" duration="42000" />
       <workItem from="1693682573883" duration="797000" />
       <workItem from="1693763966281" duration="1814000" />
-      <workItem from="1693802208110" duration="5110000" />
+      <workItem from="1693802208110" duration="6300000" />
+      <workItem from="1693818303537" duration="6755000" />
+      <workItem from="1694804342263" duration="585000" />
+      <workItem from="1694851357508" duration="3386000" />
+      <workItem from="1694855229124" duration="9000" />
+      <workItem from="1694855260592" duration="3733000" />
+      <workItem from="1694935516903" duration="584000" />
+      <workItem from="1694949317109" duration="2211000" />
     </task>
     <task id="LOCAL-00001" summary="Restrukturierung für besseren Workflow mit Qt-Designer aufgrund der bisher gemachten Erfahrungen mit PyQt.">
       <option name="closed" value="true" />
@@ -257,13 +324,22 @@
       <option name="project" value="LOCAL" />
       <updated>1693576998649</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="server.py und session.py mit den ersten Grundlegenden Funktionen erstellt">
+      <option name="closed" value="true" />
+      <created>1693819255349</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1693819255350</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Restrukturierung für besseren Workflow mit Qt-Designer aufgrund der bisher gemachten Erfahrungen mit PyQt." />
     <MESSAGE value="Erster unvollständiger Entwurf vom Trainingsfenster hinzugefügt&#10;Fusion Style aktiviert" />
     <MESSAGE value="Erster Trainings Kontroller mit Trainingsfenster" />
@@ -272,16 +348,19 @@
     <MESSAGE value="Explorer fürs erste fertiggestellt" />
     <MESSAGE value="Explorer um DragAndDrop ergänzt." />
     <MESSAGE value="Drag&amp;Drop weiter verbessert&#10;Kontextmenu für den Explorer erstellt&#10;Startgrösse des Fensters angepasst" />
-    <option name="LAST_COMMIT_MESSAGE" value="Drag&amp;Drop weiter verbessert&#10;Kontextmenu für den Explorer erstellt&#10;Startgrösse des Fensters angepasst" />
+    <MESSAGE value="server.py und session.py mit den ersten Grundlegenden Funktionen erstellt" />
+    <option name="LAST_COMMIT_MESSAGE" value="server.py und session.py mit den ersten Grundlegenden Funktionen erstellt" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Vocitrainer$setupdb.coverage" NAME="setupdb Coverage Results" MODIFIED="1688072696914" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$.coverage" NAME=" Coverage Results" MODIFIED="1691767240610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Server.coverage" NAME="Server Coverage Results" MODIFIED="1694856847372" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
     <SUITE FILE_PATH="coverage/Vocitrainer$models.coverage" NAME="models Coverage Results" MODIFIED="1688487567224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$hauptfenster.coverage" NAME="hauptfenster Coverage Results" MODIFIED="1688134888969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$client.coverage" NAME="client Coverage Results" MODIFIED="1688487578785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Client_Network_Test.coverage" NAME="Client Network Test Coverage Results" MODIFIED="1694856592805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Setup_DB.coverage" NAME="Setup DB Coverage Results" MODIFIED="1693423227821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1693766845217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1695021682830" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$kartenmodeltest.coverage" NAME="kartenmodeltest Coverage Results" MODIFIED="1688487656020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
   </component>
 </project>

@@ -53,7 +53,7 @@ class ExplorerItem(QTreeWidgetItem):
         if self.typ == "vociset":
             font = QFont()
             font.setBold(aktiv)
-            self.setFont(0, font)
+            self.setFont(0, font)  # todo Fehler, wenn das versucht wird nach dem das Item nach neuladen gelöscht wurde
 
         if aktiv:
             if self.typ == "vociset":

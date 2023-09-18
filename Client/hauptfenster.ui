@@ -185,8 +185,18 @@ selection-color: rgb(0, 0, 0);</string>
     <addaction name="mn_Einstellungen"/>
     <addaction name="mn_Ueber"/>
    </widget>
+   <widget class="QMenu" name="menuMarketplace">
+    <property name="title">
+     <string>Marketplace</string>
+    </property>
+    <addaction name="mn_Herunterladen"/>
+    <addaction name="mn_Hochladen"/>
+    <addaction name="mn_HochgeladeneVerwalten"/>
+    <addaction name="mn_Profil"/>
+   </widget>
    <addaction name="menuVocitrainer"/>
    <addaction name="menuLernen"/>
+   <addaction name="menuMarketplace"/>
    <addaction name="menu_Extra"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -211,6 +221,26 @@ selection-color: rgb(0, 0, 0);</string>
    </property>
    <property name="text">
     <string>Einstellungen</string>
+   </property>
+  </action>
+  <action name="mn_Herunterladen">
+   <property name="text">
+    <string>Herunterladen</string>
+   </property>
+  </action>
+  <action name="mn_Hochladen">
+   <property name="text">
+    <string>Hochladen</string>
+   </property>
+  </action>
+  <action name="mn_HochgeladeneVerwalten">
+   <property name="text">
+    <string>Hochgeladene verwalten</string>
+   </property>
+  </action>
+  <action name="mn_Profil">
+   <property name="text">
+    <string>Profil</string>
    </property>
   </action>
  </widget>
