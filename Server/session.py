@@ -7,7 +7,8 @@ Hier ist der Thread für die Session des Servers mit dem Client
 import threading
 import ssl
 import pickle
-from typing import List, Iterable
+from typing import List
+import sqlite3
 
 
 class Session(threading.Thread):
@@ -21,10 +22,10 @@ class Session(threading.Thread):
         self.addr = addr
 
         # Konstanten
-        self.HEADER = 64
+        self.HEADER = 128
         self.FORMAT = 'utf-8'
 
-    def empfangen(self) -> Iterable:
+    def empfangen(self) -> List:
         """
         Funktion für das Empfangen von Nachrichten vom Server. Gibt die fertig entpickelte Liste zurück
         """
@@ -56,8 +57,69 @@ class Session(threading.Thread):
         return
 
     def run(self) -> None:
-        # Zuerst Verbindung verschlüsseln
+        """
+        Run
+        :return: None
+        """
+        def zaehle_treffer(title: str) -> int:
+            """
+            Zählt die Anzahl Wörter im Titel, die im Suchbegriff vorkommen.
+            :param title: Der Titel in dem gesucht werden soll
+            :return: Die Anzahl der Wörter im Titel, die im Suchbegriff vorkommen.
+            """
+            anz_treffer = sum(wort.lower() in title.lower() for wort in gesplitteter_prompt)
+            return anz_treffer
 
-        print(self.empfangen())
+        # Zuerst Verbindung verschlüsseln (momentan entfernt)
 
-        self.senden([3, "Auch Hallo"])
+        # print(self.empfangen())
+        #
+        # self.senden([3, "Auch Hallo"])
+
+        print("DBconn erstellt")
+        self.DBCONN = sqlite3.connect('serverdb.db')
+        self.CURSOR = self.DBCONN.cursor()
+
+        while True:
+            nachricht = self.empfangen()
+            kid = nachricht[0]
+            antwort = []
+
+            if kid == 1:
+                # Verbindung wird beendet
+                pass
+            elif kid == 2:
+                # Authentifizierung
+                pass
+            elif kid == 3:
+                """
+                Set suche:
+                [kid, prompt, sprache]
+                """
+                prompt: str = nachricht[1]
+                anzahl_resultate: int = nachricht[2]
+                gesplitteter_prompt = prompt.split()
+
+                # Suchquery erstellen
+                # Die LIKEs suchen alle sets heraus, welche eines der Wörter des Suchprompts im Namen haben
+                query = "SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE set_name LIKE '%'+?+'%'"
+                for i in range(len(gesplitteter_prompt) - 1):
+                    query += "OR set_name LIKE '%'+?+'%'"
+                print("vor execute")
+                print("Query: ", query)
+                print("Argumente: ", gesplitteter_prompt)
+                self.CURSOR.execute(query, gesplitteter_prompt)
+                print("nach execute")
+                ergebnisse = self.CURSOR.fetchmany(anzahl_resultate)
+
+                # Jetzt werden die Resultate danach geordnet, wie viele Wörter des Suchprompts darin enthalten sind.
+                ergebnisse.sort(key=lambda resultat: zaehle_treffer(resultat[1]))
+
+                print(ergebnisse)
+
+                antwort = [3, ergebnisse]
+
+            else:
+                antwort = ["FEHLER"]
+
+            self.senden(antwort)

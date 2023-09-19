@@ -14,6 +14,7 @@ from PyQt5.uic import loadUi
 import sqlite3
 from ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
+from mp_herunterladen import mpHerunterladen
 from typing import List
 
 
@@ -125,6 +126,8 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.trw_Explorer.doubleClicked.connect(self.trw_Explorer_doubleClicked)
         self.trw_Explorer.dragEnterEvent = self.trw_Explorer_dragEnterEvent
         self.trw_Explorer.dropEvent = self.trw_Explorer_dropEvent
+        # Menu
+        self.mn_Herunterladen.triggered.connect(self.mn_Herunterladen_clicked)
 
         # Kontextmenüs aktivieren
         self.trw_Explorer.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -137,10 +140,10 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.close()
 
     def cmd_Setlernen_clicked(self):
-        trainingsfenster = Trainingsfenster()
-        trainingsfenster.setModal(True)
+        self.trainingsfenster = Trainingsfenster()
+        self.trainingsfenster.setModal(True)
 
-        trainingsfenster.exec_()
+        self.trainingsfenster.exec_()
 
     def load_explorer(self):
         def ebene_laden(parent, parent_id):
@@ -320,3 +323,9 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         """'Aktualisieren' Option aus dem Kontextmenu ausführen"""
         self.trw_Explorer.clear()
         self.load_explorer()
+
+    def mn_Herunterladen_clicked(self):
+        self.mp_Herunterladen = mpHerunterladen()
+        self.mp_Herunterladen.setModal(True)
+
+        self.mp_Herunterladen.exec_()

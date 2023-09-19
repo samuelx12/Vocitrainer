@@ -16,9 +16,7 @@ cursor.execute('''
         set_id INTEGER PRIMARY KEY,
         set_name TEXT,
         beschreibung TEXT,
-        sprache TEXT,
-        urordner_id INTEGER,
-        FOREIGN KEY (urordner_id) REFERENCES ordner (ordner_id)
+        sprache TEXT
     )
 ''')
 
@@ -39,9 +37,9 @@ cursor.execute('''
 
 # Testdaten in die Tabelle 'set' einfügen
 cursor.execute(
-"INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES ('servSet 1', 'servBeschreibung Set 1', 'Englisch', 1)")
+"INSERT INTO vociset (set_name, beschreibung, sprache) VALUES ('servSet 1', 'servBeschreibung Set 1', 'Englisch')")
 cursor.execute(
-"INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES ('servSet 2', 'servBeschreibung Set 2 Farben', 'Englisch', 2)")
+"INSERT INTO vociset (set_name, beschreibung, sprache) VALUES ('servSet 2', 'servBeschreibung Set 2 Farben', 'Englisch')")
 
 # Testdaten in die Tabelle 'karte' einfügen
 cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 

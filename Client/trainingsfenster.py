@@ -9,9 +9,6 @@ wurden (Qt-Konzept)
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from models import KartenModel
-from PyQt5.uic import loadUi
-import sqlite3
 from ui_trainingsfenster import Ui_Trainingsfenster
 from trainingscontroller import TestTraining, TC_Einfach
 

@@ -7,4 +7,5 @@ Ich versende in meiner Anwendung immer Python Listen in welcher das erste Elemen
 
 - 1: Verbindung wird beendent
 - 2: Authentifizierung
+- 3: Set suche
 - 
