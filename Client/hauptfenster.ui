@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>641</width>
-    <height>543</height>
+    <height>583</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -51,7 +51,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QFrame" name="aktion">
+       <widget class="QFrame" name="cmd_Aktion">
         <property name="styleSheet">
          <string notr="true">QFrame {
     background-color: #FFFFFF;
@@ -89,7 +89,7 @@ QLabel:hover {
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="cmd_ico_Aktion">
            <property name="text">
             <string/>
            </property>
@@ -102,7 +102,7 @@ QLabel:hover {
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="cmd_lbl_Aktion">
            <property name="text">
             <string>Aktion</string>
            </property>
@@ -151,7 +151,24 @@ selection-color: rgb(0, 0, 0);</string>
         </property>
        </column>
       </widget>
-      <widget class="QTableView" name="tbv_Liste"/>
+      <widget class="QTableView" name="tbv_Liste">
+       <property name="styleSheet">
+        <string notr="true">selection-background-color: rgb(201, 220, 225);
+selection-color: rgb(0, 0, 0);</string>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContents</enum>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::ExtendedSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <attribute name="horizontalHeaderCascadingSectionResizes">
+        <bool>false</bool>
+       </attribute>
+      </widget>
      </widget>
     </item>
    </layout>

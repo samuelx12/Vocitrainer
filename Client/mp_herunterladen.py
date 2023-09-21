@@ -38,10 +38,36 @@ class mpHerunterladen(QDialog, Ui_mpHerunterladen):
 
         self.net = Network()
 
-    def cmd_schliessen_clicked(self):
+    def cmd_schliessen_clicked(self) -> None:
         self.close()
 
     def txt_suche_textChanged(self):
         print("yes")
-        resultate = self.net.vociset_suche(self.txt_suche.text(), 10)
+        if self.txt_suche.text().split():
+            resultate = self.net.vociset_suche(self.txt_suche.text(), 10)
+            print(resultate)
+
+            # Tabelle neu laden
+            self.lade_tabelle(resultate)
+
+    def lade_tabelle(self, resultate):
+        """Ladet die Tabelle mit den Suchresultaten neu"""
+
+        self.such_resultate = resultate
+
+        self.tbl_suche.clear()
+        self.tbl_suche.setColumnCount(2)
+        self.tbl_suche.setRowCount(len(self.such_resultate))
+
+        for reihe in range(len(self.such_resultate)):
+            # In die erste Spalte kommt der Set Name:
+            self.tbl_suche.setItem(reihe, 0, QTableWidgetItem(self.such_resultate[reihe][1]))
+
+            # Erstellen eines Buttons für die zweite Spalte
+            herunterladen_button = QPushButton("Herunterladen")
+            herunterladen_button.clicked.connect(self.set_herunterladen)
+
+            self.tbl_suche.setCellWidget(reihe, 1, herunterladen_button)
+
+    def set_herunterladen(self):
         pass

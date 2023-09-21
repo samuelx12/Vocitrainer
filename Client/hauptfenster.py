@@ -110,6 +110,8 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # Model zuweisen
         self.tbv_Liste.setModel(self.kartenModel)
         print("Model wurde zugewiesen")
+        self.tbv_Liste.horizontalHeader().setSectionResizeMode(QHeaderView.Interactive)
+        self.tbv_Liste.horizontalHeader().setStretchLastSection(True)
 
         # Explorer vorbereiten
         self.rootNode = self.trw_Explorer.invisibleRootItem()

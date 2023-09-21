@@ -70,6 +70,9 @@ class Session(threading.Thread):
             anz_treffer = sum(wort.lower() in title.lower() for wort in gesplitteter_prompt)
             return anz_treffer
 
+        def trace_callback(statement):
+            print("Ausgeführter SQL-Befehl:", statement)
+
         # Zuerst Verbindung verschlüsseln (momentan entfernt)
 
         # print(self.empfangen())
@@ -99,12 +102,14 @@ class Session(threading.Thread):
                 prompt: str = nachricht[1]
                 anzahl_resultate: int = nachricht[2]
                 gesplitteter_prompt = prompt.split()
-
+                self.DBCONN.set_trace_callback(trace_callback)
                 # Suchquery erstellen
                 # Die LIKEs suchen alle sets heraus, welche eines der Wörter des Suchprompts im Namen haben
-                query = "SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE set_name LIKE '%'+?+'%'"
+                query = """
+                SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE set_name LIKE '%' || ? || '%'
+                """
                 for i in range(len(gesplitteter_prompt) - 1):
-                    query += "OR set_name LIKE '%'+?+'%'"
+                    query += " OR set_name LIKE '%'+?+'%'"
                 print("vor execute")
                 print("Query: ", query)
                 print("Argumente: ", gesplitteter_prompt)
