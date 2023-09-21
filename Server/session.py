@@ -61,17 +61,6 @@ class Session(threading.Thread):
         Run
         :return: None
         """
-        def zaehle_treffer(title: str) -> int:
-            """
-            Zählt die Anzahl Wörter im Titel, die im Suchbegriff vorkommen.
-            :param title: Der Titel in dem gesucht werden soll
-            :return: Die Anzahl der Wörter im Titel, die im Suchbegriff vorkommen.
-            """
-            anz_treffer = sum(wort.lower() in title.lower() for wort in gesplitteter_prompt)
-            return anz_treffer
-
-        def trace_callback(statement):
-            print("Ausgeführter SQL-Befehl:", statement)
 
         # Zuerst Verbindung verschlüsseln (momentan entfernt)
 
@@ -99,32 +88,85 @@ class Session(threading.Thread):
                 Set suche:
                 [kid, prompt, sprache]
                 """
-                prompt: str = nachricht[1]
-                anzahl_resultate: int = nachricht[2]
-                gesplitteter_prompt = prompt.split()
-                self.DBCONN.set_trace_callback(trace_callback)
-                # Suchquery erstellen
-                # Die LIKEs suchen alle sets heraus, welche eines der Wörter des Suchprompts im Namen haben
-                query = """
-                SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE set_name LIKE '%' || ? || '%'
+
+                antwort = self.beantworte_kid3(nachricht)
+
+            elif kid == 4:
                 """
-                for i in range(len(gesplitteter_prompt) - 1):
-                    query += " OR set_name LIKE '%'+?+'%'"
-                print("vor execute")
-                print("Query: ", query)
-                print("Argumente: ", gesplitteter_prompt)
-                self.CURSOR.execute(query, gesplitteter_prompt)
-                print("nach execute")
-                ergebnisse = self.CURSOR.fetchmany(anzahl_resultate)
+                Set Herunterladen
+                [kid, [Set Datensatz], [Liste der [Karten Datensätze]]]
+                """
 
-                # Jetzt werden die Resultate danach geordnet, wie viele Wörter des Suchprompts darin enthalten sind.
-                ergebnisse.sort(key=lambda resultat: zaehle_treffer(resultat[1]))
-
-                print(ergebnisse)
-
-                antwort = [3, ergebnisse]
+                antwort = self.beantworte_kid4(nachricht)
 
             else:
                 antwort = ["FEHLER"]
+                print("ERROR mit kid:")
+                print(kid)
 
             self.senden(antwort)
+
+    def beantworte_kid3(self, nachricht) -> List:
+        """
+        Set suche:
+        [kid, prompt, sprache]
+        """
+
+        def zaehle_treffer(title: str) -> int:
+            """
+            Zählt die Anzahl Wörter im Titel, die im Suchbegriff vorkommen.
+            :param title: Der Titel in dem gesucht werden soll
+            :return: Die Anzahl der Wörter im Titel, die im Suchbegriff vorkommen.
+            """
+            anz_treffer = sum(wort.lower() in title.lower() for wort in gesplitteter_prompt)
+            return anz_treffer
+
+        def trace_callback(statement):
+            print("Ausgeführter SQL-Befehl:", statement)
+
+        prompt: str = nachricht[1]
+        anzahl_resultate: int = nachricht[2]
+        gesplitteter_prompt = prompt.split()
+
+        # Ausgeführte Befehle für Debug Printen
+        self.DBCONN.set_trace_callback(trace_callback)
+
+        # Suchquery erstellen
+        # Die LIKEs suchen alle sets heraus, welche eines der Wörter des Suchprompts im Namen haben
+        query = """
+            SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE set_name LIKE '%' || ? || '%'
+        """
+        for i in range(len(gesplitteter_prompt) - 1):
+            query += " OR set_name LIKE '%'+?+'%'"
+        print("vor execute")
+        print("Query: ", query)
+        print("Argumente: ", gesplitteter_prompt)
+        self.CURSOR.execute(query, gesplitteter_prompt)
+        print("nach execute")
+        ergebnisse = self.CURSOR.fetchmany(anzahl_resultate)
+
+        # Jetzt werden die Resultate danach geordnet, wie viele Wörter des Suchprompts darin enthalten sind.
+        ergebnisse.sort(key=lambda resultat: zaehle_treffer(resultat[1]))
+
+        print(ergebnisse)
+
+        return [3, ergebnisse]
+
+    def beantworte_kid4(self, nachricht) -> List:
+        """
+        Set Herunterladen
+        [kid, [Set Datensatz], [Liste der [Karten Datensätze]]]
+        """
+        set_id = nachricht[1]
+
+        # SQL-Query um die Daten des gewünschten Vocisets zu kriegen
+        query = """SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE set_id = ?"""
+        self.CURSOR.execute(query, (set_id,))
+        vociset_datensatz = self.CURSOR.fetchone()
+
+        # SQL-Query um die Karten Datensätze zu erhalten
+        query = """SELECT karte_id, wort, fremdwort, definition, set_id FROM karte WHERE set_id = ?"""
+        self.CURSOR.execute(query, (set_id,))
+        karten_datensaetze = self.CURSOR.fetchall()
+
+        return [4, vociset_datensatz, karten_datensaetze]

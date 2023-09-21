@@ -9,16 +9,18 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from ui_mp_herunterladen import Ui_mpHerunterladen
 from network import Network
+import sqlite3
 
 
-class mpHerunterladen(QDialog, Ui_mpHerunterladen):
+class MpHerunterladen(QDialog, Ui_mpHerunterladen):
     """
     Trainingsfenster
     """
-    def __init__(self, *args, obj=None, **kwargs):
-        super(mpHerunterladen, self).__init__(*args, **kwargs)
+    def __init__(self, hauptfenster, *args, obj=None, **kwargs):
+        super(MpHerunterladen, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Herunterladen")
+        self.hauptfenster = hauptfenster
 
         # Bildschirmgrösse setzen
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
@@ -35,8 +37,10 @@ class mpHerunterladen(QDialog, Ui_mpHerunterladen):
         # )
 
         # Serververbindung erstellen
-
         self.net = Network()
+
+        self.DBCONN = sqlite3.connect('vocitrainerdb.db')
+        self.CURSOR = self.DBCONN.cursor()
 
     def cmd_schliessen_clicked(self) -> None:
         self.close()
@@ -65,9 +69,49 @@ class mpHerunterladen(QDialog, Ui_mpHerunterladen):
 
             # Erstellen eines Buttons für die zweite Spalte
             herunterladen_button = QPushButton("Herunterladen")
-            herunterladen_button.clicked.connect(self.set_herunterladen)
+            herunterladen_button.clicked.connect(self.set_herunterladen_button_clicked)
 
             self.tbl_suche.setCellWidget(reihe, 1, herunterladen_button)
 
-    def set_herunterladen(self):
-        pass
+    def set_herunterladen_button_clicked(self):
+        """
+        Diese Methode wird aktiv, wenn einer der Herunterladenbuttons in der Tabelle geklickt wurde.
+        Sie findet die ID des Heruntergeladenen Buttons heraus und gibt den Download in Auftrag.
+        """
+        clicked_button = self.sender()
+        if clicked_button:
+            button_index = self.tbl_suche.indexAt(clicked_button.pos())
+            if button_index.isValid():
+                reihe = button_index.row()
+                set_id = self.such_resultate[reihe][0]
+                self.set_herunterladen(set_id)
+
+    def set_herunterladen(self, set_id: int) -> None:
+        """
+        Lädt die Datensätze eines Sets und der zugehörigen Karten herunter.
+        :param set_id: Die ID des zu herunterladenden Sets
+        :return: None
+        """
+        print(f"Lade Set mit der ID {set_id} herunter.")
+        vociset_datensatz, karten_datensaetze = self.net.vociset_herunterladen(set_id)
+        print(vociset_datensatz)
+        print(karten_datensaetze)
+
+        # SQL-Query um das Vociset in der Datenbank zu speichern
+        query = """
+        INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES (?, ?, ?, 1)
+        """
+        self.CURSOR.execute(query, [vociset_datensatz[i] for i in range(1, 4)])
+        gespeicherte_set_id = self.CURSOR.lastrowid
+
+        # Schleife um die Karten einzufügen
+        query = f"""
+        INSERT INTO karte (wort, fremdwort, definition, lernfortschritt, markiert, set_id)
+        VALUES (?, ?, ?, 0, 0, {gespeicherte_set_id})
+        """
+        for i in range(len(karten_datensaetze)):
+            self.CURSOR.execute(query, [karten_datensaetze[i][j] for j in range(1, 4)])
+
+        self.DBCONN.commit()
+
+        self.hauptfenster.load_explorer()

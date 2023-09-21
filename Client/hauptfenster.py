@@ -14,7 +14,7 @@ from PyQt5.uic import loadUi
 import sqlite3
 from ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
-from mp_herunterladen import mpHerunterladen
+from mp_herunterladen import MpHerunterladen
 from typing import List
 
 
@@ -177,6 +177,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             for i_vociset in vocisets:
                 neues_vociset = ExplorerItem(i_vociset[1], "vociset", i_vociset[0], parent=parent)
 
+        self.trw_Explorer.clear()
         lade_cursor = self.conn.cursor()
         explorer_index = []
         ebene_laden(self.rootNode, 1)
@@ -327,7 +328,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.load_explorer()
 
     def mn_Herunterladen_clicked(self):
-        self.mp_Herunterladen = mpHerunterladen()
+        self.mp_Herunterladen = MpHerunterladen(self)
         self.mp_Herunterladen.setModal(True)
 
         self.mp_Herunterladen.exec_()

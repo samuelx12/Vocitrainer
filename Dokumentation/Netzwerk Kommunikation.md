@@ -7,5 +7,13 @@ Ich versende in meiner Anwendung immer Python Listen in welcher das erste Elemen
 
 - 1: Verbindung wird beendent
 - 2: Authentifizierung
-- 3: Set suche
-- 
+- 3: Set suche / Set Resultate
+- 4: Set Herunterladen von Server
+  - KID
+  - Set Datensatz
+  - Liste der
+    - Karte Datensätze
+- 4: Set Herunterladen von Client
+  - KID
+  - set_id
+- 5:
