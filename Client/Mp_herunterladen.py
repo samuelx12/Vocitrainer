@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-mp_herunterladen.py
+Mp_herunterladen.py
 Hier ist das Herunterladen Fenster des Menu Marketplace.
 """
 
@@ -22,6 +22,13 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         self.setWindowTitle("Herunterladen")
         self.hauptfenster = hauptfenster
 
+        # "Starten sie mit der Suche ..."-Meldung anzeigen
+        self.stackedWidget.setCurrentIndex(1)
+        self.lbl_emoji.setVisible(False)
+        self.lbl_Meldung.setText("Starten sie mit der Suche...")
+        self.lbl_Meldung.setStyleSheet("""color: rgb(0, 85, 0); font: italic 10pt "Segoe UI";""")
+        self.txt_suche.setFocus()
+
         # Bildschirmgrösse setzen
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
         breite = bildschirm_geometrie.width()
@@ -31,6 +38,7 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         # Signale mit Slots verbinden
         self.cmd_schliessen.clicked.connect(self.cmd_schliessen_clicked)
         self.txt_suche.textChanged.connect(self.txt_suche_textChanged)
+        self.cmd_refresh.clicked.connect(self.txt_suche_textChanged)
 
         # self.setStyleSheet(
         #     """font: 14pt "MS Shell Dlg 2";"""
@@ -46,13 +54,29 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         self.close()
 
     def txt_suche_textChanged(self):
-        print("yes")
         if self.txt_suche.text().split():
             resultate = self.net.vociset_suche(self.txt_suche.text(), 10)
             print(resultate)
+            if resultate:
+                # Tabelle neu laden
+                self.lade_tabelle(resultate)
+                self.stackedWidget.setCurrentIndex(0)
+            else:
+                # Keine Treffer
+                self.stackedWidget.setCurrentIndex(1)
+                self.lbl_Meldung.setText("Keine Treffer!")
+                self.lbl_emoji.setVisible(True)
+                self.lbl_Meldung.setStyleSheet("""color: rgb(170, 0, 0); font: italic 10pt "Segoe UI";""")
 
-            # Tabelle neu laden
-            self.lade_tabelle(resultate)
+        else:
+            self.tbl_suche.clear()
+            self.tbl_suche.setColumnCount(0)
+            self.tbl_suche.setRowCount(0)
+
+            self.stackedWidget.setCurrentIndex(1)
+            self.lbl_Meldung.setText("Starten sie mit der Suche...")
+            self.lbl_emoji.setVisible(False)
+            self.lbl_Meldung.setStyleSheet("""color: rgb(0, 85, 0); font: italic 10pt "Segoe UI";""")
 
     def lade_tabelle(self, resultate):
         """Ladet die Tabelle mit den Suchresultaten neu"""
@@ -69,6 +93,7 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
 
             # Erstellen eines Buttons für die zweite Spalte
             herunterladen_button = QPushButton("Herunterladen")
+            herunterladen_button.setIcon(QIcon("res/icons/download_FILL0_wght500_GRAD0_opsz40.svg"))
             herunterladen_button.clicked.connect(self.set_herunterladen_button_clicked)
 
             self.tbl_suche.setCellWidget(reihe, 1, herunterladen_button)
@@ -84,11 +109,12 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
             if button_index.isValid():
                 reihe = button_index.row()
                 set_id = self.such_resultate[reihe][0]
-                self.set_herunterladen(set_id)
+                self.set_herunterladen(set_id, reihe)
 
-    def set_herunterladen(self, set_id: int) -> None:
+    def set_herunterladen(self, set_id: int, reihe: int) -> None:
         """
         Lädt die Datensätze eines Sets und der zugehörigen Karten herunter.
+        :param reihe: Die Reihe in der Tabelle, um später dort eine Erfolgsmeldung zu zeigen
         :param set_id: Die ID des zu herunterladenden Sets
         :return: None
         """
@@ -113,5 +139,15 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
             self.CURSOR.execute(query, [karten_datensaetze[i][j] for j in range(1, 4)])
 
         self.DBCONN.commit()
-
         self.hauptfenster.load_explorer()
+
+        # erfolgsmeldungsitem = QTableWidgetItem("Heruntergeladen")
+        # erfolgsmeldungsitem.setIcon("res/icons/download_FILL0_wght500_GRAD0_opsz40.svg")
+        # self.tbl_suche.setItem(reihe, 1, erfolgsmeldungsitem)
+
+        herunterladen_button = QPushButton("Heruntergeladen")
+        herunterladen_button.setIcon(QIcon("res/icons/download_done_FILL0_wght500_GRAD0_opsz40.svg"))
+        self.tbl_suche.setCellWidget(reihe, 1, herunterladen_button)
+
+        print("Erfolgsmeldung!")
+        print(reihe)

@@ -14,7 +14,7 @@ from PyQt5.uic import loadUi
 import sqlite3
 from ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
-from mp_herunterladen import MpHerunterladen
+from Mp_herunterladen import MpHerunterladen
 from typing import List
 
 
