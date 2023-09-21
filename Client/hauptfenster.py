@@ -10,7 +10,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from models import KartenModel
-from PyQt5.uic import loadUi
 import sqlite3
 from ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
@@ -312,20 +311,44 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def trw_Explorer_Kontextmenu(self, point: QPoint):
         """Das Kontextmenü für den Explorer anzeigen"""
+
+        # Element, das geklickt wurde herausfinden
+        self.kontext_elemente = self.trw_Explorer.selectedItems()
+
         kontext = QMenu(self)
-        kontext.setStyleSheet("")  # todo Stylesheet
+        kontext.setStyleSheet("selection-background-color: rgb(201, 220, 225);selection-color: rgb(0, 0, 0);")
 
         aktualisieren = QAction("Aktualisieren", self)
         aktualisieren.setIcon(QIcon("res/icons/refresh_FILL0_wght500_GRAD0_opsz40.svg"))
         aktualisieren.triggered.connect(self.trw_Explorer_Kontextmenu_Aktualisieren)
-
         kontext.addAction(aktualisieren)
+
+        loeschen = QAction("Löschen", self)
+        loeschen.setIcon(QIcon("res/icons/delete_FILL0_wght500_GRAD0_opsz40.svg"))
+        loeschen.triggered.connect(self.trw_Explorer_Kontextmenu_Loeschen)
+        kontext.addAction(loeschen)
+
         kontext.exec_(self.trw_Explorer.viewport().mapToGlobal(point))
 
     def trw_Explorer_Kontextmenu_Aktualisieren(self):
         """'Aktualisieren' Option aus dem Kontextmenu ausführen"""
         self.trw_Explorer.clear()
         self.load_explorer()
+
+    def trw_Explorer_Kontextmenu_Loeschen(self):
+        """'Löschen' Option aus dem Kontextmenu ausführen"""
+        self.exploreritems_loeschen(self.kontext_elemente)
+
+    def exploreritems_loeschen(self, items):
+        """Löscht Elemente aus dem Explorer"""
+        print(items)  # todo Hier Lösch Option bauen
+
+    def keyPressEvent(self, event: QKeyEvent, *args, **kwargs):
+        """Überschreibung der bereits bestehenden Methode"""
+
+        # Wenn im Explorer Items gelöscht werden wollen:
+        if event.key() == Qt.Key_Delete and self.trw_Explorer.hasFocus():
+            self.exploreritems_loeschen(self.trw_Explorer.selectedItems())
 
     def mn_Herunterladen_clicked(self):
         self.mp_Herunterladen = MpHerunterladen(self)

@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="Erfolgsmeldung nach Herunterladen">
+    <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Client/res/icons/download_FILL0_wght500_GRAD0_opsz40.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/res/icons/download_done_FILL0_wght500_GRAD0_opsz40.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/mp_herunterladen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_herunterladen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/mp_herunterladen.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/mp_herunterladen.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ui_mp_herunterladen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ui_mp_herunterladen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/vocitrainerdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Client/vocitrainerdb.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -265,7 +263,7 @@
       <workItem from="1694949317109" duration="8858000" />
       <workItem from="1695033413192" duration="7863000" />
       <workItem from="1695111183246" duration="3782000" />
-      <workItem from="1695241427643" duration="18984000" />
+      <workItem from="1695241427643" duration="21921000" />
     </task>
     <task id="LOCAL-00001" summary="Restrukturierung für besseren Workflow mit Qt-Designer aufgrund der bisher gemachten Erfahrungen mit PyQt.">
       <option name="closed" value="true" />
@@ -371,7 +369,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695320567580</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Erfolgsmeldung nach Herunterladen">
+      <option name="closed" value="true" />
+      <created>1695325303201</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1695325303201</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -403,7 +409,8 @@
     <MESSAGE value="Suche in den Server und Client Netzwerkklasse eingebaut aber noch nicht im Fenster." />
     <MESSAGE value="Tabelle im Herunterladen Fenster wird jetzt gefüllt.&#10;Bug in der Suche gelöst&#10;Tabelle im Hauptfenster an Grösse angepasst" />
     <MESSAGE value="Herunterladen der Sets eingebaut." />
-    <option name="LAST_COMMIT_MESSAGE" value="Herunterladen der Sets eingebaut." />
+    <MESSAGE value="Erfolgsmeldung nach Herunterladen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Erfolgsmeldung nach Herunterladen" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Vocitrainer$.coverage" NAME=" Coverage Results" MODIFIED="1691767240610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
@@ -415,7 +422,7 @@
     <SUITE FILE_PATH="coverage/Vocitrainer$client.coverage" NAME="client Coverage Results" MODIFIED="1688487578785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Client_Network_Test.coverage" NAME="Client Network Test Coverage Results" MODIFIED="1694856592805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Setup_DB.coverage" NAME="Setup DB Coverage Results" MODIFIED="1693423227821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1695325025804" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1695327764115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$kartenmodeltest.coverage" NAME="kartenmodeltest Coverage Results" MODIFIED="1688487656020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$suche_test.coverage" NAME="suche test Coverage Results" MODIFIED="1695025638975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
   </component>
