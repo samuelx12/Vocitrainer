@@ -53,7 +53,7 @@ class ExplorerItem(QTreeWidgetItem):
         if self.typ == "vociset":
             font = QFont()
             font.setBold(aktiv)
-            self.setFont(0, font)  # todo Fehler, wenn das versucht wird nach dem das Item nach neuladen gelöscht wurde
+            self.setFont(0, font)
 
         if aktiv:
             if self.typ == "vociset":
@@ -238,6 +238,10 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # SQL-Cursor erstellen
         cursor = self.conn.cursor()
 
+        # Alte Aktive entfernen
+        for altesAktivesItem in self.aktiveItems:
+            altesAktivesItem.setActive(False)
+
         for ausgewaehltes_item in ausgewaehlte_items:
             id = ausgewaehltes_item.id
             typ = ausgewaehltes_item.typ
@@ -254,10 +258,6 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             cursor.execute(query, (neue_id, id))
 
             # ****** Änderung im Explorer vornehmen ******
-
-            # Alte Aktive entfernen
-            for altesAktivesItem in self.aktiveItems:  # todo nur einmal ausführen
-                altesAktivesItem.setActive(False)
 
             # Wenn im Ursprungsrdner danach keine Items mehr sind, Ordner als geschlossen anzeigen
             if ausgewaehltes_item.parent():
@@ -332,6 +332,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def trw_Explorer_Kontextmenu_Aktualisieren(self):
         """'Aktualisieren' Option aus dem Kontextmenu ausführen"""
+        self.aktiveItems = []
         self.trw_Explorer.clear()
         self.load_explorer()
 
