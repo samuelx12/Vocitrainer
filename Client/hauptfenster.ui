@@ -211,9 +211,16 @@ selection-color: rgb(0, 0, 0);</string>
     <addaction name="mn_HochgeladeneVerwalten"/>
     <addaction name="mn_Profil"/>
    </widget>
+   <widget class="QMenu" name="menuImportieren">
+    <property name="title">
+     <string>Importieren</string>
+    </property>
+    <addaction name="mn_CSV_importieren"/>
+   </widget>
    <addaction name="menuVocitrainer"/>
    <addaction name="menuLernen"/>
    <addaction name="menuMarketplace"/>
+   <addaction name="menuImportieren"/>
    <addaction name="menu_Extra"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -258,6 +265,11 @@ selection-color: rgb(0, 0, 0);</string>
   <action name="mn_Profil">
    <property name="text">
     <string>Profil</string>
+   </property>
+  </action>
+  <action name="mn_CSV_importieren">
+   <property name="text">
+    <string>CSV importieren</string>
    </property>
   </action>
  </widget>

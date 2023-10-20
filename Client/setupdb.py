@@ -43,6 +43,7 @@ cursor.execute('''
         wort TEXT,
         fremdwort TEXT,
         definition TEXT,
+        bemerkung TEXT,
         lernfortschritt INTEGER,
         markiert INTEGER,
         set_id INTEGER,
@@ -57,75 +58,30 @@ cursor.execute("INSERT INTO ordner (ordner_name, farbe, urordner_id) VALUES ('U2
 
 # Testdaten in die Tabelle 'set' einfügen
 cursor.execute(
-"INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES ('Set 1', 'Beschreibung Set 1', 'Englisch', 1)")
+    "INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) "
+    "VALUES ('Set 1', 'Beschreibung Set 1', 'Englisch', 1)"
+)
 cursor.execute(
-"INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES ('Set 2', 'Beschreibung Set 2 Farben', 'Englisch', 2)")
+    "INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES "
+    "('Set 2', 'Beschreibung Set 2 Farben', 'Englisch', 2)"
+)
 
 # Testdaten in die Tabelle 'karte' einfügen
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
-VALUES ('Haus', 'House', 'Eine Unterkunft für Menschen.', 1, 50, 1)""")
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
-VALUES ('Auto', 'Car', 'Ein Fahrzeug mit vier Rädern.', 1, 75, 0)""")
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
-VALUES ('Apfel', 'Apple', 'Eine runde Frucht zum Essen.', 1, 25, 1)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
+VALUES ('Haus', 'House', 'Eine Unterkunft für Menschen.', 'Bsp: Ich wohne in einem Haus.', 1, 50, 1)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
+VALUES ('Auto', 'Car', 'Ein Fahrzeug mit vier Rädern.', 'Bsp: Er fährt mit dem Auto.', 1, 75, 0)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
+VALUES ('Apfel', 'Apple', 'Eine runde Frucht zum Essen.', 'Bsp: Du isst einen Apfel', 1, 25, 1)""")
 
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
-VALUES ('Blau', 'blue', 'Die Frabe des Himmels.', 2, 50, 1)""")
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
-VALUES ('Grün', 'green', 'Die Farbe der Pflanzen.', 2, 75, 0)""")
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, set_id, lernfortschritt, markiert) 
-VALUES ('Rot', 'red', 'Die Farbe der Liebe.', 2, 25, 1)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
+VALUES ('blau', 'blue', 'Die Frabe des Himmels.', 'Der Himmel ist blau.', 2, 50, 1)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
+VALUES ('grün', 'green', 'Die Farbe der Pflanzen.', 'Das Gras ist grün.', 2, 75, 0)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
+VALUES ('rot', 'red', 'Die Farbe der Liebe.', 'Ich zeichne eine rote Blume.', 2, 25, 1)""")
 
 
 # Änderungen speichern und Verbindung schließen
 conn.commit()
 conn.close()
-
-import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableView
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlQueryModel
-
-
-def create_connection():
-    # Verbindung zur SQLite-Datenbank herstellen
-    db = QSqlDatabase.addDatabase('QSQLITE')
-    db.setDatabaseName('vocitrainerdb.db')
-
-    if not db.open():
-        print('Fehler beim Öffnen der Datenbank')
-        return False
-
-    return True
-
-
-def create_table_view():
-    # Modell für das QTableView erstellen
-    model = QSqlQueryModel()
-    query = QSqlQuery()
-
-    # SQL-Abfrage, um alle Daten aus der Tabelle 'karte' abzurufen
-    query.exec_("SELECT * FROM karte")
-    model.setQuery(query)
-
-    # QTableView erstellen und das Modell zuweisen
-    table_view = QTableView()
-    table_view.setModel(model)
-
-    return table_view
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-
-    if not create_connection():
-        sys.exit(1)
-
-    table_view = create_table_view()
-
-    # Hauptfenster erstellen und den QTableView hinzufügen
-    main_window = QMainWindow()
-    main_window.setCentralWidget(table_view)
-    main_window.resize(800, 600)
-    main_window.show()
-
-    sys.exit(app.exec_())

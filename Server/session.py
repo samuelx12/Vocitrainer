@@ -165,7 +165,7 @@ class Session(threading.Thread):
         vociset_datensatz = self.CURSOR.fetchone()
 
         # SQL-Query um die Karten Datensätze zu erhalten
-        query = """SELECT karte_id, wort, fremdwort, definition, set_id FROM karte WHERE set_id = ?"""
+        query = """SELECT karte_id, wort, fremdwort, definition, bemerkung, set_id FROM karte WHERE set_id = ?"""
         self.CURSOR.execute(query, (set_id,))
         karten_datensaetze = self.CURSOR.fetchall()
 

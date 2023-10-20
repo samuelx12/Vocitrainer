@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Richtige Ver
 hauptfenster.py
 Diese Datei enthält eigentlich nur die Klasse Hauptfenster, welche von QMainWindow erbt. Das Hauptfenster ist das erste
 Fenster, welches aufgeht. Das Programm läuft weiter, wenn Signale auftreten, welche mit einem Slot (Funktion) verbunden
