@@ -14,6 +14,7 @@ import sqlite3
 from ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
 from Mp_herunterladen import MpHerunterladen
+from importCSV import ImportCSV
 from typing import List
 
 
@@ -128,7 +129,8 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.trw_Explorer.dragEnterEvent = self.trw_Explorer_dragEnterEvent
         self.trw_Explorer.dropEvent = self.trw_Explorer_dropEvent
         # Menu
-        self.mn_Herunterladen.triggered.connect(self.mn_Herunterladen_clicked)
+        self.mn_Herunterladen.triggered.connect(self.mn_Herunterladen_triggered)
+        self.mn_CSV_importieren.triggered.connect(self.mn_CSV_importieren_triggered)
 
         # Kontextmenüs aktivieren
         self.trw_Explorer.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -351,8 +353,15 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         if event.key() == Qt.Key_Delete and self.trw_Explorer.hasFocus():
             self.exploreritems_loeschen(self.trw_Explorer.selectedItems())
 
-    def mn_Herunterladen_clicked(self):
+    def mn_Herunterladen_triggered(self):
         self.mp_Herunterladen = MpHerunterladen(self)
         self.mp_Herunterladen.setModal(True)
 
         self.mp_Herunterladen.exec_()
+
+    def mn_CSV_importieren_triggered(self):
+        """Das CSV-Importieren Fenster wird über das Menu geöffnet."""
+        self.importCSV = ImportCSV(self)
+        self.importCSV.setModal(True)
+
+        self.importCSV.exec_()

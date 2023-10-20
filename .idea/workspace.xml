@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/importCSV.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/importCSV.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/ui_importCSV.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Mp_herunterladen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_herunterladen.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/hauptfenster.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/setupdb.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/setupdb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/vocitrainerdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Client/vocitrainerdb.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/serverdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Server/serverdb.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/session.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/setupdb.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/setupdb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/ui_hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ui_hauptfenster.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -413,7 +407,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695325303201</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Column Bemerkung zu Tabelle karte hinzugefügt">
+      <option name="closed" value="true" />
+      <created>1697808576705</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1697808576705</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -446,7 +448,8 @@
     <MESSAGE value="Tabelle im Herunterladen Fenster wird jetzt gefüllt.&#10;Bug in der Suche gelöst&#10;Tabelle im Hauptfenster an Grösse angepasst" />
     <MESSAGE value="Herunterladen der Sets eingebaut." />
     <MESSAGE value="Erfolgsmeldung nach Herunterladen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Erfolgsmeldung nach Herunterladen" />
+    <MESSAGE value="Column Bemerkung zu Tabelle karte hinzugefügt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Column Bemerkung zu Tabelle karte hinzugefügt" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Vocitrainer$.coverage" NAME=" Coverage Results" MODIFIED="1691767240610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
@@ -458,7 +461,7 @@
     <SUITE FILE_PATH="coverage/Vocitrainer$client.coverage" NAME="client Coverage Results" MODIFIED="1688487578785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Client_Network_Test.coverage" NAME="Client Network Test Coverage Results" MODIFIED="1694856592805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Setup_DB.coverage" NAME="Setup DB Coverage Results" MODIFIED="1697808249863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1697808428496" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1697817626106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$kartenmodeltest.coverage" NAME="kartenmodeltest Coverage Results" MODIFIED="1688487656020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$suche_test.coverage" NAME="suche test Coverage Results" MODIFIED="1695025638975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
   </component>
