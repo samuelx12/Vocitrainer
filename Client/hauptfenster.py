@@ -10,69 +10,13 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from models import KartenModel
+from explorer_item import ExplorerItem
 import sqlite3
 from ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
 from Mp_herunterladen import MpHerunterladen
 from importCSV import ImportCSV
 from typing import List
-
-
-class ExplorerItem(QTreeWidgetItem):
-    """
-    Das Explorer Item ist eine Zeile in der Übersicht der Lernsets, die rechts angezeigt wird.
-    """
-
-    def __init__(self, txt, typ, id, parent: QTreeWidgetItem = None):
-        """
-        @param txt: Der Text den das Item zeigt
-        """
-        super().__init__(parent)
-        self.setText(0, txt)
-        icon = QIcon()
-        self.id = id
-        self.typ = typ
-        self.txt = txt
-        if typ == "ordner":
-            icon.addPixmap(QPixmap("res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
-            icon.addPixmap(QPixmap("res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
-        elif typ == "vociset":
-            print("vociset Icon")
-            icon.addPixmap(QPixmap("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
-
-        self.setIcon(0, icon)
-
-        # Das Item dem übergestellten Item zuordnen, falls dieses bekannt
-        if parent:
-            parent.addChild(self)
-
-    def setActive(self, aktiv: bool) -> None:
-        """Führt eine änderung des Icons durch je nach Status"""
-        icon = QIcon()
-
-        # Dicke Schrift an bzw. aus machen
-        if self.typ == "vociset":
-            font = QFont()
-            font.setBold(aktiv)
-            self.setFont(0, font)
-
-        if aktiv:
-            if self.typ == "vociset":
-                icon.addPixmap(QPixmap("res/icons/note_stack_FILL1_wght500_GRAD0_opsz40.svg"), QIcon.Normal,
-                               QIcon.Off)
-            elif self.typ == "ordner":
-                icon.addPixmap(QPixmap("res/icons/folder_FILL1_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
-                icon.addPixmap(QPixmap("res/icons/folder_open_FILL1_wght500_GRAD0_opsz40.svg"), QIcon.Normal,
-                               QIcon.On)
-        else:
-            if self.typ == "vociset":
-                icon.addPixmap(QPixmap("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal,
-                               QIcon.Off)
-            elif self.typ == "ordner":
-                icon.addPixmap(QPixmap("res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
-                icon.addPixmap(QPixmap("res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
-
-        self.setIcon(0, icon)
 
 
 class Hauptfenster(QMainWindow, Ui_MainWindow):
@@ -150,6 +94,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def load_explorer(self):
         def ebene_laden(parent, parent_id):
+            """Diese Funktion ladet Rekursiv die Ordnerstruktur"""
             # Ordner dieser Ebene laden
             query = "SELECT ordner_id, ordner_name, farbe, urordner_id FROM ordner WHERE urordner_id = ?"
             lade_cursor.execute(query, (parent_id,))
@@ -183,14 +128,19 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         explorer_index = []
         ebene_laden(self.rootNode, 1)
 
-    def trw_Explorer_doubleClicked(self, item_index):
+    def trw_Explorer_doubleClicked(self, item_index, item_direkt=None):
         """Funktion, die ausgeführt wird, wenn ein Item im Explorer doppelt geklickt wird."""
         # Das zugehörige Explorer Item bekommen
-        item = self.trw_Explorer.itemFromIndex(item_index)
 
-        if not isinstance(item, ExplorerItem):  # Eine Fehlerprüfung zur Sicherheit
-            print("Nicht Explorer Item")
-            return
+        # Möglicherweise wird dass Item direkt übergeben, nämlich dann, wenn die Funktion manuell aufgerufen wurde.
+        if item_direkt:
+            item = item_direkt
+        else:
+            item = self.trw_Explorer.itemFromIndex(item_index)
+
+        # if not isinstance(item, ExplorerItem):  # Eine Fehlerprüfung zur Sicherheit
+        #     print("Nicht Explorer Item")
+        #     return
 
         # Wenn ein Vociset doppeltgeklickt wurde, sollten die entsprechenden Daten geladen werden
         if item.typ == "vociset":
