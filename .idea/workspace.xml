@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Client/VociSanz.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/explorer_item.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/import_text.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/Mp_LogReg.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dokumentation/Config Struktur.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/importCSV.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/importCSV.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/importCSV.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/importCSV.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ui_importCSV.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ui_importCSV.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/vocitrainerdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Client/vocitrainerdb.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dokumentation/suche test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dokumentation/woosch.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -434,7 +430,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697828433658</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Aus CSV Importieren fertiggestellt:&#10;Importieren funktioniert ✅&#10;Fehlerverarbeitung eingerichtet ✅&#10;Danach importiertes Set anzeigen ✅">
+      <option name="closed" value="true" />
+      <created>1697878767764</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1697878767764</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -470,7 +474,9 @@
     <MESSAGE value="Column Bemerkung zu Tabelle karte hinzugefügt" />
     <MESSAGE value="CSV-Importieren Fenster erstellt, dass bereits aus dem Menu 'Importieren' aufrufbar ist.&#10;Im CSV Fenster den Durchsuchen-Button mit seiner Funktion &quot;belebt&quot;." />
     <MESSAGE value="Eine Datei Vorschau für das CSV Importieren Fenster erstellt." />
-    <option name="LAST_COMMIT_MESSAGE" value="Eine Datei Vorschau für das CSV Importieren Fenster erstellt." />
+    <MESSAGE value="Aus CSV Importieren fertiggestellt.&#10;Importieren" />
+    <MESSAGE value="Aus CSV Importieren fertiggestellt:&#10;Importieren funktioniert ✅&#10;Fehlerverarbeitung eingerichtet ✅&#10;Danach importiertes Set anzeigen ✅" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aus CSV Importieren fertiggestellt:&#10;Importieren funktioniert ✅&#10;Fehlerverarbeitung eingerichtet ✅&#10;Danach importiertes Set anzeigen ✅" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Vocitrainer$.coverage" NAME=" Coverage Results" MODIFIED="1691767240610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
@@ -482,7 +488,7 @@
     <SUITE FILE_PATH="coverage/Vocitrainer$client.coverage" NAME="client Coverage Results" MODIFIED="1688487578785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Client_Network_Test.coverage" NAME="Client Network Test Coverage Results" MODIFIED="1694856592805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Setup_DB.coverage" NAME="Setup DB Coverage Results" MODIFIED="1697808249863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1697878429334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1697878464097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$kartenmodeltest.coverage" NAME="kartenmodeltest Coverage Results" MODIFIED="1688487656020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$suche_test.coverage" NAME="suche test Coverage Results" MODIFIED="1695025638975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
   </component>
