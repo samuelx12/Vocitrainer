@@ -74,6 +74,22 @@ class Network:
 
         return antwort[1], antwort[2]
 
+    def user_registrieren(self, benutzername: str, email: str, passwort: str):
+        """
+        Registriert einen neuen Benutzer beim Server
+        :param benutzername: Ein vom Benutzergewählter, öffentlich sichtbarer Nickname
+        :param email: Die E-Mail des zu registrierenden Benutzers (Bereits auf Möglichkeit überprüft)
+        :param passwort: Das bereits gehashte Passwort
+        :return: interger
+            0 = Erfolg
+            1 = Benutzername bereits gewählt
+            2 = E-Mail bereits registriert
+        """
+        nachricht = [6, benutzername, email, passwort]
+        antwort = self.sendRecv(nachricht)
+
+        return antwort[1]
+
 
 if __name__ == "__main__":
     net = Network(("localhost", 4647))

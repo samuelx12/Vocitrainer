@@ -7,7 +7,8 @@ Hier ist der Thread für die Session des Servers mit dem Client
 import threading
 import ssl
 import pickle
-from typing import List
+from typing import List, Iterable
+from datetime import datetime
 import sqlite3
 
 
@@ -24,6 +25,9 @@ class Session(threading.Thread):
         # Konstanten
         self.HEADER = 128
         self.FORMAT = 'utf-8'
+        self.SALT = b'\xcd\xae\xd1C\xc0#a\x8ch\x83\x95\xc5%l\xc7\x14'
+
+        self.eingeloggter_user_id = None
 
     def empfangen(self) -> List:
         """
@@ -99,6 +103,27 @@ class Session(threading.Thread):
 
                 antwort = self.beantworte_kid4(nachricht)
 
+            elif kid == 5:
+                """
+                Login
+                """
+
+                antwort = self.beantworte_kid5(nachricht)
+
+            elif kid == 6:
+                """
+                Registrieren
+                """
+
+                antwort = self.beantworte_kid6(nachricht)
+
+            elif kid == 7:
+                """
+                E-Mail-Überprüfung
+                """
+
+                antwort = self.beantworte_kid7(nachricht)
+
             else:
                 antwort = ["FEHLER"]
                 print("ERROR mit kid:")
@@ -170,3 +195,53 @@ class Session(threading.Thread):
         karten_datensaetze = self.CURSOR.fetchall()
 
         return [4, vociset_datensatz, karten_datensaetze]
+
+    def beantworte_kid5(self, nachricht: List[int, str, str]) -> List:
+        """
+        Login
+        :param nachricht: [kid, email, passwort]
+        :return: [kid, erfolg: bool]
+        """
+        pass
+
+    def beantworte_kid6(self, nachricht: List[int, str, str, str]) -> List:
+        """
+        Registrieren
+        :param nachricht: [kid, benutzername, email, passwort]
+        :return: [kid, ergebnis: int]
+        ergebnis:
+            0 = Erfolg
+            1 = Benutzername bereits gewählt
+            2 = E-Mail bereits registriert
+        """
+        benutzername = nachricht[1]
+        email = nachricht[2]
+        passwort = nachricht[3]
+
+        # Überprüfen ob der Benutzername bereits existiert
+        self.CURSOR.execute('SELECT COUNT(*) FROM user WHERE benutzername = ?', (benutzername,))
+        resultat = self.CURSOR.fetchone()
+        if resultat[0] > 0:
+            return [6, 1]
+
+        # Überprüfen ob die E-Mail schon registriert ist
+        self.CURSOR.execute('SELECT COUNT(*) FROM user WHERE email = ?', (email,))
+        resultat = self.CURSOR.fetchone()
+        if resultat[0] > 0:
+            return [6, 2]
+
+        # Benutzer registrieren
+        self.CURSOR.execute(
+            f"INSERT INTO user (email, passwort, benutzername, gesperrt, erstellung) VALUES (?, ?, 0, ?)",
+            [email, passwort, datetime.now()]
+        )
+        self.eingeloggter_user_id = self.CURSOR.lastrowid
+        self.DBCONN.commit()
+
+    def beantworte_kid7(self, nachricht: Iterable[int, int]) -> List:
+        """
+        E-Mail Überprüfung
+        :param nachricht: [kid, code]
+        :return: [kid, bool: erfolg]
+        """
+        pass

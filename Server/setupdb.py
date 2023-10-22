@@ -5,10 +5,23 @@ Dieses Skript erstellt eine Testdatenbank mit Testdaten für den Server
 """
 
 import sqlite3
+from datetime import datetime
 
 # Verbindung zur Datenbank herstellen (erstellt die Datenbank, wenn sie nicht existiert)
 conn = sqlite3.connect('serverdb.db')
 cursor = conn.cursor()
+
+# Tabelle 'user' erstellen
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS user (
+        user_id INTEGER PRIMARY KEY,
+        email TEXT UNIQUE,
+        passwort TEXT,
+        benutzername TEXT UNIQUE,
+        gesperrt INTEGER,
+        erstellung DATETIME
+    )
+''')
 
 # Tabelle 'set' erstellen
 cursor.execute('''
@@ -34,6 +47,18 @@ cursor.execute('''
         FOREIGN KEY (set_id) REFERENCES vociset (set_id)
     )
 ''')
+
+# Testdaten in die Tabelle 'set' einfügen
+cursor.execute(
+    f"INSERT INTO user (email, passwort, benutzername, gesperrt, erstellung) "
+    f"VALUES ('test@barmet.ch', 'pass', 'testname', 0, ?)",
+    [datetime.now()]
+)
+cursor.execute(
+    f"INSERT INTO user (email, passwort, benutzername, gesperrt, erstellung) "
+    f"VALUES ('muster@barmet.ch', 'pass', 'mustername', 0, ?)",
+    [datetime.now()]
+)
 
 # Testdaten in die Tabelle 'set' einfügen
 cursor.execute(

@@ -20,6 +20,7 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         super(MpHerunterladen, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Herunterladen")
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)  # Hilfebutton ausblenden
         self.hauptfenster = hauptfenster
 
         # "Starten sie mit der Suche ..."-Meldung anzeigen

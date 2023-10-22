@@ -21,6 +21,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         super(Trainingsfenster, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Training")
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
 
         # Bildschirmgrösse setzen
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())

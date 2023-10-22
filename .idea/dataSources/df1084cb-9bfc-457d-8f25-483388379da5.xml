@@ -432,8 +432,8 @@
     </routine>
     <schema id="173" parent="1" name="main">
       <Current>1</Current>
-      <IntrospectionTimestamp>2023-10-20.15:26:14.598</IntrospectionTimestamp>
-      <LocalIntrospectionTimestamp>2023-10-20.13:26:14</LocalIntrospectionTimestamp>
+      <IntrospectionTimestamp>2023-10-22.15:31:55.351</IntrospectionTimestamp>
+      <LocalIntrospectionTimestamp>2023-10-22.13:31:55</LocalIntrospectionTimestamp>
     </schema>
     <argument id="174" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1429,85 +1429,114 @@
     <table id="505" parent="173" name="sqlite_master">
       <System>1</System>
     </table>
-    <table id="506" parent="173" name="vociset"/>
-    <column id="507" parent="504" name="karte_id">
+    <table id="506" parent="173" name="user"/>
+    <table id="507" parent="173" name="vociset"/>
+    <column id="508" parent="504" name="karte_id">
       <DasType>INTEGER|0s</DasType>
       <Position>1</Position>
     </column>
-    <column id="508" parent="504" name="wort">
+    <column id="509" parent="504" name="wort">
       <DasType>TEXT|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="509" parent="504" name="fremdwort">
+    <column id="510" parent="504" name="fremdwort">
       <DasType>TEXT|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="510" parent="504" name="definition">
+    <column id="511" parent="504" name="definition">
       <DasType>TEXT|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="511" parent="504" name="bemerkung">
+    <column id="512" parent="504" name="bemerkung">
       <DasType>TEXT|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="512" parent="504" name="lernfortschritt">
+    <column id="513" parent="504" name="lernfortschritt">
       <DasType>INTEGER|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="513" parent="504" name="markiert">
+    <column id="514" parent="504" name="markiert">
       <DasType>INTEGER|0s</DasType>
       <Position>7</Position>
     </column>
-    <column id="514" parent="504" name="set_id">
+    <column id="515" parent="504" name="set_id">
       <DasType>INTEGER|0s</DasType>
       <Position>8</Position>
     </column>
-    <foreign-key id="515" parent="504">
+    <foreign-key id="516" parent="504">
       <ColNames>set_id</ColNames>
       <RefColNames>set_id</RefColNames>
       <RefTableName>vociset</RefTableName>
     </foreign-key>
-    <key id="516" parent="504">
+    <key id="517" parent="504">
       <ColNames>karte_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="517" parent="505" name="type">
+    <column id="518" parent="505" name="type">
       <DasType>TEXT|0s</DasType>
       <Position>1</Position>
     </column>
-    <column id="518" parent="505" name="name">
+    <column id="519" parent="505" name="name">
       <DasType>TEXT|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="519" parent="505" name="tbl_name">
+    <column id="520" parent="505" name="tbl_name">
       <DasType>TEXT|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="520" parent="505" name="rootpage">
+    <column id="521" parent="505" name="rootpage">
       <DasType>INT|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="521" parent="505" name="sql">
+    <column id="522" parent="505" name="sql">
       <DasType>TEXT|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="522" parent="506" name="set_id">
+    <column id="523" parent="506" name="user_id">
       <DasType>INTEGER|0s</DasType>
       <Position>1</Position>
     </column>
-    <column id="523" parent="506" name="set_name">
+    <column id="524" parent="506" name="email">
       <DasType>TEXT|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="524" parent="506" name="beschreibung">
+    <column id="525" parent="506" name="passwort">
       <DasType>TEXT|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="525" parent="506" name="sprache">
+    <column id="526" parent="506" name="benutzername">
       <DasType>TEXT|0s</DasType>
       <Position>4</Position>
     </column>
-    <key id="526" parent="506">
+    <column id="527" parent="506" name="gesperrt">
+      <DasType>INTEGER|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="528" parent="506" name="erstellung">
+      <DasType>DATETIME|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <key id="529" parent="506">
+      <ColNames>user_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="530" parent="507" name="set_id">
+      <DasType>INTEGER|0s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="531" parent="507" name="set_name">
+      <DasType>TEXT|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="532" parent="507" name="beschreibung">
+      <DasType>TEXT|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="533" parent="507" name="sprache">
+      <DasType>TEXT|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <key id="534" parent="507">
       <ColNames>set_id</ColNames>
       <Primary>1</Primary>
     </key>
