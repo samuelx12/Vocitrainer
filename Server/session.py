@@ -29,7 +29,7 @@ class Session(threading.Thread):
 
         self.eingeloggter_user_id = None
 
-    def empfangen(self) -> List:
+    def empfangen(self) -> list:
         """
         Funktion für das Empfangen von Nachrichten vom Server. Gibt die fertig entpickelte Liste zurück
         """
@@ -131,7 +131,7 @@ class Session(threading.Thread):
 
             self.senden(antwort)
 
-    def beantworte_kid3(self, nachricht) -> List:
+    def beantworte_kid3(self, nachricht) -> list:
         """
         Set suche:
         [kid, prompt, sprache]
@@ -177,7 +177,7 @@ class Session(threading.Thread):
 
         return [3, ergebnisse]
 
-    def beantworte_kid4(self, nachricht) -> List:
+    def beantworte_kid4(self, nachricht) -> list:
         """
         Set Herunterladen
         [kid, [Set Datensatz], [Liste der [Karten Datensätze]]]
@@ -196,7 +196,7 @@ class Session(threading.Thread):
 
         return [4, vociset_datensatz, karten_datensaetze]
 
-    def beantworte_kid5(self, nachricht: List[int, str, str]) -> List:
+    def beantworte_kid5(self, nachricht: list) -> List:
         """
         Login
         :param nachricht: [kid, email, passwort]
@@ -204,7 +204,7 @@ class Session(threading.Thread):
         """
         pass
 
-    def beantworte_kid6(self, nachricht: List[int, str, str, str]) -> List:
+    def beantworte_kid6(self, nachricht: list) -> list:
         """
         Registrieren
         :param nachricht: [kid, benutzername, email, passwort]
@@ -232,13 +232,20 @@ class Session(threading.Thread):
 
         # Benutzer registrieren
         self.CURSOR.execute(
-            f"INSERT INTO user (email, passwort, benutzername, gesperrt, erstellung) VALUES (?, ?, 0, ?)",
-            [email, passwort, datetime.now()]
+            f"INSERT INTO user (email, passwort, benutzername, gesperrt, erstellung) VALUES (?, ?, ?, 0, ?)",
+            [email, passwort, benutzername, datetime.now()]
         )
+
+        # Benutzer einloggen
         self.eingeloggter_user_id = self.CURSOR.lastrowid
+
+        # Änderngen speichern
         self.DBCONN.commit()
 
-    def beantworte_kid7(self, nachricht: Iterable[int, int]) -> List:
+        # Erfolg zurückmelden
+        return [6, 0]
+
+    def beantworte_kid7(self, nachricht: list) -> list:
         """
         E-Mail Überprüfung
         :param nachricht: [kid, code]

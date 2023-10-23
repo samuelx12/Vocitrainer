@@ -74,7 +74,7 @@ class Network:
 
         return antwort[1], antwort[2]
 
-    def user_registrieren(self, benutzername: str, email: str, passwort: str):
+    def user_registrieren(self, benutzername: str, email: str, passwort: bytes):
         """
         Registriert einen neuen Benutzer beim Server
         :param benutzername: Ein vom Benutzergewählter, öffentlich sichtbarer Nickname

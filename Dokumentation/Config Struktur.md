@@ -35,5 +35,5 @@ config.write()
 - Profil
   - email
   - passwort
-  - nickname
+  - benutzername
   - eingeloggt
