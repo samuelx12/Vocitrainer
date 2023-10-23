@@ -141,7 +141,11 @@ class MpLogReg(QDialog, Ui_mpLogReg):
 
     def cmd_log_clicked(self):
         """Button Login wurde geklickt"""
-        pass
+
+        email = self.txt_log_email.text()
+        passwort = hash_passwort(self.txt_log_passwort.text())
+
+        ####
 
     def cmd_reg_clicked(self):
         """Button Registrieren wurde geklickt"""

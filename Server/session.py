@@ -202,7 +202,19 @@ class Session(threading.Thread):
         :param nachricht: [kid, email, passwort]
         :return: [kid, erfolg: bool]
         """
-        pass
+        email = nachricht[1]
+        passwort = nachricht[2]
+
+        query = """SELECT user_id FROM user WHERE email = ? AND passwort = ?"""
+        self.CURSOR.execute(query, (email, passwort))
+
+        id = self.CURSOR.fetchone()
+        print(id)
+        if id:
+            self.eingeloggter_user_id = id
+            return [5, True]
+        else:
+            return [5, False]
 
     def beantworte_kid6(self, nachricht: list) -> list:
         """
