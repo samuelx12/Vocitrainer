@@ -7,6 +7,7 @@ Hier ist der Thread für die Session des Servers mit dem Client
 import threading
 import ssl
 import pickle
+import time
 from typing import List, Iterable
 from datetime import datetime
 import sqlite3
@@ -28,13 +29,23 @@ class Session(threading.Thread):
         self.SALT = b'\xcd\xae\xd1C\xc0#a\x8ch\x83\x95\xc5%l\xc7\x14'
 
         self.eingeloggter_user_id = None
+        self.verbunden = True
 
     def empfangen(self) -> list:
         """
         Funktion für das Empfangen von Nachrichten vom Server. Gibt die fertig entpickelte Liste zurück
         """
         # Erste Nachricht empfangen, welche die Grösse der zweiten Nachricht enthaltet
-        msg_length = self.conn.recv(self.HEADER).decode(self.FORMAT)
+        msg_length = self.conn.recv(self.HEADER)
+
+        if msg_length == b'':
+            # Client hat die Verbindung geschlossen
+            self.CURSOR.close()
+            self.DBCONN.close()
+            self.verbunden = False
+            return [1]
+
+        msg_length = msg_length.decode(self.FORMAT)
         msg_length = int(msg_length)
 
         # Zweite Nachricht empfangen
@@ -76,13 +87,14 @@ class Session(threading.Thread):
         self.DBCONN = sqlite3.connect('serverdb.db')
         self.CURSOR = self.DBCONN.cursor()
 
-        while True:
+        while self.verbunden:
             nachricht = self.empfangen()
             kid = nachricht[0]
             antwort = []
 
             if kid == 1:
                 # Verbindung wird beendet
+                print("Verbindung wurde geschlossen")
                 pass
             elif kid == 2:
                 # Authentifizierung
@@ -129,7 +141,8 @@ class Session(threading.Thread):
                 print("ERROR mit kid:")
                 print(kid)
 
-            self.senden(antwort)
+            if self.verbunden:
+                self.senden(antwort)
 
     def beantworte_kid3(self, nachricht) -> list:
         """
@@ -202,6 +215,9 @@ class Session(threading.Thread):
         :param nachricht: [kid, email, passwort]
         :return: [kid, erfolg: bool]
         """
+        # Kleine Verzögerung zur Sicherheit
+        time.sleep(0.2)
+
         email = nachricht[1]
         passwort = nachricht[2]
 

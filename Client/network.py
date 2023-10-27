@@ -66,15 +66,27 @@ class Network:
         Lädt das Vociset und die dazugehörigen Karten vom Server herunter
         :param set_id: set_id des Vocisets
         :return: Ein Tupel,
-        Das erste Element enthält den Vociset Datensatz,
-        Das zweite Element eine Liste von Karten Datensätzen
+            Das erste Element enthält den Vociset Datensatz,
+            Das zweite Element eine Liste von Karten Datensätzen
         """
         nachricht = [4, set_id]
         antwort = self.sendRecv(nachricht)
 
         return antwort[1], antwort[2]
 
-    def user_registrieren(self, benutzername: str, email: str, passwort: bytes):
+    def user_einloggen(self, email: str, passwort: bytes) -> bool:
+        """
+        Versucht einen Benutzer mit den Logindaten einzuloggen
+        :param email: Die E-Mail des Benutzers
+        :param passwort: Das bereits gehashte Passwort des Benutzers
+        :return: Erfolg des einloggens (bool)
+        """
+        nachricht = [5, email, passwort]
+        antwort = self.sendRecv(nachricht)
+
+        return antwort[1]
+
+    def user_registrieren(self, benutzername: str, email: str, passwort: bytes) -> int:
         """
         Registriert einen neuen Benutzer beim Server
         :param benutzername: Ein vom Benutzergewählter, öffentlich sichtbarer Nickname

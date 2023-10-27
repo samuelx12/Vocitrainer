@@ -15,13 +15,40 @@ from network import Network
 from validate_email_address import validate_email
 from configobj import ConfigObj
 import hashlib
+import socket
+import typing
 
 
-def log_reg():
+def log_reg() -> typing.Tuple[bool, typing.Union[Network, None]]:
+    """
+    Versucht den Benutzer einzuloggen. Wenn möglich geschieht es mit seinen bereits gespeicherten Nutzerdaten
+    in den Einstellungen, ansonsten wird ein Login/Registrierung (LogReg) Fenster aufgemacht
+    :return: Ein Tuple aus
+        bool Erfolg
+        Eingeloggten Network bzw. None bei Misserfolg
+    """
+    logindaten = lade_logindaten()
+    if logindaten:
+        # Fall 1: Benutzer hat sich bereits einmal eingeloggt -> automatisch verbinden
+        net = Network()
+        email = logindaten[1]
+        passwort = logindaten[2]
+        erfolg = net.user_einloggen(email, passwort)
+
+        if erfolg:
+            return True, net
+
+    # Fall 2: Keine Logindaten gespeichert -> LogReg-Fenster für Anmeldung öffnen
+    # oder automatische Anmeldung (Fall 1) fehlgeschlagen
     fenster = MpLogReg()
     fenster.setModal(True)
 
     fenster.exec_()
+
+    if fenster.eingeloggt:
+        return True, fenster.net
+    else:
+        return False, None
 
 
 def hash_passwort(passwort):
@@ -67,6 +94,10 @@ def speichere_logindaten(benutzername: str, email: str, passwort: bytes):
 
 
 def lade_logindaten():
+    """
+    Versucht die Logindaten aus den Einstellungen zu laden.
+    :return: None bei Misserfolg / benutername, email, passwort bei Erfolg
+    """
     try:
         config = ConfigObj('settings.ini')
     except:
@@ -145,7 +176,16 @@ class MpLogReg(QDialog, Ui_mpLogReg):
         email = self.txt_log_email.text()
         passwort = hash_passwort(self.txt_log_passwort.text())
 
-        ####
+        erfolg = self.net.user_einloggen(email, passwort)
+
+        if erfolg:
+            self.eingeloggt = True
+            print("Eingeloggt")  # #######
+            self.close()
+            return
+        else:
+            self.lbl_log_fehler.setText("Login fehlgeschlagen: E-Mail oder Passwort inkorrekt!")
+            return
 
     def cmd_reg_clicked(self):
         """Button Registrieren wurde geklickt"""
