@@ -8,14 +8,14 @@ Ich versende in meiner Anwendung immer Python Listen in welcher das erste Elemen
 - 1: Verbindung wird beendent
 - 2: unbenutzt
 - 3: Set suche / Set Resultate
-- 4: Set Herunterladen von Server
+- 4: Set Herunterladen
+  - KID
+  - set_id
+- 4-Antwort: Set Herunterladen
   - KID
   - Set Datensatz
   - Liste der
     - Karte Datensätze
-- 4: Set Herunterladen von Client
-  - KID
-  - set_id
 - 5: Login
   - KID
   - email
@@ -34,9 +34,32 @@ Ich versende in meiner Anwendung immer Python Listen in welcher das erste Elemen
     - 0 = Erfolg
     - 1 = Benutzername bereits gewählt
     - 2 = E-Mail bereits registriert
-- 7 E-Mail-Überprüfung
+- 7: E-Mail-Überprüfung
   - KID
   - Code
 - 7-Antwort: E-Mail-Überprüfung
   - KID
   - Erfolg (True/False)
+- 8: Set hochladen
+  - KID
+  - Set Datensatz
+  - Liste der
+    - Karte Datensätze
+- 8-Antwort:
+  - KID
+  - Erfolg (True/False)
+- 9: VerwaltenInfo
+  - KID
+- 9-Antwort: VerwaltenInfo
+  - KID
+  - Liste der 
+    - Vociset Datensätze
+- 10: VerwaltenExe
+  - KID
+  - Set_Id
+  - Aktion
+    - 0: Löschen
+- 10-Antwort:
+  - KID
+  - Erfolg (True/False)
+

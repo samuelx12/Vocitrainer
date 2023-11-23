@@ -23,13 +23,15 @@ cursor.execute('''
     )
 ''')
 
-# Tabelle 'set' erstellen
+# Tabelle 'vociset' erstellen
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS vociset (
         set_id INTEGER PRIMARY KEY,
         set_name TEXT,
         beschreibung TEXT,
-        sprache TEXT
+        sprache TEXT,
+        user_id INTEGER,
+        FOREIGN KEY (user_id) REFERENCES user (user_id)
     )
 ''')
 
@@ -41,8 +43,6 @@ cursor.execute('''
         fremdwort TEXT,
         definition TEXT,
         bemerkung TEXT,
-        lernfortschritt INTEGER,
-        markiert INTEGER,
         set_id INTEGER,
         FOREIGN KEY (set_id) REFERENCES vociset (set_id)
     )
@@ -69,19 +69,19 @@ cursor.execute(
 )
 
 # Testdaten in die Tabelle 'karte' einfügen
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
-VALUES ('servHaus', 'servHouse', 'servEine Unterkunft für Menschen.', 'Bsp: Ich wohne in einem Haus.', 1, 50, 1)""")
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
-VALUES ('servAuto', 'servCar', 'servEin Fahrzeug mit vier Rädern.', 'Bsp: Er fährt mit dem Auto.', 1, 75, 0)""")
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
-VALUES ('servApfel', 'servApple', 'servEine runde Frucht zum Essen.', 'Bsp: Du isst einen Apfel', 1, 25, 1)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id) 
+VALUES ('servHaus', 'servHouse', 'servEine Unterkunft für Menschen.', 'Bsp: Ich wohne in einem Haus.', 1)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id) 
+VALUES ('servAuto', 'servCar', 'servEin Fahrzeug mit vier Rädern.', 'Bsp: Er fährt mit dem Auto.', 1)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id) 
+VALUES ('servApfel', 'servApple', 'servEine runde Frucht zum Essen.', 'Bsp: Du isst einen Apfel', 1)""")
 
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
-VALUES ('servBlau', 'servblue', 'servDie Frabe des Himmels.', 'Der Himmel ist blau.', 2, 50, 1)""")
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
-VALUES ('servGrün', 'servgreen', 'Dservie Farbe der Pflanzen.', 'Das Gras ist grün.', 2, 75, 0)""")
-cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id, lernfortschritt, markiert) 
-VALUES ('servRot', 'servred', 'servDie Farbe der Liebe.', 'Ich zeichne eine rote Blume.', 2, 25, 1)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id) 
+VALUES ('servBlau', 'servblue', 'servDie Frabe des Himmels.', 'Der Himmel ist blau.', 2)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id) 
+VALUES ('servGrün', 'servgreen', 'Dservie Farbe der Pflanzen.', 'Das Gras ist grün.', 2)""")
+cursor.execute("""INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id) 
+VALUES ('servRot', 'servred', 'servDie Farbe der Liebe.', 'Ich zeichne eine rote Blume.', 2)""")
 
 # Änderungen speichern und Verbindung schließen
 conn.commit()

@@ -15,8 +15,10 @@ import sqlite3
 from ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
 from Mp_herunterladen import MpHerunterladen
+from Mp_Hochladen import MpHochladen
 from importCSV import ImportCSV
 from typing import List
+from Mp_LogReg import log_reg
 
 
 class Hauptfenster(QMainWindow, Ui_MainWindow):
@@ -75,6 +77,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # Menu
         self.mn_Herunterladen.triggered.connect(self.mn_Herunterladen_triggered)
         self.mn_CSV_importieren.triggered.connect(self.mn_CSV_importieren_triggered)
+        self.mn_Hochladen.triggered.connect(self.mn_Hochladen_triggered)
 
         # Kontextmenüs aktivieren
         self.trw_Explorer.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -315,3 +318,22 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.importCSV.setModal(True)
 
         self.importCSV.exec_()
+
+    def mn_Hochladen_triggered(self):
+        """Das Fenster um das momentan offene Set hochzuladen wird geöffnet"""
+        offenes_set = self.kartenModel.geladenesSet
+        erfolg, net = log_reg()
+
+        if not erfolg:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowTitle("Vocitrainer - Fehler")
+            msg.setText(
+                "Fehler bei der Verbindung / Authentifizierung mit dem Server!"
+            )
+            msg.exec_()
+            return
+
+        self.mp_Hochladen = MpHochladen(net, offenes_set)
+        self.mp_Hochladen.setModal(True)
+        self.mp_Hochladen.exec_()

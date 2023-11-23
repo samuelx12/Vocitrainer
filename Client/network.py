@@ -102,6 +102,19 @@ class Network:
 
         return antwort[1]
 
+    def vociset_hochladen(self, vociset_datensatz, karten_datensaetze):
+        """
+        Lädt das Set auf den Server hoch.
+        :param vociset_datensatz: Der Datensatz des Sets
+        :param karten_datensaetze: Die Daten der einzelnen Karten (2D-Liste)
+        :return: bool Erfolg
+        """
+        nachricht = [8, vociset_datensatz, karten_datensaetze]
+        antwort = self.sendRecv(nachricht)
+        print("Etwas wird hochgeladen (Network)")  # todo Entfernen
+        print(antwort)
+        return antwort[1]
+
 
 if __name__ == "__main__":
     net = Network(("localhost", 4647))

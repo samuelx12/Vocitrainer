@@ -29,6 +29,7 @@ def log_reg() -> typing.Tuple[bool, typing.Union[Network, None]]:
     """
     logindaten = lade_logindaten()
     if logindaten:
+        print("Logindaten vorhanden")
         # Fall 1: Benutzer hat sich bereits einmal eingeloggt -> automatisch verbinden
         net = Network()
         email = logindaten[1]

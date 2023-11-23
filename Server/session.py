@@ -136,6 +136,13 @@ class Session(threading.Thread):
 
                 antwort = self.beantworte_kid7(nachricht)
 
+            elif kid == 8:
+                """
+                Set auf den Server hochladen
+                """
+
+                antwort = self.beantworte_kid8(nachricht)
+
             else:
                 antwort = ["FEHLER"]
                 print("ERROR mit kid:")
@@ -227,7 +234,7 @@ class Session(threading.Thread):
         id = self.CURSOR.fetchone()
         print(id)
         if id:
-            self.eingeloggter_user_id = id
+            self.eingeloggter_user_id = id[0]
             return [5, True]
         else:
             return [5, False]
@@ -280,3 +287,50 @@ class Session(threading.Thread):
         :return: [kid, bool: erfolg]
         """
         pass
+
+    def beantworte_kid8(self, nachricht: list) -> list:
+        """
+        Set auf den Server hochladen
+        :param nachricht: [kid, [Set Datensatz], [Liste der [Karten Datensätze]]]
+        :return: [kid, Erfolg]
+        """
+
+        try:
+            vociset_datensatz = nachricht[1]
+            karten_datensaetze = nachricht[2]
+
+            # Query um den Vocisetzt-Datensatz einzufügen
+            query = """
+            INSERT INTO vociset (set_name, beschreibung, sprache, user_id) VALUES (?, ?, ?, ?)
+            """
+
+            self.CURSOR.execute(
+                query,
+                (vociset_datensatz[0], vociset_datensatz[1], vociset_datensatz[2], self.eingeloggter_user_id)
+            )
+            hochgeladenes_set_id = self.CURSOR.lastrowid
+
+            # Schleife um die Karten einzufügen
+            query = f"""
+            INSERT INTO karte (wort, fremdwort, definition, bemerkung, set_id)
+            VALUES (?, ?, ?, ?, {hochgeladenes_set_id})
+            """
+            for i in range(len(karten_datensaetze)):
+                self.CURSOR.execute(
+                    query,
+                    (
+                        karten_datensaetze[i][0],
+                        karten_datensaetze[i][1],
+                        karten_datensaetze[i][2],
+                        karten_datensaetze[i][3]
+                    )
+                )
+
+            self.DBCONN.commit()
+
+            return [8, True]
+
+        except Exception as e:
+            # Misserfolgsbotschaft zurückschicken
+            raise e  # todo Entfernen
+            return [8, False]

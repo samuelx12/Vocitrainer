@@ -14,7 +14,7 @@ import sqlite3
 
 class MpHerunterladen(QDialog, Ui_mpHerunterladen):
     """
-    Trainingsfenster
+    Hier kann der Benutzer Sets von anderen Benutzern vom Marketplace suchen und herunterladen.
     """
     def __init__(self, hauptfenster, *args, obj=None, **kwargs):
         super(MpHerunterladen, self).__init__(*args, **kwargs)
@@ -112,10 +112,10 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
                 set_id = self.such_resultate[reihe][0]
                 self.set_herunterladen(set_id, reihe)
 
-    def set_herunterladen(self, set_id: int, reihe: int) -> None:
+    def set_herunterladen(self, set_id: int, zeile: int) -> None:
         """
         Lädt die Datensätze eines Sets und der zugehörigen Karten herunter.
-        :param reihe: Die Reihe in der Tabelle, um später dort eine Erfolgsmeldung zu zeigen
+        :param zeile: Die Reihe in der Tabelle, um später dort eine Erfolgsmeldung zu zeigen
         :param set_id: Die ID des zu herunterladenden Sets
         :return: None
         """
@@ -148,7 +148,7 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
 
         herunterladen_button = QPushButton("Heruntergeladen")
         herunterladen_button.setIcon(QIcon("res/icons/download_done_FILL0_wght500_GRAD0_opsz40.svg"))
-        self.tbl_suche.setCellWidget(reihe, 1, herunterladen_button)
+        self.tbl_suche.setCellWidget(zeile, 1, herunterladen_button)
 
         print("Erfolgsmeldung!")
-        print(reihe)
+        print(zeile)
