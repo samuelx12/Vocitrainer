@@ -5,27 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Client/Mp_Hochladen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/Mp_hochgeladeneVerwalten.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/mp_hochgeladeneVerwalten.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/mp_hochladen.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/ui_mp_hochgeladeneVerwalten.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/ui_mp_hochladen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/versuch_quizlet_export.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Mp_LogReg.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_LogReg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Mp_herunterladen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_herunterladen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/settings.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Client/settings.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/vocitrainerdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Client/vocitrainerdb.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dokumentation/Netzwerk Kommunikation.md" beforeDir="false" afterPath="$PROJECT_DIR$/Dokumentation/Netzwerk Kommunikation.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Organisatorisches/Besprechungen/Besprechung 2023.05.05.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Organisatorisches/Besprechungen/Besprechung vom 2023.05.05.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/serverdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Server/serverdb.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/session.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/setupdb.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/setupdb.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -336,7 +316,7 @@
       <workItem from="1698854042887" duration="1083000" />
       <workItem from="1698934504852" duration="1263000" />
       <workItem from="1698935802951" duration="3410000" />
-      <workItem from="1700730883362" duration="12336000" />
+      <workItem from="1700730883362" duration="12668000" />
     </task>
     <task id="LOCAL-00001" summary="Restrukturierung für besseren Workflow mit Qt-Designer aufgrund der bisher gemachten Erfahrungen mit PyQt.">
       <option name="closed" value="true" />
@@ -522,7 +502,23 @@
       <option name="project" value="LOCAL" />
       <updated>1698389931713</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Hochladen von Vocisets möglich">
+      <option name="closed" value="true" />
+      <created>1700776764459</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1700776764459</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Hochladen einer neuen Version der schriftlichen Arbeit">
+      <option name="closed" value="true" />
+      <created>1700777024497</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1700777024497</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -541,7 +537,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Restrukturierung für besseren Workflow mit Qt-Designer aufgrund der bisher gemachten Erfahrungen mit PyQt." />
     <MESSAGE value="Erster unvollständiger Entwurf vom Trainingsfenster hinzugefügt&#10;Fusion Style aktiviert" />
     <MESSAGE value="Erster Trainings Kontroller mit Trainingsfenster" />
     <MESSAGE value="Richtige Antworten grün, falsche Antworten rot einfärben" />
@@ -565,7 +560,9 @@
     <MESSAGE value="Registrieren Clientseitig fertiggestellt&#10;Inhaltsverzeichnis und ein Kapitel hochgeladen" />
     <MESSAGE value="Login Serverseitig erste Verison" />
     <MESSAGE value="LogReg Modul vorerst fertig" />
-    <option name="LAST_COMMIT_MESSAGE" value="LogReg Modul vorerst fertig" />
+    <MESSAGE value="Hochladen von Vocisets möglich" />
+    <MESSAGE value="Hochladen einer neuen Version der schriftlichen Arbeit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hochladen einer neuen Version der schriftlichen Arbeit" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Vocitrainer$.coverage" NAME=" Coverage Results" MODIFIED="1698414310010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
