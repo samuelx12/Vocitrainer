@@ -7,7 +7,7 @@ Hier ist das Herunterladen Fenster des Menu Marketplace.
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from ui_mp_herunterladen import Ui_mpHerunterladen
+from Client.res.qt.ui_mp_herunterladen import Ui_mpHerunterladen
 from network import Network
 import sqlite3
 

@@ -9,8 +9,8 @@ wurden (Qt-Konzept)
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from ui_trainingsfenster import Ui_Trainingsfenster
-from trainingscontroller import TestTraining, TC_Einfach
+from Client.res.qt.ui_trainingsfenster import Ui_Trainingsfenster
+from trainingscontroller import TC_Einfach
 
 
 class Trainingsfenster(QDialog, Ui_Trainingsfenster):

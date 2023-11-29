@@ -4,10 +4,8 @@ Mp_herunterladen.py
 Hier ist das Herunterladen Fenster des Menu Marketplace.
 """
 
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from ui_importCSV import Ui_ImportCSV
+from Client.res.qt.ui_importCSV import Ui_ImportCSV
 import sqlite3
 import csv
 from explorer_item import ExplorerItem

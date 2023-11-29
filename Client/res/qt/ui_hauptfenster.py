@@ -62,7 +62,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.cmd_ico_Aktion = QtWidgets.QLabel(self.cmd_Aktion)
         self.cmd_ico_Aktion.setText("")
-        self.cmd_ico_Aktion.setPixmap(QtGui.QPixmap("res/icons/logout_FILL0_wght500_GRAD0_opsz40.svg"))
+        self.cmd_ico_Aktion.setPixmap(QtGui.QPixmap("../icons/logout_FILL0_wght500_GRAD0_opsz40.svg"))
         self.cmd_ico_Aktion.setAlignment(QtCore.Qt.AlignCenter)
         self.cmd_ico_Aktion.setObjectName("cmd_ico_Aktion")
         self.verticalLayout.addWidget(self.cmd_ico_Aktion)

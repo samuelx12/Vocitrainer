@@ -331,6 +331,6 @@ class Session(threading.Thread):
             return [8, True]
 
         except Exception as e:
-            # Misserfolgsbotschaft zurückschicken
+            # Fehlermeldung zurückschicken
             raise e  # todo Entfernen
             return [8, False]
