@@ -58,7 +58,7 @@ class MpHochladen(QDialog, Ui_Mp_Hochladen):
         sprache = self.cmb_sprache.currentText()
 
         # SQL-Query der die Karten Datensätze lädt
-        query = """SELECT karte_id, wort, fremdwort, definition, bemerkung, set_id FROM karte WHERE set_id = ?"""
+        query = """SELECT wort, fremdwort, definition, bemerkung, set_id FROM karte WHERE set_id = ?"""
         self.CURSOR.execute(query, (set_id,))
         karten_datensaetze = self.CURSOR.fetchall()
 

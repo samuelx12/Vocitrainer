@@ -321,7 +321,6 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def mn_Hochladen_triggered(self):
         """Das Fenster um das momentan offene Set hochzuladen wird geöffnet"""
-        offenes_set = self.kartenModel.geladenesSet
         erfolg, net = log_reg()
 
         if not erfolg:
@@ -334,6 +333,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             msg.exec_()
             return
 
+        offenes_set = self.kartenModel.geladenesSet
         self.mp_Hochladen = MpHochladen(net, offenes_set)
         self.mp_Hochladen.setModal(True)
         self.mp_Hochladen.exec_()
