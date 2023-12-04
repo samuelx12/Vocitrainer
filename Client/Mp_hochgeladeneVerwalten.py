@@ -32,5 +32,16 @@ class MpHochgeladeneVerwalten(QDialog, Ui_Mp_HochgeladeneVerwalten):
         # Signale mit Slots verbinden
         self.cmd_schliessen.clicked.connect(self.cmd_schliessen_clicked)
 
+        self.net = network
+
     def cmd_schliessen_clicked(self) -> None:
         self.close()
+
+    def lade_tabell(self, inhalte):
+        """
+        Ladet die Tabelle mit "inhalte",
+        wobei die Inhalte die Hochgeladenen Vocisets des angemeldeten Benutzers sind.
+        """
+        self.inhalte = inhalte
+        self.tbl_hochgeladeneSets.clear()
+

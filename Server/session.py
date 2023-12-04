@@ -214,6 +214,10 @@ class Session(threading.Thread):
         self.CURSOR.execute(query, (set_id,))
         karten_datensaetze = self.CURSOR.fetchall()
 
+        # Downloadzahl erhöhen
+        query = """UPDATE vociset SET anz_downloads = anz_downloads + 1 WHERE set_id = ?;"""
+        self.CURSOR.execute(query, (set_id,))
+
         return [4, vociset_datensatz, karten_datensaetze]
 
     def beantworte_kid5(self, nachricht: list) -> List:
@@ -227,6 +231,9 @@ class Session(threading.Thread):
 
         email = nachricht[1]
         passwort = nachricht[2]
+
+        print("email: ", email)
+        print("passwort (hash): ", passwort)
 
         query = """SELECT user_id FROM user WHERE email = ? AND passwort = ?"""
         self.CURSOR.execute(query, (email, passwort))
@@ -252,6 +259,8 @@ class Session(threading.Thread):
         benutzername = nachricht[1]
         email = nachricht[2]
         passwort = nachricht[3]
+
+        print("Registriertes Passwort (hash): ", passwort)
 
         # Überprüfen ob der Benutzername bereits existiert
         self.CURSOR.execute('SELECT COUNT(*) FROM user WHERE benutzername = ?', (benutzername,))

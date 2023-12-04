@@ -5,30 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/Mp_Hochladen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_Hochladen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Mp_LogReg.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_LogReg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Mp_herunterladen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_herunterladen.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/Mp_hochgeladeneVerwalten.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_hochgeladeneVerwalten.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/hauptfenster.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/hauptfenster.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/importCSV.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/importCSV.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/importCSV.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/importCSV.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/kartenmodeltest.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/kartenmodeltest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/meine_datenbank.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/mp_herunterladen.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/mp_herunterladen.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/mp_hochgeladeneVerwalten.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/mp_hochgeladeneVerwalten.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/mp_hochladen.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/mp_hochladen.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/mp_logreg.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/mp_logreg.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/trainingsfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/trainingsfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/trainingsfenster.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/trainingsfenster.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ui_hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/ui_hauptfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ui_importCSV.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/ui_importCSV.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ui_mp_herunterladen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/ui_mp_herunterladen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ui_mp_hochgeladeneVerwalten.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/ui_mp_hochgeladeneVerwalten.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ui_mp_hochladen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/ui_mp_hochladen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ui_mp_logreg.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/ui_mp_logreg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ui_trainingsfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/ui_trainingsfenster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/serverdb.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/setupdb.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/setupdb.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,14 +105,14 @@
       <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Client\res\qt" />
       <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Dokumentation" />
+      <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Client\res\qt" />
       <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
       <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server\certificate" />
       <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer" />
     </key>
   </component>
-  <component name="RunManager" selected="Compound.Client + Server">
+  <component name="RunManager">
     <configuration name="Client + Server" type="CompoundRunConfigurationType">
       <toRun name="Client" type="PythonConfigurationType" />
       <toRun name="Server" type="PythonConfigurationType" />
@@ -342,7 +327,11 @@
       <workItem from="1700730883362" duration="12668000" />
       <workItem from="1700838265866" duration="2112000" />
       <workItem from="1701085014674" duration="636000" />
-      <workItem from="1701261023344" duration="1922000" />
+      <workItem from="1701261023344" duration="6325000" />
+      <workItem from="1701332612646" duration="1283000" />
+      <workItem from="1701360924306" duration="1744000" />
+      <workItem from="1701422865032" duration="1447000" />
+      <workItem from="1701535146680" duration="4992000" />
     </task>
     <task id="LOCAL-00001" summary="Restrukturierung für besseren Workflow mit Qt-Designer aufgrund der bisher gemachten Erfahrungen mit PyQt.">
       <option name="closed" value="true" />
@@ -560,7 +549,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701262136967</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Änderung der Struktur:&#10;Alle QT Quelldateien liegen im Ressourcenordner 'qt'">
+      <option name="closed" value="true" />
+      <created>1701263093030</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1701263093030</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -579,7 +576,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Richtige Antworten grün, falsche Antworten rot einfärben" />
     <MESSAGE value="TreeWidget angefangen mit Icons" />
     <MESSAGE value="Explorer fürs erste fertiggestellt" />
     <MESSAGE value="Explorer um DragAndDrop ergänzt." />
@@ -604,22 +600,23 @@
     <MESSAGE value="Hochladen einer neuen Version der schriftlichen Arbeit" />
     <MESSAGE value="Hochladen von Notizen zum effizienten Lernen" />
     <MESSAGE value="Bug behoben, das Wörter mit der ID des Clients hochgeladen werden." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug behoben, das Wörter mit der ID des Clients hochgeladen werden." />
+    <MESSAGE value="Änderung der Struktur:&#10;Alle QT Quelldateien liegen im Ressourcenordner 'qt'" />
+    <option name="LAST_COMMIT_MESSAGE" value="Änderung der Struktur:&#10;Alle QT Quelldateien liegen im Ressourcenordner 'qt'" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Vocitrainer$.coverage" NAME=" Coverage Results" MODIFIED="1698414310010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$woosch.coverage" NAME="woosch Coverage Results" MODIFIED="1695049758389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dokumentation" />
     <SUITE FILE_PATH="coverage/Vocitrainer$versuch_quizlet_export.coverage" NAME="versuch_quizlet_export Coverage Results" MODIFIED="1698415966000" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Server.coverage" NAME="Server Coverage Results" MODIFIED="1701261789659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Server.coverage" NAME="Server Coverage Results" MODIFIED="1701678986366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
     <SUITE FILE_PATH="coverage/Vocitrainer$client.coverage" NAME="client Coverage Results" MODIFIED="1688487578785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Setup_DB.coverage" NAME="Setup DB Coverage Results" MODIFIED="1697808249863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Mp_LogReg.coverage" NAME="Mp_LogReg Coverage Results" MODIFIED="1698417789518" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$setupdb.coverage" NAME="setupdb Coverage Results" MODIFIED="1701261649558" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$setupdb.coverage" NAME="setupdb Coverage Results" MODIFIED="1701680181493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Mp_herunterladen.coverage" NAME="Mp_herunterladen Coverage Results" MODIFIED="1698935661738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$models.coverage" NAME="models Coverage Results" MODIFIED="1688487567224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$hauptfenster.coverage" NAME="hauptfenster Coverage Results" MODIFIED="1700762493364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Client_Network_Test.coverage" NAME="Client Network Test Coverage Results" MODIFIED="1694856592805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1701261789585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1701678986021" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$kartenmodeltest.coverage" NAME="kartenmodeltest Coverage Results" MODIFIED="1688487656020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$suche_test.coverage" NAME="suche test Coverage Results" MODIFIED="1695025638975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
   </component>

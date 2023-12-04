@@ -62,7 +62,22 @@ class MpHochladen(QDialog, Ui_Mp_Hochladen):
         self.CURSOR.execute(query, (set_id,))
         karten_datensaetze = self.CURSOR.fetchall()
 
-        self.net.vociset_hochladen(
+        erfolg = self.net.vociset_hochladen(
             (set_name, beschreibung, sprache),
             karten_datensaetze
         )
+
+        msg = QMessageBox()
+        if erfolg:
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Vocitrainer - Erfolg")
+            msg.setText(
+            "Das Set wurde auf den Server hochgeladen"
+            )
+        else:
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowTitle("Vocitrainer - Fehler")
+            msg.setText("Das Set konnte auf Grund eines unerwarteten Fehlers nicht hochgeladen werden.\n"
+                        "Überprüfen sie bitte ihre Internet-Verbindung")
+
+        msg.exec_()

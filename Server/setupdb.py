@@ -31,6 +31,7 @@ cursor.execute('''
         beschreibung TEXT,
         sprache TEXT,
         user_id INTEGER,
+        anz_downloads INTEGER,
         FOREIGN KEY (user_id) REFERENCES user (user_id)
     )
 ''')
@@ -60,12 +61,12 @@ cursor.execute(
     [datetime.now()]
 )
 
-# Testdaten in die Tabelle 'set' einfügen
+# Testdaten in die Tabelle 'vociset' einfügen
 cursor.execute(
-    "INSERT INTO vociset (set_name, beschreibung, sprache) VALUES ('servSet 1', 'servBeschreibung Set 1', 'Englisch')")
+    "INSERT INTO vociset (set_name, beschreibung, sprache, anz_downloads) VALUES ('servSet 1', 'servBeschreibung Set 1', 'Englisch', 0)")
 cursor.execute(
-    "INSERT INTO vociset (set_name, beschreibung, sprache) VALUES "
-    "('servSet 2', 'servBeschreibung Set 2 Farben', 'Englisch')"
+    "INSERT INTO vociset (set_name, beschreibung, sprache, anz_downloads) VALUES "
+    "('servSet 2', 'servBeschreibung Set 2 Farben', 'Englisch', 0)"
 )
 
 # Testdaten in die Tabelle 'karte' einfügen

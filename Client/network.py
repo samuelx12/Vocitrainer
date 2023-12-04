@@ -110,10 +110,11 @@ class Network:
         :return: bool Erfolg
         """
         nachricht = [8, vociset_datensatz, karten_datensaetze]
-        antwort = self.sendRecv(nachricht)
-        print("Etwas wird hochgeladen (Network)")  # todo Entfernen
-        print(antwort)
-        return antwort[1]
+        try:
+            antwort = self.sendRecv(nachricht)
+            return antwort[1]
+        except:
+            return False
 
 
 if __name__ == "__main__":
