@@ -88,6 +88,17 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         self.tbl_suche.setColumnCount(2)
         self.tbl_suche.setRowCount(len(self.such_resultate))
 
+        # Spaltenbreite festlegen
+        header = self.tbl_suche.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.Fixed)
+        header.setSectionResizeMode(1, QHeaderView.Fixed)
+
+        # Die erste Spalte nimmt 2/3 des Platzes ein
+        header.resizeSection(0, self.width() * 2 / 3.3)
+
+        # Die zweite Spalte nimmt 1/3 des Platzes ein
+        header.resizeSection(1, self.width() * 1 / 3.3)
+
         for reihe in range(len(self.such_resultate)):
             # In die erste Spalte kommt der Set Name:
             self.tbl_suche.setItem(reihe, 0, QTableWidgetItem(self.such_resultate[reihe][1]))
@@ -102,7 +113,7 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
     def set_herunterladen_button_clicked(self):
         """
         Diese Methode wird aktiv, wenn einer der Herunterladenbuttons in der Tabelle geklickt wurde.
-        Sie findet die ID des Heruntergeladenen Buttons heraus und gibt den Download in Auftrag.
+        Sie findet die ID des geklickten Buttons heraus und gibt den Download in Auftrag.
         """
         clicked_button = self.sender()
         if clicked_button:

@@ -32,9 +32,9 @@ class Ui_Mp_HochgeladeneVerwalten(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
-        self.lbl_schliessen = QtWidgets.QPushButton(Mp_HochgeladeneVerwalten)
-        self.lbl_schliessen.setObjectName("lbl_schliessen")
-        self.horizontalLayout.addWidget(self.lbl_schliessen)
+        self.cmd_schliessen = QtWidgets.QPushButton(Mp_HochgeladeneVerwalten)
+        self.cmd_schliessen.setObjectName("cmd_schliessen")
+        self.horizontalLayout.addWidget(self.cmd_schliessen)
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.retranslateUi(Mp_HochgeladeneVerwalten)
@@ -44,4 +44,4 @@ class Ui_Mp_HochgeladeneVerwalten(object):
         _translate = QtCore.QCoreApplication.translate
         Mp_HochgeladeneVerwalten.setWindowTitle(_translate("Mp_HochgeladeneVerwalten", "Hochgeladene Sets verwalten"))
         self.lbl_titel.setText(_translate("Mp_HochgeladeneVerwalten", "Hochgeladene Sets"))
-        self.lbl_schliessen.setText(_translate("Mp_HochgeladeneVerwalten", "Schliessen"))
+        self.cmd_schliessen.setText(_translate("Mp_HochgeladeneVerwalten", "Schliessen"))

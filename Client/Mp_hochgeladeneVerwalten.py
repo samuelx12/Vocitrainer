@@ -33,15 +33,60 @@ class MpHochgeladeneVerwalten(QDialog, Ui_Mp_HochgeladeneVerwalten):
         self.cmd_schliessen.clicked.connect(self.cmd_schliessen_clicked)
 
         self.net = network
+        inhalte = self.net.verwalten_info()
+        self.lade_tabelle(inhalte)
 
     def cmd_schliessen_clicked(self) -> None:
         self.close()
 
-    def lade_tabell(self, inhalte):
+    def lade_tabelle(self, inhalte):
         """
         Ladet die Tabelle mit "inhalte",
         wobei die Inhalte die Hochgeladenen Vocisets des angemeldeten Benutzers sind.
+        inhalte = [set_id, set_name, beschreibung, sprache, anz_downloads]
         """
+        print("Inhalte:", inhalte)
         self.inhalte = inhalte
         self.tbl_hochgeladeneSets.clear()
+        self.tbl_hochgeladeneSets.setColumnCount(4)
+        self.tbl_hochgeladeneSets.setRowCount(len(self.inhalte))
 
+        self.tbl_hochgeladeneSets.setHorizontalHeaderLabels(["Name", "Sprache", "Downloads", "Löschen"])
+
+        ueberschift = self.tbl_hochgeladeneSets.horizontalHeader()
+        ueberschift.setSectionResizeMode(QHeaderView.Stretch)
+
+        for reihe in range(len(self.inhalte)):
+            # Erste Spalte: Set Name
+            self.tbl_hochgeladeneSets.setItem(reihe, 0, QTableWidgetItem(self.inhalte[reihe][1]))
+
+            # Zweite Spalte: Sprache
+            self.tbl_hochgeladeneSets.setItem(reihe, 1, QTableWidgetItem(self.inhalte[reihe][3]))
+
+            # Dritte Spalte: Anzahl Downloads
+            self.tbl_hochgeladeneSets.setItem(reihe, 2, QTableWidgetItem(str(self.inhalte[reihe][4])))
+
+            # Vierte Spalte: 'Löschen'-Button
+            loeschen_button = QPushButton("Löschen")
+            loeschen_button.setIcon(QIcon("res/icons/delete_FILL0_wght500_GRAD0_opsz40.svg"))
+            loeschen_button.clicked.connect(self.set_loeschen_button_clicked)
+            self.tbl_hochgeladeneSets.setCellWidget(reihe, 3, loeschen_button)
+
+    def set_loeschen_button_clicked(self):
+        """
+        Diese Methode wird ausgeführt, wenn einer der Löschen-Buttons gelickt wurde.
+        Nachdem die ID des dazugehörigen Sets herausgefunden wurde, wird der Lösch-Befehl an den Server gesendet.
+        """
+
+        clicked_button = self.sender()
+        if clicked_button:
+            button_index = self.tbl_hochgeladeneSets.indexAt(clicked_button.pos())
+            if button_index.isValid():
+                reihe = button_index.row()
+                set_id = self.inhalte[reihe][0]
+                self.net.verwalten_aktion(set_id, 0)
+
+                # Erfolgsnachricht auf dem Button ausgeben
+                erfolg_button = QPushButton("Gelöscht")
+                erfolg_button.setIcon(QIcon("res/icons/delete_FILL0_wght500_GRAD0_opsz40.svg"))
+                self.tbl_hochgeladeneSets.setCellWidget(reihe, 3, erfolg_button)

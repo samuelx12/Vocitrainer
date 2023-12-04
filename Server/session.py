@@ -143,6 +143,20 @@ class Session(threading.Thread):
 
                 antwort = self.beantworte_kid8(nachricht)
 
+            elif kid == 9:
+                """
+                Verwalten Informationen angefordert
+                """
+
+                antwort = self.beantworte_kid9(nachricht)
+
+            elif kid == 10:
+                """
+                Verwalten: Eine Aktion (löschen) wird gefordert
+                """
+
+                antwort = self.beantworte_kid10(nachricht)
+
             else:
                 antwort = ["FEHLER"]
                 print("ERROR mit kid:")
@@ -177,7 +191,7 @@ class Session(threading.Thread):
         self.DBCONN.set_trace_callback(trace_callback)
 
         # Suchquery erstellen
-        # Die LIKEs suchen alle sets heraus, welche eines der Wörter des Suchprompts im Namen haben
+        # Die 'LIKE's suchen alle sets heraus, welche eines der Wörter des Suchprompts im Namen haben
         query = """
             SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE set_name LIKE '%' || ? || '%'
         """
@@ -217,6 +231,7 @@ class Session(threading.Thread):
         # Downloadzahl erhöhen
         query = """UPDATE vociset SET anz_downloads = anz_downloads + 1 WHERE set_id = ?;"""
         self.CURSOR.execute(query, (set_id,))
+        self.DBCONN.commit()
 
         return [4, vociset_datensatz, karten_datensaetze]
 
@@ -230,16 +245,16 @@ class Session(threading.Thread):
         time.sleep(0.2)
 
         email = nachricht[1]
-        passwort = nachricht[2]
+        passwort = str(nachricht[2])
 
-        print("email: ", email)
-        print("passwort (hash): ", passwort)
+        print("E-Mail>>", email)
+        print("Login Passwort (hash): ", passwort)
 
         query = """SELECT user_id FROM user WHERE email = ? AND passwort = ?"""
         self.CURSOR.execute(query, (email, passwort))
 
         id = self.CURSOR.fetchone()
-        print(id)
+        print("ID: ", id)
         if id:
             self.eingeloggter_user_id = id[0]
             return [5, True]
@@ -258,8 +273,9 @@ class Session(threading.Thread):
         """
         benutzername = nachricht[1]
         email = nachricht[2]
-        passwort = nachricht[3]
+        passwort = str(nachricht[3])
 
+        print("E-Mail>>", email)
         print("Registriertes Passwort (hash): ", passwort)
 
         # Überprüfen ob der Benutzername bereits existiert
@@ -310,7 +326,7 @@ class Session(threading.Thread):
 
             # Query um den Vocisetzt-Datensatz einzufügen
             query = """
-            INSERT INTO vociset (set_name, beschreibung, sprache, user_id) VALUES (?, ?, ?, ?)
+            INSERT INTO vociset (set_name, beschreibung, sprache, anz_downloads, user_id) VALUES (?, ?, ?, 0, ?)
             """
 
             self.CURSOR.execute(
@@ -341,5 +357,45 @@ class Session(threading.Thread):
 
         except Exception as e:
             # Fehlermeldung zurückschicken
-            raise e  # todo Entfernen
             return [8, False]
+
+    def beantworte_kid9(self, nachricht: list) -> list:
+        """
+        Client fordert Informationen zu seinen hochgeladenen Vocisets an
+        :param nachricht: [9]
+        :return: Resultate
+        """
+
+        query = """
+                    SELECT set_id, set_name, beschreibung, sprache, anz_downloads FROM vociset WHERE user_id = ?
+                """
+        self.CURSOR.execute(query, (self.eingeloggter_user_id,))
+        ergebnisse = self.CURSOR.fetchall()
+
+        return [9, ergebnisse]
+
+    def beantworte_kid10(self, nachricht: list) -> list:
+        """
+        Der Client fordert die Ausführung einer Aktion (löschen) angewendet auf das Set set_id auf dem Server.
+        :param nachricht: nachricht: [10, set_id, löschen]
+        :return: Erfolg True/False
+        """
+
+        set_id = nachricht[1]
+        aktion = nachricht[2]
+
+        if aktion == 0:
+            print("LÖSCH AUFTRAG GEGEBEN")
+            # Query zum löschen
+            # "AND user_id ..." bewirkt, dass der Eintrag nur gelöscht wird, wenn das Set dem eingeloggten User gehört.
+            query = """
+            DELETE FROM vociset WHERE set_id = ? AND user_id = ?
+            """
+            self.CURSOR.execute(query, (set_id, self.eingeloggter_user_id))
+
+            if self.CURSOR.rowcount == 1:
+                # Karen nur löschen, wenn oben auch ein Set gelöscht wurde.
+                query = """
+                DELETE FROM karte WHERE set_id = ?
+                """
+                self.CURSOR.execute(query, (set_id,))

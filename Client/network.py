@@ -116,6 +116,33 @@ class Network:
         except:
             return False
 
+    def verwalten_info(self):
+        """
+        Fordert Informationen aller vom momentan angemeldeten User hochgeladenen Vocisets an.
+        :return: False bei Fehler, sonst die Liste der vociset-Datensätze
+        Vociset_Datensatz = [set_id, set_name, beschreibung, sprache, anz_downloads]
+        """
+        nachricht = [9]
+        try:
+            antwort = self.sendRecv(nachricht)
+            return antwort[1]
+        except:
+            return False
+
+    def verwalten_aktion(self, set_id: int, aktion: int) -> bool:
+        """
+        Führt mit einem der Sets (falls es dem angemeldeten User gehört) eine Aktion auf dem Server aus (löschen)
+        :param set_id: Das Set mit dem etwas gemacht werden sollte (muss dem angemeldeten User gehören)
+        :param aktion: 0 = Löschen
+        :return: bool Erfolg
+        """
+        nachricht = [10, set_id, aktion]
+        try:
+            antwort = self.sendRecv(nachricht)
+            return antwort[1]
+        except:
+            return False
+
 
 if __name__ == "__main__":
     net = Network(("localhost", 4647))

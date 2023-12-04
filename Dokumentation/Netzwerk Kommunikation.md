@@ -54,6 +54,7 @@ Ich versende in meiner Anwendung immer Python Listen in welcher das erste Elemen
   - KID
   - Liste der 
     - Vociset Datensätze
+    = [id, name, tags, sprache, anz_downloads]
 - 10: VerwaltenExe
   - KID
   - Set_Id

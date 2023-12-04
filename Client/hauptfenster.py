@@ -16,6 +16,7 @@ from Client.res.qt.ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
 from Mp_herunterladen import MpHerunterladen
 from Mp_Hochladen import MpHochladen
+from Mp_hochgeladeneVerwalten import MpHochgeladeneVerwalten
 from importCSV import ImportCSV
 from typing import List
 from Mp_LogReg import log_reg
@@ -78,6 +79,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.mn_Herunterladen.triggered.connect(self.mn_Herunterladen_triggered)
         self.mn_CSV_importieren.triggered.connect(self.mn_CSV_importieren_triggered)
         self.mn_Hochladen.triggered.connect(self.mn_Hochladen_triggered)
+        self.mn_HochgeladeneVerwalten.triggered.connect(self.mn_hochgeladeneVerwalten_triggered)
 
         # Kontextmenüs aktivieren
         self.trw_Explorer.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -337,3 +339,21 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.mp_Hochladen = MpHochladen(net, offenes_set)
         self.mp_Hochladen.setModal(True)
         self.mp_Hochladen.exec_()
+
+    def mn_hochgeladeneVerwalten_triggered(self):
+        """Das Fenster um hochgeladene Sets zu verwalten öffnen"""
+        erfolg, net = log_reg()
+
+        if not erfolg:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowTitle("Vocitrainer - Fehler")
+            msg.setText(
+                "Fehler bei der Verbindung / Authentifizierung mit dem Server!"
+            )
+            msg.exec_()
+            return
+
+        self.mp_hochgeladeneVerwalten = MpHochgeladeneVerwalten(net)
+        self.mp_hochgeladeneVerwalten.setModal(True)
+        self.mp_hochgeladeneVerwalten.exec_()

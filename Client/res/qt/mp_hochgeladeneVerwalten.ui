@@ -45,7 +45,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="lbl_schliessen">
+      <widget class="QPushButton" name="cmd_schliessen">
        <property name="text">
         <string>Schliessen</string>
        </property>
