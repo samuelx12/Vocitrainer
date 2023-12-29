@@ -94,10 +94,10 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         header.setSectionResizeMode(1, QHeaderView.Fixed)
 
         # Die erste Spalte nimmt 2/3 des Platzes ein
-        header.resizeSection(0, self.width() * 2 / 3.3)
+        header.resizeSection(0, int(self.width() * 2 / 3.3))
 
         # Die zweite Spalte nimmt 1/3 des Platzes ein
-        header.resizeSection(1, self.width() * 1 / 3.3)
+        header.resizeSection(1, int(self.width() * 1 / 3.3))
 
         for reihe in range(len(self.such_resultate)):
             # In die erste Spalte kommt der Set Name:

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="serverdb">
-  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.49">
-    <root id="1">
-      <ServerVersion>3.40.1</ServerVersion>
-    </root>
+  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.51">
+    <root id="1"/>
     <collation id="2" parent="1" name="RTRIM"/>
     <collation id="3" parent="1" name="NOCASE"/>
     <collation id="4" parent="1" name="BINARY"/>
@@ -432,8 +430,7 @@
     <routine id="172" parent="1" name="fts3_tokenizer"/>
     <schema id="173" parent="1" name="main">
       <Current>1</Current>
-      <IntrospectionTimestamp>2023-12-04.09:55:39.388</IntrospectionTimestamp>
-      <LocalIntrospectionTimestamp>2023-12-04.08:55:39</LocalIntrospectionTimestamp>
+      <LastIntrospectionLocalTimestamp>2023-12-04.08:55:39</LastIntrospectionLocalTimestamp>
     </schema>
     <argument id="174" parent="16">
       <ArgumentDirection>R</ArgumentDirection>

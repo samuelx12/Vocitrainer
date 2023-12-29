@@ -197,11 +197,8 @@ class Session(threading.Thread):
         """
         for i in range(len(gesplitteter_prompt) - 1):
             query += " OR set_name LIKE '%'+?+'%'"
-        print("vor execute")
-        print("Query: ", query)
-        print("Argumente: ", gesplitteter_prompt)
+
         self.CURSOR.execute(query, gesplitteter_prompt)
-        print("nach execute")
         ergebnisse = self.CURSOR.fetchmany(anzahl_resultate)
 
         # Jetzt werden die Resultate danach geordnet, wie viele Wörter des Suchprompts darin enthalten sind.
@@ -386,16 +383,15 @@ class Session(threading.Thread):
 
         if aktion == 0:
             print("LÖSCH AUFTRAG GEGEBEN")
+            print(f"set_id: {set_id}")
+            print(f"self.eingeloggeter_user_id: {self.eingeloggter_user_id}")
             # Query zum löschen
-            # "AND user_id ..." bewirkt, dass der Eintrag nur gelöscht wird, wenn das Set dem eingeloggten User gehört.
+            # "AND user_id ..." bewirkt, dass der Eintrag nur gelöscht wird, wenn das Set dem eingeloggten User gehört,
+            # was eigentlich immer der Fall ist, aber theoretisch könnte man das manipulieren.
             query = """
             DELETE FROM vociset WHERE set_id = ? AND user_id = ?
             """
+
             self.CURSOR.execute(query, (set_id, self.eingeloggter_user_id))
 
-            if self.CURSOR.rowcount == 1:
-                # Karen nur löschen, wenn oben auch ein Set gelöscht wurde.
-                query = """
-                DELETE FROM karte WHERE set_id = ?
-                """
-                self.CURSOR.execute(query, (set_id,))
+            self.DBCONN.commit()

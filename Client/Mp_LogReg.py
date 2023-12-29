@@ -12,7 +12,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from Client.res.qt.ui_mp_logreg import Ui_mpLogReg
 from network import Network
-from validate_email_address import validate_email
+from validate_email import validate_email
 from configobj import ConfigObj
 import hashlib
 import typing
