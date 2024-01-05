@@ -20,6 +20,7 @@ from Mp_hochgeladeneVerwalten import MpHochgeladeneVerwalten
 from importCSV import ImportCSV
 from typing import List
 from Mp_LogReg import log_reg
+from karte_tuple import Karte
 
 
 class Hauptfenster(QMainWindow, Ui_MainWindow):
@@ -29,7 +30,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
     Datei ohne Gefahr neu überschrieben werden kann.
     """
 
-    def __init__(self, *args, obj=None, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(Hauptfenster, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Vocitrainer")
@@ -45,9 +46,9 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.splitter.updateGeometry()
 
         # Tabellen Model erstellen und zuweisen
-        self.conn = sqlite3.connect('vocitrainerdb.db')
+        self.dbconn = sqlite3.connect('vocitrainerdb.db')
         print("Datenbankverbindung wurde erstellt")
-        self.kartenModel = KartenModel(dbconn=self.conn)
+        self.kartenModel = KartenModel(dbconn=self.dbconn)
         print("Model wurde erstellt")
 
         # Tabellen Model Daten laden
@@ -92,7 +93,24 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.close()
 
     def cmd_Setlernen_clicked(self):
-        self.trainingsfenster = Trainingsfenster()
+        # Daten laden und in das Datenformat konvertieren
+        selection_model = self.tbv_Liste.selectionModel()
+        gewaehlte_indices = selection_model.selectedRows()
+        gewaehlte_zeilen = [index.row() for index in gewaehlte_indices]
+
+        # Das ist für die Schwierigkeit, die nicht in den Kartendaten ist.
+        #                                                         V
+        gewaehlte_karten = [Karte(*self.kartenModel.daten[zeile], 0) for zeile in gewaehlte_zeilen]
+
+        print(gewaehlte_karten)  # todo Entfernen
+
+        # Sprache herausfinden
+        cursor = self.dbconn.cursor()
+        sql = """SELECT sprache FROM main.vociset WHERE set_id = ?"""
+        cursor.execute(sql, (self.geladenes_set_explorer_item.id,))
+        sprache = cursor.fetchone()[0]
+
+        self.trainingsfenster = Trainingsfenster(gewaehlte_karten, sprache)
         self.trainingsfenster.setModal(True)
 
         self.trainingsfenster.exec_()
@@ -126,11 +144,10 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
                 ebene_laden(neuer_ordner, i_ordner[0])
 
             for i_vociset in vocisets:
-                neues_vociset = ExplorerItem(i_vociset[1], "vociset", i_vociset[0], parent=parent)
+                ExplorerItem(i_vociset[1], "vociset", i_vociset[0], parent=parent)
 
         self.trw_Explorer.clear()
-        lade_cursor = self.conn.cursor()
-        explorer_index = []
+        lade_cursor = self.dbconn.cursor()
         ebene_laden(self.rootNode, 1)
 
     def trw_Explorer_doubleClicked(self, item_index, item_direkt=None):
@@ -189,11 +206,10 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         else:
             neue_id = ziel_item.id
 
-        quell_items = []
         ausgewaehlte_items: List[ExplorerItem] = self.trw_Explorer.selectedItems()
 
         # SQL-Cursor erstellen
-        cursor = self.conn.cursor()
+        cursor = self.dbconn.cursor()
 
         # Alte Aktive entfernen
         for altesAktivesItem in self.aktiveItems:
@@ -252,13 +268,12 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
                     item = item.parent()
                 item.setActive(True)
                 self.aktiveItems.append(item)
-                item = item.parent()
             except AttributeError:  # Am Root Node angekommen
                 pass
 
         # Prozess abschliessen
         cursor.close()
-        self.conn.commit()
+        self.dbconn.commit()
 
         # Explorer komplett neu aktualisieren
         # self.trw_Explorer.clear()
@@ -277,11 +292,13 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
         aktualisieren = QAction("Aktualisieren", self)
         aktualisieren.setIcon(QIcon("res/icons/refresh_FILL0_wght500_GRAD0_opsz40.svg"))
+        # noinspection PyUnresolvedReferences
         aktualisieren.triggered.connect(self.trw_Explorer_Kontextmenu_Aktualisieren)
         kontext.addAction(aktualisieren)
 
         loeschen = QAction("Löschen", self)
         loeschen.setIcon(QIcon("res/icons/delete_FILL0_wght500_GRAD0_opsz40.svg"))
+        # noinspection PyUnresolvedReferences
         loeschen.triggered.connect(self.trw_Explorer_Kontextmenu_Loeschen)
         kontext.addAction(loeschen)
 
@@ -309,6 +326,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             self.exploreritems_loeschen(self.trw_Explorer.selectedItems())
 
     def mn_Herunterladen_triggered(self):
+        """Wird ausgeführt, wenn der Benutzer das Herunterladenmenü anwählt."""
         self.mp_Herunterladen = MpHerunterladen(self)
         self.mp_Herunterladen.setModal(True)
 

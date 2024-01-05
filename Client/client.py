@@ -9,7 +9,6 @@ Signalen und Slots weiter.
 from PyQt5.QtWidgets import QApplication
 import sys
 from hauptfenster import Hauptfenster
-from trainingsfenster import Trainingsfenster
 import exception
 from rich import traceback
 

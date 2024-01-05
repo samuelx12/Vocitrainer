@@ -4,6 +4,8 @@ trainingscontroller.py
 Hierhin kommen die Kontroll-Klassen für das Training
 """
 
+from karte_tuple import Karte
+
 
 class TestTraining:
     def __int__(self):
@@ -21,18 +23,14 @@ class TC_Einfach:
     """
     Ein einfacher Trainingscontroller, der Wörter immer wiederholt, bis alle einmal richtig geschrieben wurden.
     """
-    def __init__(self):
-        self.lernliste = [
-            [1, "Haus", "house", "Ein Gebäude", 75, False, 3],
-            [2, "Hund", "dog", "Haustier", 25, True, 3],
-            [3, "Kuh", "cow", "Tier, das Milch gibt", 50, False, 3]
-        ]
+    def __init__(self, lernliste):
+        self.lernliste = lernliste
         self.i = 0  # Counter
 
-    def frage(self):
-        return self.lernliste[self.i],
+    def frage(self) -> Karte:
+        return self.lernliste[self.i]
 
-    def antwort(self, antwort):
+    def antwort(self, resultat: bool):
         print("Wort Nummer: ", self.i)
         resultat = antwort == self.lernliste[self.i][2]
         return_info = self.lernliste[self.i], resultat
@@ -51,3 +49,38 @@ class TC_Einfach:
             pass
 
         return return_info
+
+
+class TC_Intelligent:
+    """
+    Hier steht der Controller für den Intelligenten Lernmodus.
+    Über die Algorithmik und die psychologischen Hintergrundgedanken steht genaueres
+    in eigenen Dateien im "Dokumentation"-Ordner.
+
+    karte = [
+        [kartendaten],
+        schwierigkeit: int,
+        gezeigt: bool
+    ]
+    """
+    def __init__(self):
+        # Countervariable
+        self.i = 0
+
+        # Einstellbare aber während Training konstante Millersche Zahl (siehe Dokumentation)
+        self.MZ = 5
+
+        # Liste für die noch ungelerten Vokabeln
+        self.ungelernt = []
+
+        # Liste für die Vokabeln, welche gerade gelernt werden.
+        self.lernend = []
+
+        # Liste für die gelernten Vokabeln.
+        self.gelernt = []
+
+    def frage(self):
+        pass
+
+    def antwort(self, antowrt: str):
+        pass

@@ -6,6 +6,8 @@ erstellt. Das Model, welches die Daten darin verwaltet wird allerdings einzel ge
 Widget zugewiesen.
 Der Vollständigkeit halber sei erwähnt, dass es auch sogenannte itembased Widgets gibt, die gleich wie ihre Verwandten
 aussehen aber die in sich enthaltenen Daten anders verwalten.
+
+Momentan ist hier nur das KartenModel.
 """
 from PyQt5.QtCore import QAbstractTableModel, QModelIndex, Qt
 from PyQt5 import QtCore
@@ -55,7 +57,7 @@ class KartenModel(QAbstractTableModel):
         cursor = self.dbconn.cursor()
 
         # SQL-Abfrage, um bestimmte Spalten aus der Tabelle karte abzurufen
-        query = f"SELECT karte_id, wort, fremdwort, definition, bemerkung, markiert FROM karte WHERE set_id = ?"
+        query = f"SELECT karte_id, wort, fremdwort, definition, bemerkung, lernfortschritt, markiert FROM karte WHERE set_id = ?"
         cursor.execute(query, (set_id,))
         result = cursor.fetchall()
 
@@ -69,7 +71,7 @@ class KartenModel(QAbstractTableModel):
 
         self.endResetModel()
 
-        print(karte_liste)
+        # print(karte_liste)
 
     def flags(self, index: QModelIndex) -> Qt.ItemFlags:
         """
@@ -100,7 +102,7 @@ class KartenModel(QAbstractTableModel):
             # damit die Änderung direkt in der Datenbank vorgenommen werden kann und
             # dann über die lade_daten Funktion auch in der Liste, der geladenen Karten gespeichert wird.
             karten_ID = self.daten[index.row][0]
-            print(karten_ID)
+            # print(karten_ID)
 
         return True
 

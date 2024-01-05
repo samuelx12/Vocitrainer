@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>443</width>
-    <height>290</height>
+    <width>518</width>
+    <height>352</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,6 +65,23 @@ border-color: rgb(201, 220, 225);</string>
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="f_lbl_definition_beschreibung">
+         <property name="text">
+          <string>Definition:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="f_lbl_definition_wort">
+         <property name="text">
+          <string>DEFINTION DEFINITION DEFINTION aösdlfkjasdfljasdlöfkj aölskdjf alökdsfj aölsfj aösldkfj aösdlkfj alösdkfj aölsdkfj aölsdkfj aölsdkfj aölsdkfj aölkdsfj aöllskdjf aölskdfj aölskdfj aölskdjf aölsdkfj aölskdfj aölskdfj aöldkfj </string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -72,10 +89,17 @@ border-color: rgb(201, 220, 225);</string>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>0</height>
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Frage</string>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -108,16 +132,9 @@ border-color: rgb(201, 220, 225);</string>
          </item>
         </layout>
        </item>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Frage</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_2">
+     <widget class="QWidget" name="antwort_page">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QLabel" name="a_lbl_deutsch_beschreibung">
@@ -149,6 +166,26 @@ border-color: rgb(201, 220, 225);</string>
        <item>
         <widget class="QLabel" name="a_lbl_fremdsprache_wort">
          <property name="styleSheet">
+          <string notr="true">background-color: rgb(201, 220, 225);
+border: 3px solid;
+border-radius: 3px;
+border-color: rgb(201, 220, 225);</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="a_lbl_deineAntwort_beschreibung">
+         <property name="text">
+          <string>Deine Antwort:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="a_lbl_deineAntwort_wort">
+         <property name="styleSheet">
           <string notr="true">background-color: rgb(225, 171, 171);
 border: 3px solid;
 border-radius: 3px;
@@ -160,17 +197,58 @@ border-color: rgb(225, 171, 171);</string>
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="a_lbl_definition_beschreibung">
+         <property name="text">
+          <string>Definition:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="a_lbl_definition_wort">
+         <property name="text">
+          <string>DEFINTION DEFINITION DEFINTION aösdlfkjasdfljasdlöfkj aölskdjf alökdsfj aölsfj aösldkfj aösdlkfj alösdkfj aölsdkfj aölsdkfj aölsdkfj aölsdkfj aölkdsfj aöllskdjf aölskdfj aölskdfj aölskdjf aölsdkfj aölskdfj aölskdfj aöldkfj </string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="a_lbl_bemerkung_beschreibung">
+         <property name="text">
+          <string>Bemerkung:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="a_lbl_bemerkung_wort">
+         <property name="text">
+          <string>BEMERKUNG BEMERKUNG BEMERKUNG</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>20</width>
-           <height>40</height>
+           <width>17</width>
+           <height>2</height>
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Antwort</string>
+         </property>
+        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -203,12 +281,191 @@ border-color: rgb(225, 171, 171);</string>
          </item>
         </layout>
        </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="zeigen_page">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QLabel" name="label_2">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="z_lbl_NeuesWort">
+           <property name="styleSheet">
+            <string notr="true">font: 16pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Neues Wort!</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="Line" name="line">
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="z_lbl_ProfiTipp">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Profi-Tipp: Schreibe das Wort einmal von Hand ab. Das hilft, es sich schnell zu merken.</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="z_lbl_deutsch_beschreibung">
          <property name="text">
-          <string>Antwort</string>
+          <string>Deutsch:</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="z_lbl_deutsch_wort">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(201, 220, 225);
+border: 3px solid;
+border-radius: 3px;
+border-color: rgb(201, 220, 225);</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="z_lbl_fremdsprache_beschreibung">
+         <property name="text">
+          <string>Fremdsprache:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="z_lbl_fremdsprache_wort">
+         <property name="styleSheet">
+          <string notr="true">font: 11pt &quot;MS Shell Dlg 2&quot;;
+background-color: rgb(184, 225, 210);
+border: 3px solid;
+border-radius: 3px;
+border-color: rgb(184, 225, 210);</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="z_lbl_definition_beschreibung">
+         <property name="text">
+          <string>Definition:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="z_lbl_definition_wort">
+         <property name="text">
+          <string>DEFINTION DEFINITION DEFINTION aösdlfkjasdfljasdlöfkj aölskdjf alökdsfj aölsfj aösldkfj aösdlkfj alösdkfj aölsdkfj aölsdkfj aölsdkfj aölsdkfj aölkdsfj aöllskdjf aölskdfj aölskdfj aölskdjf aölsdkfj aölskdfj aölskdfj aöldkfj </string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="z_lbl_bemerkung_beschreibung">
+         <property name="text">
+          <string>Bemerkung:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="z_lbl_bemerkung_wort">
+         <property name="text">
+          <string>BEMERKUNG BEMERKUNG BEMERKUNG</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Zeigen</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="z_cmd_weiter">
+           <property name="text">
+            <string>Weiter</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="z_cmd_abbrechen">
+           <property name="text">
+            <string>Abbrechen</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
