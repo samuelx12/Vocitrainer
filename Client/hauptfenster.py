@@ -47,17 +47,14 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
         # Tabellen Model erstellen und zuweisen
         self.dbconn = sqlite3.connect('vocitrainerdb.db')
-        print("Datenbankverbindung wurde erstellt")
         self.kartenModel = KartenModel(dbconn=self.dbconn)
-        print("Model wurde erstellt")
 
         # Tabellen Model Daten laden
-        self.kartenModel.lade_daten(1)
+        # self.kartenModel.lade_daten(1)
         self.geladenes_set_explorer_item = None
 
         # Model zuweisen
         self.tbv_Liste.setModel(self.kartenModel)
-        print("Model wurde zugewiesen")
         self.tbv_Liste.horizontalHeader().setSectionResizeMode(QHeaderView.Interactive)
         self.tbv_Liste.horizontalHeader().setStretchLastSection(True)
 
@@ -102,7 +99,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         #                                                         V
         gewaehlte_karten = [Karte(*self.kartenModel.daten[zeile], 0) for zeile in gewaehlte_zeilen]
 
-        print(gewaehlte_karten)  # todo Entfernen
+        # print(gewaehlte_karten) # DEBUG Hier entkommentieren um zu sehen, welche Karten ins Training geladen werden
 
         # Sprache herausfinden
         cursor = self.dbconn.cursor()
@@ -110,14 +107,16 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         cursor.execute(sql, (self.geladenes_set_explorer_item.id,))
         sprache = cursor.fetchone()[0]
 
-        self.trainingsfenster = Trainingsfenster(gewaehlte_karten, sprache)
+        self.trainingsfenster = Trainingsfenster(gewaehlte_karten, sprache, False)
         self.trainingsfenster.setModal(True)
 
         self.trainingsfenster.exec_()
 
     def load_explorer(self):
         def ebene_laden(parent, parent_id):
-            """Diese Funktion ladet Rekursiv die Ordnerstruktur"""
+            """
+            Diese Funktion ladet Rekursiv die Ordnerstruktur
+            """
             # Ordner dieser Ebene laden
             query = "SELECT ordner_id, ordner_name, farbe, urordner_id FROM ordner WHERE urordner_id = ?"
             lade_cursor.execute(query, (parent_id,))
@@ -131,7 +130,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             # Vocisets dieser Ebene laden
             query = "SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE urordner_id = ?"
             lade_cursor.execute(query, (parent_id,))
-            print(parent_id)
+            # print(parent_id)
             result = lade_cursor.fetchall()
 
             # Resultat in Liste umwandeln

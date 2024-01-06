@@ -30,7 +30,10 @@ class KartenModel(QAbstractTableModel):
     def rowCount(self, parent: QModelIndex = ...) -> int:
         """Vorgegebene Funktion welche die Anzahl Zeilen zurückgeben muss."""
         # print("rowCount: ", len(self.daten))
-        return len(self.daten)
+        try:
+            return len(self.daten)
+        except:
+            return 0
 
     def columnCount(self, parent: QModelIndex = ...) -> int:
         """Vorgegebene Funktion welche die Anzahl Spalten zurückgeben muss."""
@@ -57,7 +60,9 @@ class KartenModel(QAbstractTableModel):
         cursor = self.dbconn.cursor()
 
         # SQL-Abfrage, um bestimmte Spalten aus der Tabelle karte abzurufen
-        query = f"SELECT karte_id, wort, fremdwort, definition, bemerkung, lernfortschritt, markiert FROM karte WHERE set_id = ?"
+        query = """
+        SELECT karte_id, wort, fremdwort, definition, bemerkung, lernfortschritt, markiert FROM karte WHERE set_id = ?
+        """
         cursor.execute(query, (set_id,))
         result = cursor.fetchall()
 

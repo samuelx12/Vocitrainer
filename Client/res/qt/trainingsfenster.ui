@@ -48,6 +48,9 @@ border-color: rgb(201, 220, 225);</string>
          <property name="text">
           <string>TextLabel</string>
          </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -61,23 +64,6 @@ border-color: rgb(201, 220, 225);</string>
         <widget class="QLineEdit" name="f_txt_fremdsprache">
          <property name="cursorMoveStyle">
           <enum>Qt::LogicalMoveStyle</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="f_lbl_definition_beschreibung">
-         <property name="text">
-          <string>Definition:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="f_lbl_definition_wort">
-         <property name="text">
-          <string>DEFINTION DEFINITION DEFINTION aösdlfkjasdfljasdlöfkj aölskdjf alökdsfj aölsfj aösldkfj aösdlkfj alösdkfj aölsdkfj aölsdkfj aölsdkfj aölsdkfj aölkdsfj aöllskdjf aölskdfj aölskdfj aölskdjf aölsdkfj aölskdfj aölskdfj aöldkfj </string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -157,26 +143,6 @@ border-color: rgb(201, 220, 225);</string>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="a_lbl_fremdsprache_beschreibung">
-         <property name="text">
-          <string>Fremdsprache:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="a_lbl_fremdsprache_wort">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(201, 220, 225);
-border: 3px solid;
-border-radius: 3px;
-border-color: rgb(201, 220, 225);</string>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="a_lbl_deineAntwort_beschreibung">
          <property name="text">
           <string>Deine Antwort:</string>
@@ -190,6 +156,26 @@ border-color: rgb(201, 220, 225);</string>
 border: 3px solid;
 border-radius: 3px;
 border-color: rgb(225, 171, 171);</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="a_lbl_fremdsprache_beschreibung">
+         <property name="text">
+          <string>Fremdsprache:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="a_lbl_fremdsprache_wort">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(197, 225, 196);
+border: 3px solid;
+border-radius: 3px;
+border-color: rgb(197, 225, 196);</string>
          </property>
          <property name="text">
           <string>TextLabel</string>

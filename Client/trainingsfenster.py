@@ -10,7 +10,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from Client.res.qt.ui_trainingsfenster import Ui_Trainingsfenster
-from trainingscontroller import TC_Einfach
+from trainingscontroller import TC_Einfach, TC_Intelligent, TrainingFertig
 from karte_tuple import Karte
 
 
@@ -31,23 +31,28 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         Phase 2:
             Falls in Phase 1 eine Frage gestellt wurde, die Antwort anzeigen.
     """
-    def __init__(self, daten, sprache, *args, **kwargs):
+
+    def __init__(self, daten: list, sprache: str, definition_lernen: bool, *args, **kwargs):
         super(Trainingsfenster, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        self.setWindowTitle("Training")
+        self.setWindowTitle("Vocitrainer")
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+        self.training_beendet = False
 
         # Sprache gleich für alles Einstellen:
-        self.sprache = sprache
+        self.sprache: str = sprache
         self.f_lbl_fremdsprache.setText(self.sprache)
         self.a_lbl_fremdsprache_beschreibung.setText(self.sprache)
         self.z_lbl_fremdsprache_beschreibung.setText(self.sprache)
+
+        # Mit Definition lernen falls vorhanden einstellen
+        self.definition_lernen: bool = definition_lernen
 
         # Bildschirmgrösse setzen
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
         breite = bildschirm_geometrie.width()
         hoehe = bildschirm_geometrie.height()
-        self.setGeometry(int(breite * 4/12), int(hoehe * 3/8), int(breite * 1/3), int(hoehe * 1/6))
+        self.setGeometry(int(breite * 4 / 12), int(hoehe * 3 / 8), int(breite * 1 / 3), int(hoehe * 1 / 6))
 
         # self.setCentralWidget(self.stackedWidget)
         self.stackedWidget.setCurrentIndex(0)
@@ -74,8 +79,8 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
     def antwort_pruefen(antwort, loesung) -> bool:
         """
         Hier wird die Antwort überprüft.
-        Eine mögliche Erweiterung wäre hier,
-        dass zum Beispiel bei gegebener Loesung "to listen (verb)" auch einfach "to listen" als Antwort akzeptiert wird.
+        Eine mögliche Verbesserung wäre hier, dass zum Beispiel bei gegebener Loesung
+        "to listen (verb)" auch einfach "to listen" als Antwort akzeptiert wird.
         """
         return antwort == loesung
 
@@ -84,10 +89,54 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         In dieser Phase werden die Daten vom Controller geladen.
         Dann wird entweder nach dem Voci gefragt oder das neue Wort wird gezeigt.
         """
-        self.aktive_karte = self.controller.frage()
 
-        self.f_txt_fremdsprache.setText("")
-        self.f_lbl_deutsch_wort.setText(self.aktive_karte.wort)
+        # --- Kontroller nach dem nächsten Voci fragen ---
+        try:
+            self.aktive_karte, karte_zeigen = self.controller.frage()
+        except TrainingFertig:
+            self.training_beendet = True
+            self.close()
+            return
+
+        if karte_zeigen:
+            # --- Zeigeseite laden ---
+            self.z_lbl_deutsch_wort.setText(self.aktive_karte.wort)
+            self.z_lbl_fremdsprache_wort.setText(self.aktive_karte.fremdwort)
+
+            # Allenfalls Definition zeigen
+            if self.aktive_karte.bemerkung == "":
+                self.z_lbl_definition_beschreibung.setVisible(False)
+                self.z_lbl_definition_wort.setVisible(False)
+            else:
+                self.z_lbl_definition_beschreibung.setVisible(True)
+                self.z_lbl_definition_wort.setVisible(True)
+                self.z_lbl_definition_wort.setText(self.aktive_karte.definition)
+
+            # Allenfalls Bemerkung zeigen
+            if self.aktive_karte.bemerkung == "":
+                self.z_lbl_bemerkung_beschreibung.setVisible(False)
+                self.z_lbl_bemerkung_wort.setVisible(False)
+            else:
+                self.z_lbl_bemerkung_beschreibung.setVisible(True)
+                self.z_lbl_bemerkung_wort.setVisible(True)
+                self.z_lbl_bemerkung_wort.setText(self.aktive_karte.bemerkung)
+
+            # Zeigeseite anzeigen
+            self.stackedWidget.setCurrentIndex(2)
+        else:
+            # --- Frageseite laden ---
+            if self.definition_lernen and self.aktive_karte.definition != "":
+                self.f_lbl_deutsch_beschreibung.setText("Definition:")
+                self.f_lbl_deutsch_wort.setText(self.aktive_karte.definition)
+            else:
+                self.f_lbl_deutsch_beschreibung.setText("Deutsch:")
+                self.f_lbl_deutsch_wort.setText(self.aktive_karte.wort)
+
+            # Eingabefeld leeren
+            self.f_txt_fremdsprache.setText("")
+
+            # Frageseite anzeigen
+            self.stackedWidget.setCurrentIndex(0)
 
     def phase2(self):
         """
@@ -133,26 +182,42 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             self.a_lbl_bemerkung_wort.setVisible(True)
             self.a_lbl_bemerkung_wort.setText(self.aktive_karte.bemerkung)
 
+        # --- Antwortsseite anzeigen ---
+        self.stackedWidget.setCurrentIndex(1)
 
     def closeEvent(self, event: QCloseEvent):
         """
         Überschreiben der closeEvent-Methode, um das Schließen des Fensters zu überwachen.
         """
 
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Question)
-        msg.setWindowTitle("Vocitrainer")
-        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        msg.setText(
-            "Willst du das Training beenden?"
-        )
-        antwort = msg.exec_()
+        if self.training_beendet:
+            # Das Training ist fertig
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowTitle("Vocitrainer")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.setText(
+                "Das Training ist beendet. Gratulation!"
+            )
+            event.accept()
+            msg.exec_()
 
-        if antwort == QMessageBox.Yes:
-            self.training_beenden()
-            event.accept()  # Fenster wird geschlossen.
         else:
-            event.ignore()  # Sonst muss nichts passieren
+            # Der Benutzer will das Training vorzeitig beenden.
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Question)
+            msg.setWindowTitle("Vocitrainer")
+            msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            msg.setText(
+                "Willst du das Training beenden?"
+            )
+            antwort = msg.exec_()
+
+            if antwort == QMessageBox.Yes:
+                self.training_beenden()
+                event.accept()  # Fenster wird geschlossen.
+            else:
+                event.ignore()  # Sonst muss nichts passieren
 
     def training_beenden(self):
         """Wenn das Training beendet werden soll, wird diese Funktion aufgerufen."""
@@ -163,36 +228,13 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
     # --------------------------------
 
     def f_cmd_pruefen_clicked(self):
-        """Frageseite: PRÜFEN GEKLICKT"""
-
-        antwort_korrekt = self.antwort_pruefen(self.f_txt_fremdsprache.text())
-
-        antwort = self.controller.antwort(self.f_txt_fremdsprache.text())
-        self.a_lbl_deutsch_wort.setText(antwort[0][1])
-        self.a_lbl_fremdsprache_wort.setText(antwort[0][2])
-        self.a_lbl_deutsch_beschreibung.setText(str(antwort[1]))
-        if antwort[1]:
-            self.a_lbl_fremdsprache_wort.setStyleSheet(
-                """
-                background-color: rgb(197, 225, 196);
-                border: 3px solid;
-                border-radius: 3px;
-                border-color: rgb(197, 225, 196);
-                """
-            )
-        else:
-            self.a_lbl_fremdsprache_wort.setStyleSheet(
-                """
-                background-color: rgb(225, 171, 171);
-                border: 3px solid;
-                border-radius: 3px;
-                border-color: rgb(225, 171, 171);
-                """
-            )
-        self.stackedWidget.setCurrentIndex(1)
+        """PRÜFEN GEKLICKT"""
+        # Phase 2 starten
+        self.phase2()
 
     def f_cmd_abbrechen_clicked(self):
-        """ABBRECHEN (Frageseite) GEKLICKT"""
+        """ABBRECHEN GEKLICKT"""
+        # Fenster schliessen
         self.close()
 
     # ----------------------------------
@@ -201,11 +243,12 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
 
     def a_cmd_weiter_clicked(self):
         """WEITER GEKLICKT"""
+        # Phase 1 wieder einleiten
         self.phase1()
-        self.stackedWidget.setCurrentIndex(0)
 
     def a_cmd_abbrechen_clicked(self):
-        """ABBRECHEN (Antwortseite) GEKLICKT"""
+        """ABBRECHEN GEKLICKT"""
+        # Fenster schliessen
         self.close()
 
     # ---------------------------------------------
@@ -214,8 +257,10 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
 
     def z_cmd_weiter_clicked(self):
         """WEITER GEKLICKT"""
-        pass
+        # Phase 1 aufrufen
+        self.phase1()
 
     def z_cmd_abbrechen_clicked(self):
-        """ABBRECHEN (Zeigenseite) GEKLICKT"""
+        """ABBRECHEN GEKLICKT"""
+        # Fenster schliessen
         self.close()

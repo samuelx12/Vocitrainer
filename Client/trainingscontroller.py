@@ -27,13 +27,23 @@ class TC_Einfach:
         self.lernliste = lernliste
         self.i = 0  # Counter
 
-    def frage(self) -> Karte:
-        return self.lernliste[self.i]
+    def frage(self) -> (Karte, bool):
+        """
+        Gibt die Frage zurück
+        :return: 1. Kartendaten, 2. Ob die Karte gezeigt oder danach gefragt werden soll.
+        """
+        try:
+            neues_wort = self.lernliste[self.i]
+        except IndexError:
+            # Wenn das Training fertig ist wird das über die Exception gemeldet
+            raise TrainingFertig
+
+        return neues_wort, False
 
     def antwort(self, resultat: bool):
-        print("Wort Nummer: ", self.i)
-        resultat = antwort == self.lernliste[self.i][2]
-        return_info = self.lernliste[self.i], resultat
+        """
+        Mit dieser Funktion wird der Trainingscontroller informiert, ob die Frage richtig beantwortet wurde
+        """
 
         if resultat:
             self.lernliste.pop(self.i)  # Gelerntes Wort aus der Liste entfernen
@@ -47,8 +57,6 @@ class TC_Einfach:
         # Wenn kein Wort mehr übrig
         if len(self.lernliste) == 0:
             pass
-
-        return return_info
 
 
 class TC_Intelligent:
@@ -79,8 +87,19 @@ class TC_Intelligent:
         # Liste für die gelernten Vokabeln.
         self.gelernt = []
 
+
+
     def frage(self):
         pass
 
     def antwort(self, antowrt: str):
         pass
+
+
+class TrainingFertig(Exception):
+    """
+    Das ist eine eigene Exception, die geworfen wird, wenn eine weitere Karte geladen wird,
+    obwohl das Training fertig ist.
+    """
+    def __init__(self):
+        super().__init__()
