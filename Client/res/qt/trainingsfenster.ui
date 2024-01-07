@@ -30,7 +30,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="frage_page">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -93,6 +93,13 @@ border-color: rgb(201, 220, 225);</string>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="f_lbl_schwierigkeit">
+           <property name="text">
+            <string>Schwierigkeit</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
@@ -242,6 +249,13 @@ border-color: rgb(197, 225, 196);</string>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="a_lbl_schwierigkeit">
+           <property name="text">
+            <string>Schwierigkeit</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <spacer name="horizontalSpacer_2">
            <property name="orientation">

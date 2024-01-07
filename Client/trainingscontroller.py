@@ -69,13 +69,30 @@ class TC_Intelligent:
     """
     Hier steht der Controller für den Intelligenten Lernmodus.
     Über die Algorithmik und die psychologischen Hintergrundgedanken steht genaueres
-    in eigenen Dateien im "Dokumentation"-Ordner.
+    in eigenen Dateien im "Dokumentation"-Ordner und im Kaptiel der schriftlichen Arbeit
 
-    karte = [
-        [kartendaten],
-        schwierigkeit: int,
-        gezeigt: bool
-    ]
+    Schwierigkeit: Es gibt zwei Schwierigkeiten.
+
+    Schwierigkeit_Training
+        - Schwierigkeit_Training zählt, wie häufig das Voci falsch beantwortet wurde.
+        - Wenn es jedoch richtig geschriebe wird verringert sich dieser Wert wieder
+        - Das Wort gilt dann als gelernt, wenn die Schwierigkeit_Training ~0 erreicht
+        - Schwierigkeit Training existiert nur für die Laufzeit des Trainings
+
+    Schwierigkeit_Max
+        - Im Gegensatz zu Schwierigkeit_Training wird Schwierigkeit_Max in der Datenbank festgehalten.
+        - Das Ziel ist, das der Wert die Schwierigkeit des Wortes für den Benutzer zeigt
+        - 0=Einfach, 1=Mittelmässig, 2=Schwer, 3=Sehr Schwer
+        - Die Schwierigkeit_Max ist die maximale im Training erreichte Schwierigkeit durch die Fehlertoleranz
+
+    Fehlertolerenz
+        - Die Fehlertoleranz bestimmt, ab wie vielen falschen Antworten, das Wort eine Schwierigkeitsstufe höher rückt
+        - Angenommen, die Fehlertoleranz ist 2: Nach zwei Falschen Antworten, muss das Wort zusätzlich einmal
+          neu geschrieben werden, ausserdem gilt es ab 2 Antworten als "mittelmässig" schwer
+        - Eine hohe Fehlertoleranz ist für die Leute geignet, welche eher lange brauchen bis sie das Wort können bzw.
+          viele Flüchtigkeitsfehler machen: So werden die Wörter für sie nicht schwieriger eingestuft als sie
+          eigentlich sind.
+        - Die Standart-Fehlertoleranz ist 2
     """
     def __init__(self, lernliste: Iterable[Karte], dbconn: Connection):
         # DB Connection speichern
@@ -163,7 +180,7 @@ class TC_Intelligent:
         Dann wird je nach Lernfortschritt das Wort gezeigt oder abgefragt.
         :return: Kartendaten, karte_zeigen: bool
         """
-        self.debug_prints("--------- FRAGE")
+        self.debug_prints("-------------------- FRAGE")
         nachgefuellt = False
         while not nachgefuellt:
             if self.lernend[self.i] is None:
@@ -171,6 +188,7 @@ class TC_Intelligent:
                 try:
                     self.lernend[self.i] = self.ungelernt.pop(0)
                     nachgefuellt = True
+
                 except IndexError:
                     # Es gibt keine Ungelernten Wörter mehr, deshalb wird jetzt die Lernend Liste kleiner
                     self.lernend.pop(self.i)
@@ -181,8 +199,6 @@ class TC_Intelligent:
                     self.i = self.i % self.MZ
             else:
                 nachgefuellt = True
-
-        self.debug_prints("Nach nachladen")
 
         if self.lernend[self.i].lernfortschritt == 0:
             # Zeigen
@@ -195,23 +211,44 @@ class TC_Intelligent:
             # Fragen
             return self.lernend[self.i], False
 
-    def antwort(self, richtig_beantwortet: str) -> None:
+    def antwort(self, richtig_beantwortet: str) -> Karte:
         """
         Diese Funktion wird vom Fenster aufgerufen, um den Controller über das Resultat der letzten Abfrage
         zu informieren
         :param richtig_beantwortet: Boolean, ob der Benutzer die Frage richtig beantwortet hatte.
-        :return: None
+        :return: Die Karte mit der aktualisierten Schwierigkeit
         """
+        self.debug_prints("----------------------- Antwort")
         if richtig_beantwortet:
-            if self.lernend[self.i].schwierigkeit_training >= self.fehlertoleranz:
-                # Die Karte war mehrmals falsch, sie wird jetzt doch für Trainingszeitdauer als einfacher eingestuft.
+            if self.lernend[self.i].schwierigkeit_max == -1:
+                # Voci wurde zum erstenmal abgefragt und war gleich richtig
+                self.lernend[self.i] = self.lernend[self.i]._replace(
+                    schwierigkeit_max=0
+                )
+                self.update_schwierigkeit_max(self.lernend[self.i].ID, 0)
+
+                # Karte für die Anzeige nachher speichern
+                aktualisierte_karte = self.lernend[self.i]
+
+            elif self.lernend[self.i].schwierigkeit_training >= self.fehlertoleranz:
+                # Die Karte war zuvor mehrmals falsch, sie wird jetzt doch für
+                # die Trainingszeitdauer als einfacher eingestuft.
                 self.lernend[self.i] = self.lernend[self.i]._replace(
                     schwierigkeit_training=self.lernend[self.i].schwierigkeit_training - self.fehlertoleranz
                 )
+
+                # Aktualisierte Karte speichern
+                aktualisierte_karte = self.lernend[self.i]
+
             else:
                 # Karte ist fertig gelernt
+                self.lernend[self.i] = self.lernend[self.i]._replace(schwierigkeit_training=0)
                 self.gelernt.append(self.lernend[self.i]._replace(lernfortschritt=2))
                 self.update_lernfortschritt(self.lernend[self.i].ID, 2)
+
+                # Aktualisierte Karte speichern
+                aktualisierte_karte = self.lernend[self.i]
+
                 # noinspection PyTypeChecker
                 self.lernend[self.i] = None
 
@@ -232,7 +269,12 @@ class TC_Intelligent:
 
                 self.update_schwierigkeit_max(self.lernend[self.i].ID, neue_schwierigkeit_max)
 
+            # Aktualisierte Karte speichern
+            aktualisierte_karte = self.lernend[self.i]
+
         self.i = (self.i + 1) % self.MZ
+
+        return aktualisierte_karte
 
     def update_lernfortschritt(self, karte_id: int, neuer_lernfortschritt: int):
         """Kleine Funktion um auch in der Datenbank die Werte upzudaten."""

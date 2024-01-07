@@ -42,14 +42,17 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.training_beendet = False
         self.DBCONN = dbconn
 
-        # Sprache gleich für alles Einstellen:
+        # Einstellung: Sprache gleich für alles Einstellen:
         self.sprache: str = sprache
         self.f_lbl_fremdsprache.setText(self.sprache + ":")
         self.a_lbl_fremdsprache_beschreibung.setText(self.sprache + ":")
         self.z_lbl_fremdsprache_beschreibung.setText(self.sprache + ":")
 
-        # Mit Definition lernen falls vorhanden einstellen
+        # Einstellung: Mit Definition lernen falls vorhanden einstellen
         self.definition_lernen: bool = definition_lernen
+
+        # Einstellung: Schwierigkeit anzeigen
+        self.schwierigkeit_zeigen = True
 
         # Bildschirmgrösse setzen
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
@@ -89,6 +92,56 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         "to listen (verb)" auch einfach "to listen" als Antwort akzeptiert wird.
         """
         return antwort == loesung
+
+    def zeige_schwierigkeit(self, karte: Karte, seite: str):
+        """
+        Zeigt die Schwierigkeit der Karte auf, falls die Einstellung dazu entsprechend ist.
+        :param karte: Welcher Karte Schwierigkeit
+        :param seite: Auf welcher Seite
+        :return:
+        """
+
+        if seite == "f":
+            schwierigkeits_label = self.f_lbl_schwierigkeit
+        elif seite == "a":
+            schwierigkeits_label = self.a_lbl_schwierigkeit
+        else:
+            return
+
+        # Wenn Einstellung nicht aktiv ist:
+        if not self.schwierigkeit_zeigen:
+            schwierigkeits_label.setVisible(False)
+            return
+
+        # Verbleibende Abfragen berechnen:
+        verbleibend = karte.schwierigkeit_training // self.controller.fehlertoleranz
+
+        # Farbe und Text bestimmen
+        if karte.schwierigkeit_max == -1:
+            level = "Unbekannt"
+            farbe = "rgb(80, 80, 80)"
+            verbleibend = 1
+        elif karte.schwierigkeit_max == 0:
+            level = "Einfach"
+            farbe = "rgb(0, 85, 0)"
+        elif karte.schwierigkeit_max == 1:
+            level = "Mittelmässig"
+            farbe = "rgb(198, 132, 0)"
+        elif karte.schwierigkeit_max == 2:
+            level = "Schwer"
+            farbe = "rgb(170, 0, 0)"
+        else:
+            level = "Sehr schwer"
+            farbe = "rgb(255, 0, 0)"
+
+        schwierigkeits_label.setText(level + f" (Min. verbleibende Abfragen: {verbleibend})")
+        schwierigkeits_label.setStyleSheet(
+            f"""
+            color: {farbe};
+            font: 75 13pt "MS Shell Dlg 2";
+            """
+        )
+        schwierigkeits_label.setVisible(True)
 
     def phase1(self):
         """
@@ -141,6 +194,9 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             # Eingabefeld leeren
             self.f_txt_fremdsprache.setText("")
 
+            # Schwierigkeit anzeigen
+            self.zeige_schwierigkeit(self.aktive_karte, "f")
+
             # Frageseite anzeigen
             self.stackedWidget.setCurrentIndex(0)
 
@@ -154,7 +210,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         antwort_korrekt = self.antwort_pruefen(user_antwort, self.aktive_karte.fremdwort)
 
         # --- Kontroller soll über das Resultat informiert werden ---
-        self.controller.antwort(antwort_korrekt)
+        self.aktive_karte = self.controller.antwort(antwort_korrekt)
 
         # --- Antwortsseite laden ---
         # Deutsches Wort:
@@ -187,6 +243,9 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             self.a_lbl_bemerkung_beschreibung.setVisible(True)
             self.a_lbl_bemerkung_wort.setVisible(True)
             self.a_lbl_bemerkung_wort.setText(self.aktive_karte.bemerkung)
+
+        # Schwierigkeit anzeigen
+        self.zeige_schwierigkeit(self.aktive_karte, "a")
 
         # --- Antwortsseite anzeigen ---
         self.stackedWidget.setCurrentIndex(1)

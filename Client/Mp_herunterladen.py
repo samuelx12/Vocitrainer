@@ -145,7 +145,7 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         # Schleife um die Karten einzufügen
         query = f"""
         INSERT INTO karte (wort, fremdwort, definition, bemerkung, lernfortschritt, markiert, schwierigkeit, set_id)
-        VALUES (?, ?, ?, ?, 0, 0, 0, {gespeicherte_set_id})
+        VALUES (?, ?, ?, ?, 0, 0, -1, {gespeicherte_set_id})
         """
         for i in range(len(karten_datensaetze)):
             self.CURSOR.execute(query, [karten_datensaetze[i][j] for j in range(1, 5)])

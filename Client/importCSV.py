@@ -123,8 +123,8 @@ class ImportCSV(QDialog, Ui_ImportCSV):
             importiertes_set_id = self.CURSOR.lastrowid
 
             query = f"""
-            INSERT INTO karte (wort, fremdwort, definition, bemerkung, lernfortschritt, markiert, set_id)
-            VALUES (?, ?, ?, ?, 0, 0, {importiertes_set_id})
+            INSERT INTO karte (wort, fremdwort, definition, bemerkung, lernfortschritt, markiert, schwierigkeit, set_id)
+            VALUES (?, ?, ?, ?, 0, 0, -1, {importiertes_set_id})
             """
             for zeile in daten:
                 if self.int_spalteWort.value() == 0:
