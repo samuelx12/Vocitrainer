@@ -202,7 +202,7 @@ class TC_Intelligent:
 
         if self.lernend[self.i].lernfortschritt == 0:
             # Zeigen
-            self.lernend[self.i] = self.lernend[self.i]._replace(lernfortschritt=1)
+            self.lernend[self.i].lernfortschritt = 1
             self.update_lernfortschritt(self.lernend[self.i].ID, 1)
             karte = self.lernend[self.i]
             self.i = (self.i + 1) % self.MZ
@@ -222,9 +222,8 @@ class TC_Intelligent:
         if richtig_beantwortet:
             if self.lernend[self.i].schwierigkeit_max == -1:
                 # Voci wurde zum erstenmal abgefragt und war gleich richtig
-                self.lernend[self.i] = self.lernend[self.i]._replace(
-                    schwierigkeit_max=0
-                )
+                self.lernend[self.i].schwierigkeit_max = 0
+
                 self.update_schwierigkeit_max(self.lernend[self.i].ID, 0)
 
                 # Karte für die Anzeige nachher speichern
@@ -233,17 +232,17 @@ class TC_Intelligent:
             elif self.lernend[self.i].schwierigkeit_training >= self.fehlertoleranz:
                 # Die Karte war zuvor mehrmals falsch, sie wird jetzt doch für
                 # die Trainingszeitdauer als einfacher eingestuft.
-                self.lernend[self.i] = self.lernend[self.i]._replace(
-                    schwierigkeit_training=self.lernend[self.i].schwierigkeit_training - self.fehlertoleranz
-                )
+                self.lernend[self.i].schwierigkeit_training = (
+                        self.lernend[self.i].schwierigkeit_training - self.fehlertoleranz)
 
                 # Aktualisierte Karte speichern
                 aktualisierte_karte = self.lernend[self.i]
 
             else:
                 # Karte ist fertig gelernt
-                self.lernend[self.i] = self.lernend[self.i]._replace(schwierigkeit_training=0)
-                self.gelernt.append(self.lernend[self.i]._replace(lernfortschritt=2))
+                self.lernend[self.i].schwierigkeit_training = 0
+                self.lernend[self.i].lernfortschritt = 2
+                self.gelernt.append(self.lernend[self.i])
                 self.update_lernfortschritt(self.lernend[self.i].ID, 2)
 
                 # Aktualisierte Karte speichern
@@ -255,9 +254,7 @@ class TC_Intelligent:
         else:
             # Frage wurde Falsch beantwortet
             # Trainingsschwierigkeit erhöhen
-            self.lernend[self.i] = self.lernend[self.i]._replace(
-                schwierigkeit_training=self.lernend[self.i].schwierigkeit_training + 1
-            )
+            self.lernend[self.i].schwierigkeit_training=self.lernend[self.i].schwierigkeit_training + 1
 
             # Jetzt wird nur noch ermittelt, ob die Schwierigkeit der Karte einen neuen Peak hat, weil dann muss
             # die Schwierigkeit Max aktualisiert werden.
@@ -265,7 +262,7 @@ class TC_Intelligent:
 
                 neue_schwierigkeit_max = self.lernend[self.i].schwierigkeit_training // self.fehlertoleranz
 
-                self.lernend[self.i] = self.lernend[self.i]._replace(schwierigkeit_max=neue_schwierigkeit_max)
+                self.lernend[self.i].schwierigkeit_max=neue_schwierigkeit_max
 
                 self.update_schwierigkeit_max(self.lernend[self.i].ID, neue_schwierigkeit_max)
 
