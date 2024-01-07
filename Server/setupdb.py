@@ -63,7 +63,8 @@ cursor.execute(
 
 # Testdaten in die Tabelle 'vociset' einfügen
 cursor.execute(
-    "INSERT INTO vociset (set_name, beschreibung, sprache, user_id, anz_downloads) VALUES ('servSet 1', 'servBeschreibung Set 1', 2, 'Englisch', 0)")
+    "INSERT INTO vociset (set_name, beschreibung, sprache, user_id, anz_downloads) VALUES "
+    "('servSet 1', 'servBeschreibung Set 1', 'Englisch', 2, 0)")
 cursor.execute(
     "INSERT INTO vociset (set_name, beschreibung, sprache, anz_downloads) VALUES "
     "('servSet 2', 'servBeschreibung Set 2 Farben', 'Englisch', 0)"

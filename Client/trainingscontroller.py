@@ -49,6 +49,7 @@ class TC_Einfach:
         """
         Mit dieser Funktion wird der Trainingscontroller informiert, ob die Frage richtig beantwortet wurde
         """
+        karte = self.lernliste[self.i]
 
         if resultat:
             self.lernliste.pop(self.i)  # Gelerntes Wort aus der Liste entfernen
@@ -62,6 +63,8 @@ class TC_Einfach:
         # Wenn kein Wort mehr übrig
         if len(self.lernliste) == 0:
             pass
+
+        return karte
 
 
 # noinspection PyUnresolvedReferences
@@ -85,7 +88,7 @@ class TC_Intelligent:
         - 0=Einfach, 1=Mittelmässig, 2=Schwer, 3=Sehr Schwer
         - Die Schwierigkeit_Max ist die maximale im Training erreichte Schwierigkeit durch die Fehlertoleranz
 
-    Fehlertolerenz
+    Fehlertoleranz
         - Die Fehlertoleranz bestimmt, ab wie vielen falschen Antworten, das Wort eine Schwierigkeitsstufe höher rückt
         - Angenommen, die Fehlertoleranz ist 2: Nach zwei Falschen Antworten, muss das Wort zusätzlich einmal
           neu geschrieben werden, ausserdem gilt es ab 2 Antworten als "mittelmässig" schwer
@@ -132,7 +135,11 @@ class TC_Intelligent:
                 # um herauszufinden, wie viele Vocis gelernt wurden.
                 pass
 
-        self.debug_prints("Initialisierung des Controllers")
+        # Falls es nichts zu lernen gibt
+        if len(self.ungelernt) == 0 and self.lernend == [None for i in range(7)]:
+            raise TrainingFertig
+
+        # self.debug_prints("Initialisierung des Controllers")
 
     def debug_prints(self, position: str = ""):
         """
@@ -180,7 +187,7 @@ class TC_Intelligent:
         Dann wird je nach Lernfortschritt das Wort gezeigt oder abgefragt.
         :return: Kartendaten, karte_zeigen: bool
         """
-        self.debug_prints("-------------------- FRAGE")
+        # self.debug_prints("-------------------- FRAGE")
         nachgefuellt = False
         while not nachgefuellt:
             if self.lernend[self.i] is None:
@@ -218,58 +225,55 @@ class TC_Intelligent:
         :param richtig_beantwortet: Boolean, ob der Benutzer die Frage richtig beantwortet hatte.
         :return: Die Karte mit der aktualisierten Schwierigkeit
         """
-        self.debug_prints("----------------------- Antwort")
+
+        # Erste abfrage eines Vocis -> nicht mehr unbekannt
+        if self.lernend[self.i].schwierigkeit_max == -1:
+            self.lernend[self.i].schwierigkeit_max = 0
+            self.update_schwierigkeit_max(self.lernend[self.i].ID, 0)
+
+        #
         if richtig_beantwortet:
-            if self.lernend[self.i].schwierigkeit_max == -1:
-                # Voci wurde zum erstenmal abgefragt und war gleich richtig
-                self.lernend[self.i].schwierigkeit_max = 0
+            # Richtig beantwortet -> Einmal Fehlertoleranz von der Trainingsschwierigkeit abziehen
+            self.lernend[self.i].schwierigkeit_training -= self.fehlertoleranz
 
-                self.update_schwierigkeit_max(self.lernend[self.i].ID, 0)
-
-                # Karte für die Anzeige nachher speichern
-                aktualisierte_karte = self.lernend[self.i]
-
-            elif self.lernend[self.i].schwierigkeit_training >= self.fehlertoleranz:
-                # Die Karte war zuvor mehrmals falsch, sie wird jetzt doch für
-                # die Trainingszeitdauer als einfacher eingestuft.
-                self.lernend[self.i].schwierigkeit_training = (
-                        self.lernend[self.i].schwierigkeit_training - self.fehlertoleranz)
-
-                # Aktualisierte Karte speichern
-                aktualisierte_karte = self.lernend[self.i]
-
-            else:
+            if self.lernend[self.i].schwierigkeit_training < 0:
                 # Karte ist fertig gelernt
-                self.lernend[self.i].schwierigkeit_training = 0
                 self.lernend[self.i].lernfortschritt = 2
-                self.gelernt.append(self.lernend[self.i])
                 self.update_lernfortschritt(self.lernend[self.i].ID, 2)
 
+                # Der Liste der gelernten Karten hinzufügen
+                self.gelernt.append(self.lernend[self.i])
+
                 # Aktualisierte Karte speichern
                 aktualisierte_karte = self.lernend[self.i]
 
+                # Platz freigeben, damit später eine nachgeladen werden kann
                 # noinspection PyTypeChecker
                 self.lernend[self.i] = None
+
+            else:
+                # Aktualisierte Karte speichern
+                aktualisierte_karte = self.lernend[self.i]
 
         else:
             # Frage wurde Falsch beantwortet
             # Trainingsschwierigkeit erhöhen
-            self.lernend[self.i].schwierigkeit_training=self.lernend[self.i].schwierigkeit_training + 1
+            self.lernend[self.i].schwierigkeit_training += 1
 
             # Jetzt wird nur noch ermittelt, ob die Schwierigkeit der Karte einen neuen Peak hat, weil dann muss
             # die Schwierigkeit Max aktualisiert werden.
-            if self.lernend[self.i].schwierigkeit_training > self.lernend[self.i].schwierigkeit_max:
-
-                neue_schwierigkeit_max = self.lernend[self.i].schwierigkeit_training // self.fehlertoleranz
-
-                self.lernend[self.i].schwierigkeit_max=neue_schwierigkeit_max
-
-                self.update_schwierigkeit_max(self.lernend[self.i].ID, neue_schwierigkeit_max)
+            aktuelle_schwierigkeit_max = self.lernend[self.i].schwierigkeit_training // self.fehlertoleranz
+            if self.lernend[self.i].schwierigkeit_max < aktuelle_schwierigkeit_max <= 3:
+                # Update
+                self.lernend[self.i].schwierigkeit_max = aktuelle_schwierigkeit_max
+                self.update_schwierigkeit_max(self.lernend[self.i].ID, aktuelle_schwierigkeit_max)
 
             # Aktualisierte Karte speichern
             aktualisierte_karte = self.lernend[self.i]
 
         self.i = (self.i + 1) % self.MZ
+
+        # self.debug_prints("----------------------- Antwort")
 
         return aktualisierte_karte
 
@@ -288,7 +292,7 @@ class TC_Intelligent:
         if self.training_speichern:
             cursor = self.DBCONN.cursor()
             sql = """
-            UPDATE karte SET lernfortschritt=? WHERE karte_id=?"""
+            UPDATE karte SET schwierigkeit=? WHERE karte_id=?"""
             cursor.execute(sql, (neue_schwierigkeit, karte_id))
             cursor.close()
             self.DBCONN.commit()

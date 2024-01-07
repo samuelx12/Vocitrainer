@@ -109,8 +109,8 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
         self.trainingsfenster = Trainingsfenster(gewaehlte_karten, sprache, False, self.dbconn)
         self.trainingsfenster.setModal(True)
-
-        self.trainingsfenster.exec_()
+        if self.trainingsfenster.oeffnen:
+            self.trainingsfenster.exec_()
 
     def load_explorer(self):
         def ebene_laden(parent, parent_id):

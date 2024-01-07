@@ -30,7 +30,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="frage_page">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -85,16 +85,13 @@ border-color: rgb(201, 220, 225);</string>
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Frage</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QLabel" name="f_lbl_schwierigkeit">
+           <property name="styleSheet">
+            <string notr="true">color: rgb(170, 0, 0);
+font: 75 8pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
            <property name="text">
             <string>Schwierigkeit</string>
            </property>
@@ -239,13 +236,6 @@ border-color: rgb(197, 225, 196);</string>
           </size>
          </property>
         </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Antwort</string>
-         </property>
-        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -432,13 +422,6 @@ border-color: rgb(184, 225, 210);</string>
           </size>
          </property>
         </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Zeigen</string>
-         </property>
-        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">

@@ -40,7 +40,10 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.setWindowTitle("Vocitrainer")
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self.training_beendet = False
+        self.schliessen_ohne_kommentar = False
+        self.oeffnen = True
         self.DBCONN = dbconn
+        self.controller_typ = "intelligent"
 
         # Einstellung: Sprache gleich für alles Einstellen:
         self.sprache: str = sprache
@@ -76,10 +79,32 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         )
 
         # Training Controller laden
-        # self.controller = TC_Einfach(daten)
-        self.controller = TC_Intelligent(daten, self.DBCONN)
-        self.controller.set_MZ(2)
-        self.definition_lernen = True
+        if self.controller_typ == "einfach":
+            self.controller = TC_Einfach(daten)
+            self.schwierigkeit_zeigen = False
+
+        elif self.controller_typ == "intelligent":
+            try:
+                self.controller = TC_Intelligent(daten, self.DBCONN)
+            except TrainingFertig:
+                # Es gibt gar nichts zu lernen
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Warning)
+                msg.setWindowTitle("Vocitrainer")
+                msg.setStandardButtons(QMessageBox.Ok)
+                msg.setText(
+                    "Du kennst schon alle Wörter! Umso besser.\n\n" +
+                    "Wenn du die Wörter weiter üben willst, kannst du das mit dem einfachen Modus tun.\n\n" +
+                    "Ansonsten musst du dein Fortschritt für dieses Set zurücksetzen."
+                )
+                self.oeffnen = False
+                msg.exec_()
+                return
+
+            self.schwierigkeit_zeigen = True
+            self.controller.set_MZ(2)
+
+        self.definition_lernen = False
 
         # Erste Frage laden
         self.phase1()
@@ -113,8 +138,17 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             schwierigkeits_label.setVisible(False)
             return
 
-        # Verbleibende Abfragen berechnen:
-        verbleibend = karte.schwierigkeit_training // self.controller.fehlertoleranz
+        # Verbleibende Abfragen berechnen
+        # Es scheint kompliziert, aber wenn man sich eine Tabelle macht und sich die Sache genau anschaut
+        # macht der folgende Rechenweg Sinn.
+        ftoleranz = self.controller.fehlertoleranz
+
+        if karte.schwierigkeit_training % ftoleranz == 0:
+            summand = ftoleranz
+        else:
+            summand = abs(karte.schwierigkeit_training % ftoleranz)
+
+        verbleibend = (karte.schwierigkeit_training + summand) // ftoleranz
 
         # Farbe und Text bestimmen
         if karte.schwierigkeit_max == -1:
@@ -254,6 +288,10 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         """
         Überschreiben der closeEvent-Methode, um das Schließen des Fensters zu überwachen.
         """
+
+        if self.schliessen_ohne_kommentar:
+            event.accept()
+            return
 
         if self.training_beendet:
             # Das Training ist fertig
