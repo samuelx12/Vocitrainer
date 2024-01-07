@@ -95,7 +95,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         gewaehlte_indices = selection_model.selectedRows()
         gewaehlte_zeilen = [index.row() for index in gewaehlte_indices]
 
-        # Das ist für die Schwierigkeit, die nicht in den Kartendaten ist.
+        # Das ist für die Schwierigkeit_Training, die nicht in den Kartendaten ist.
         #                                                         V
         gewaehlte_karten = [Karte(*self.kartenModel.daten[zeile], 0) for zeile in gewaehlte_zeilen]
 
@@ -107,7 +107,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         cursor.execute(sql, (self.geladenes_set_explorer_item.id,))
         sprache = cursor.fetchone()[0]
 
-        self.trainingsfenster = Trainingsfenster(gewaehlte_karten, sprache, False)
+        self.trainingsfenster = Trainingsfenster(gewaehlte_karten, sprache, False, self.dbconn)
         self.trainingsfenster.setModal(True)
 
         self.trainingsfenster.exec_()

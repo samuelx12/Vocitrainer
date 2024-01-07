@@ -12,6 +12,8 @@ from PyQt5.QtWidgets import *
 from Client.res.qt.ui_trainingsfenster import Ui_Trainingsfenster
 from trainingscontroller import TC_Einfach, TC_Intelligent, TrainingFertig
 from karte_tuple import Karte
+from sqlite3 import Connection
+from typing import List
 
 
 class Trainingsfenster(QDialog, Ui_Trainingsfenster):
@@ -32,18 +34,19 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             Falls in Phase 1 eine Frage gestellt wurde, die Antwort anzeigen.
     """
 
-    def __init__(self, daten: list, sprache: str, definition_lernen: bool, *args, **kwargs):
+    def __init__(self, daten: List[Karte], sprache: str, definition_lernen: bool, dbconn: Connection, *args, **kwargs):
         super(Trainingsfenster, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Vocitrainer")
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self.training_beendet = False
+        self.DBCONN = dbconn
 
         # Sprache gleich für alles Einstellen:
         self.sprache: str = sprache
-        self.f_lbl_fremdsprache.setText(self.sprache)
-        self.a_lbl_fremdsprache_beschreibung.setText(self.sprache)
-        self.z_lbl_fremdsprache_beschreibung.setText(self.sprache)
+        self.f_lbl_fremdsprache.setText(self.sprache + ":")
+        self.a_lbl_fremdsprache_beschreibung.setText(self.sprache + ":")
+        self.z_lbl_fremdsprache_beschreibung.setText(self.sprache + ":")
 
         # Mit Definition lernen falls vorhanden einstellen
         self.definition_lernen: bool = definition_lernen
@@ -70,7 +73,10 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         )
 
         # Training Controller laden
-        self.controller = TC_Einfach(daten)
+        # self.controller = TC_Einfach(daten)
+        self.controller = TC_Intelligent(daten, self.DBCONN)
+        self.controller.set_MZ(2)
+        self.definition_lernen = True
 
         # Erste Frage laden
         self.phase1()

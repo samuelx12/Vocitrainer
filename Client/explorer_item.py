@@ -7,6 +7,7 @@ Hier ist die Klasse ExplorerItem enthalten die für den Explorer im Hauptfenster
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from rich import print as rprint
 
 
 class ExplorerItem(QTreeWidgetItem):
@@ -44,7 +45,14 @@ class ExplorerItem(QTreeWidgetItem):
         if self.typ == "vociset":
             font = QFont()
             font.setBold(aktiv)
-            self.setFont(0, font)
+            try:
+                self.setFont(0, font)
+            except RuntimeError:
+                rprint(
+                    """[yellow]INFO Der "[italic]wrapped C/C++ object of type ExplorerItem has been""" +
+                    """deleted[/italic]"-Runtime Error wurde gerade abgefangen.""" +
+                    """ [green]Diese Nachricht kann ignoriert werden, obwohl sie mehrmals hintereinander auftritt."""
+                )
 
         if aktiv:
             if self.typ == "vociset":
@@ -62,4 +70,11 @@ class ExplorerItem(QTreeWidgetItem):
                 icon.addPixmap(QPixmap("res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
                 icon.addPixmap(QPixmap("res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
 
-        self.setIcon(0, icon)
+        try:
+            self.setIcon(0, icon)
+        except RuntimeError:
+            rprint(
+                """[yellow]INFO Der "[italic]wrapped C/C++ object of type ExplorerItem has been""" +
+                """deleted[/italic]"-Runtime Error wurde gerade abgefangen.""" +
+                """ [green]Diese Nachricht kann ignoriert werden, obwohl sie mehrmals hintereinander auftritt."""
+            )

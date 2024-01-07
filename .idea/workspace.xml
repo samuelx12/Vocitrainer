@@ -4,16 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="Teil 1 des Remakes des Trainingsfensters und allem drumherum&#10;- Neue Datenstruktur Karte&#10;- Trainingsfenster kennt jetzt zwei Phasen&#10;- Hauptfenster lädt die Daten der *ausgewählten&quot; Zeilen und konvertiert sie in das Format der 'Karte' Tuple&#10;- Hauptfenster lädt Sprache&#10;- Trainingsfenster hat eine neue Seite, die Zeigeseite&#10;- Wegen neuem Laptop: das ganze mit aktualisierten Versionen von Qt, Python und anderem&#10;- Einige kleine Verbesserungen und Bugfixes, die oben noch nicht dabei sind.">
+    <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="Teil 2 des Remakes des Trainingsfensters und allem drumherum&#10;- Trainingsfenster so weit fertiggestellt&#10;- Option um Definitionen zu lernen&#10;- Besseres Design für falsche Antworten&#10;- Kleine strukturelle Anpassungen.&#10;Im Teil 3 steht jetzt noch der Intelligente Modus an">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/d7ea5f9d-46a7-4363-8bcf-1fbac6c9cf3d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d7ea5f9d-46a7-4363-8bcf-1fbac6c9cf3d.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/df1084cb-9bfc-457d-8f25-483388379da5.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Mp_herunterladen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_herunterladen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/explorer_item.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/explorer_item.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/karte_tuple.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/karte_tuple.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/res/qt/trainingsfenster.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/trainingsfenster.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/res/qt/ui_trainingsfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/qt/ui_trainingsfenster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/setupdb.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/setupdb.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/trainingscontroller.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/trainingscontroller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/trainingsfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/trainingsfenster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/vocitrainerdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Client/vocitrainerdb.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/serverdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Server/serverdb.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/session.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,33 +81,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Python.Client.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Server.executor&quot;: &quot;Run&quot;,
-    &quot;Python.setupdb.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Samuel/AppData/Local/Programs/Python/Python311/Scripts/pyuic5.exe&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Python&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python.Client.executor": "Run",
+    "Python.Server.executor": "Run",
+    "Python.Setup DB.executor": "Run",
+    "Python.models.executor": "Run",
+    "Python.setupdb.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Samuel/AppData/Local/Programs/Python/Python311/Scripts/pyuic5.exe",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;HTML&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "HTML"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Client" />
@@ -236,6 +244,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="models" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Vocitrainer" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Client" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Client/models.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="setupdb" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="Vocitrainer" />
       <option name="ENV_FILES" value="" />
@@ -267,7 +298,13 @@
       <item itemvalue="Python.Setup DB" />
       <item itemvalue="Python.Mp_LogReg" />
       <item itemvalue="Python.setupdb" />
+      <item itemvalue="Python.models" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.models" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -368,7 +405,10 @@
       <workItem from="1704308186206" duration="2816000" />
       <workItem from="1704459017935" duration="4114000" />
       <workItem from="1704468844648" duration="10040000" />
-      <workItem from="1704536529504" duration="4128000" />
+      <workItem from="1704536529504" duration="8106000" />
+      <workItem from="1704562280426" duration="4567000" />
+      <workItem from="1704574033567" duration="7631000" />
+      <workItem from="1704588326882" duration="2025000" />
     </task>
     <task id="LOCAL-00001" summary="Restrukturierung für besseren Workflow mit Qt-Designer aufgrund der bisher gemachten Erfahrungen mit PyQt.">
       <option name="closed" value="true" />
@@ -626,7 +666,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704495350786</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Teil 2 des Remakes des Trainingsfensters und allem drumherum&#10;- Trainingsfenster so weit fertiggestellt&#10;- Option um Definitionen zu lernen&#10;- Besseres Design für falsche Antworten&#10;- Kleine strukturelle Anpassungen.&#10;Im Teil 3 steht jetzt noch der Intelligente Modus an">
+      <option name="closed" value="true" />
+      <created>1704541072388</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1704541072388</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -645,7 +693,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="server.py und session.py mit den ersten Grundlegenden Funktionen erstellt" />
     <MESSAGE value="Server Client Kommunikations Struktur fertiggestellt&#10;&quot;Herunterladen&quot;-Fenster erstellt" />
     <MESSAGE value="Suche in den Server und Client Netzwerkklasse eingebaut aber noch nicht im Fenster." />
     <MESSAGE value="Tabelle im Herunterladen Fenster wird jetzt gefüllt.&#10;Bug in der Suche gelöst&#10;Tabelle im Hauptfenster an Grösse angepasst" />
@@ -670,16 +717,17 @@
     <MESSAGE value="Fehlerbehebung betreffend Hochgeladene Verwalten.&#10;Anzahl Downloads jetzt auch sichtbar" />
     <MESSAGE value="Fehlerbehebung betreffend Hochgeladene Verwalten.&#10;Commit Statement ist bei vorherigem Commit verloren gegangen:&#10;Es wurde nicht wirklich gelöscht.&#10;Optimierung mit ON DELETE CASCADE" />
     <MESSAGE value="Teil 1 des Remakes des Trainingsfensters und allem drumherum&#10;- Neue Datenstruktur Karte&#10;- Trainingsfenster kennt jetzt zwei Phasen&#10;- Hauptfenster lädt die Daten der *ausgewählten&quot; Zeilen und konvertiert sie in das Format der 'Karte' Tuple&#10;- Hauptfenster lädt Sprache&#10;- Trainingsfenster hat eine neue Seite, die Zeigeseite&#10;- Wegen neuem Laptop: das ganze mit aktualisierten Versionen von Qt, Python und anderem&#10;- Einige kleine Verbesserungen und Bugfixes, die oben noch nicht dabei sind." />
-    <option name="LAST_COMMIT_MESSAGE" value="Teil 1 des Remakes des Trainingsfensters und allem drumherum&#10;- Neue Datenstruktur Karte&#10;- Trainingsfenster kennt jetzt zwei Phasen&#10;- Hauptfenster lädt die Daten der *ausgewählten&quot; Zeilen und konvertiert sie in das Format der 'Karte' Tuple&#10;- Hauptfenster lädt Sprache&#10;- Trainingsfenster hat eine neue Seite, die Zeigeseite&#10;- Wegen neuem Laptop: das ganze mit aktualisierten Versionen von Qt, Python und anderem&#10;- Einige kleine Verbesserungen und Bugfixes, die oben noch nicht dabei sind." />
+    <MESSAGE value="Teil 2 des Remakes des Trainingsfensters und allem drumherum&#10;- Trainingsfenster so weit fertiggestellt&#10;- Option um Definitionen zu lernen&#10;- Besseres Design für falsche Antworten&#10;- Kleine strukturelle Anpassungen.&#10;Im Teil 3 steht jetzt noch der Intelligente Modus an" />
+    <option name="LAST_COMMIT_MESSAGE" value="Teil 2 des Remakes des Trainingsfensters und allem drumherum&#10;- Trainingsfenster so weit fertiggestellt&#10;- Option um Definitionen zu lernen&#10;- Besseres Design für falsche Antworten&#10;- Kleine strukturelle Anpassungen.&#10;Im Teil 3 steht jetzt noch der Intelligente Modus an" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Vocitrainer$models.coverage" NAME="models Coverage Results" MODIFIED="1688487567224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Setup_DB.coverage" NAME="Setup DB Coverage Results" MODIFIED="1697808249863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Server.coverage" NAME="Server Coverage Results" MODIFIED="1703885850741" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$models.coverage" NAME="models Coverage Results" MODIFIED="1704571156791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Server.coverage" NAME="Server Coverage Results" MODIFIED="1704573105874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Setup_DB.coverage" NAME="Setup DB Coverage Results" MODIFIED="1704580229395" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$woosch.coverage" NAME="woosch Coverage Results" MODIFIED="1695049758389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dokumentation" />
     <SUITE FILE_PATH="coverage/Vocitrainer$versuch_quizlet_export.coverage" NAME="versuch_quizlet_export Coverage Results" MODIFIED="1698415966000" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$suche_test.coverage" NAME="suche test Coverage Results" MODIFIED="1695025638975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1704540263328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1704590040097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$.coverage" NAME=" Coverage Results" MODIFIED="1698414310010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$setupdb.coverage" NAME="setupdb Coverage Results" MODIFIED="1703866470946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Client_Network_Test.coverage" NAME="Client Network Test Coverage Results" MODIFIED="1694856592805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />

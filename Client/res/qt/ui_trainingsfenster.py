@@ -14,7 +14,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Trainingsfenster(object):
     def setupUi(self, Trainingsfenster):
         Trainingsfenster.setObjectName("Trainingsfenster")
-        Trainingsfenster.resize(518, 352)
+        Trainingsfenster.resize(585, 423)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("../icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Trainingsfenster.setWindowIcon(icon)
         Trainingsfenster.setLayoutDirection(QtCore.Qt.LeftToRight)
         Trainingsfenster.setStyleSheet("")
         Trainingsfenster.setSizeGripEnabled(False)

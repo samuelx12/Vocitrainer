@@ -33,12 +33,13 @@ class KartenModel(QAbstractTableModel):
         try:
             return len(self.daten)
         except:
+            # Ausnahmefall beim Öffnen des Vocitrainers, wenn noch kein Set aktiv ist.
             return 0
 
     def columnCount(self, parent: QModelIndex = ...) -> int:
         """Vorgegebene Funktion welche die Anzahl Spalten zurückgeben muss."""
         # print("columnCount: 6")
-        return 6
+        return 8
 
     def data(self, index: QModelIndex, role: int = ...) -> typing.Any:
         """
@@ -61,7 +62,8 @@ class KartenModel(QAbstractTableModel):
 
         # SQL-Abfrage, um bestimmte Spalten aus der Tabelle karte abzurufen
         query = """
-        SELECT karte_id, wort, fremdwort, definition, bemerkung, lernfortschritt, markiert FROM karte WHERE set_id = ?
+        SELECT karte_id, wort, fremdwort, definition, bemerkung, lernfortschritt, markiert, schwierigkeit
+        FROM karte WHERE set_id = ?
         """
         cursor.execute(query, (set_id,))
         result = cursor.fetchall()

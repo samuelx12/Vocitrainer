@@ -18,6 +18,7 @@ Karte = namedtuple(
         "bemerkung",
         "lernfortschritt",
         "markiert",
-        "schwierigkeit"
+        "schwierigkeit_max",
+        "schwierigkeit_training"
     ]
 )

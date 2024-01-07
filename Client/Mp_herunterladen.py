@@ -130,10 +130,10 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         :param set_id: Die ID des zu herunterladenden Sets
         :return: None
         """
-        print(f"Lade Set mit der ID {set_id} herunter.")
+        # print(f"Lade Set mit der ID {set_id} herunter.")
         vociset_datensatz, karten_datensaetze = self.net.vociset_herunterladen(set_id)
-        print(vociset_datensatz)
-        print(karten_datensaetze)
+        # print(vociset_datensatz)
+        # print(karten_datensaetze)
 
         # SQL-Query um das Vociset in der Datenbank zu speichern
         query = """
@@ -144,8 +144,8 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
 
         # Schleife um die Karten einzufügen
         query = f"""
-        INSERT INTO karte (wort, fremdwort, definition, bemerkung, lernfortschritt, markiert, set_id)
-        VALUES (?, ?, ?, ?, 0, 0, {gespeicherte_set_id})
+        INSERT INTO karte (wort, fremdwort, definition, bemerkung, lernfortschritt, markiert, schwierigkeit, set_id)
+        VALUES (?, ?, ?, ?, 0, 0, 0, {gespeicherte_set_id})
         """
         for i in range(len(karten_datensaetze)):
             self.CURSOR.execute(query, [karten_datensaetze[i][j] for j in range(1, 5)])
@@ -161,5 +161,5 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         herunterladen_button.setIcon(QIcon("res/icons/download_done_FILL0_wght500_GRAD0_opsz40.svg"))
         self.tbl_suche.setCellWidget(zeile, 1, herunterladen_button)
 
-        print("Erfolgsmeldung!")
-        print(zeile)
+        # print("Erfolgsmeldung!")
+        # print(zeile)

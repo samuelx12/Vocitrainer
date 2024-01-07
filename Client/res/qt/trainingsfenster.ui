@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>518</width>
-    <height>352</height>
+    <width>585</width>
+    <height>423</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</normaloff>../icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
