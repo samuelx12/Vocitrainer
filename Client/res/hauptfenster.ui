@@ -262,19 +262,19 @@ selection-color: rgb(0, 0, 0);]</string>
     <addaction name="mn_NeuesSet"/>
     <addaction name="mn_NeuerOrdner"/>
     <addaction name="separator"/>
-    <addaction name="actionEinstellungen"/>
-    <addaction name="action_ber"/>
+    <addaction name="mn_Einstellungen"/>
+    <addaction name="mn_Ueber"/>
     <addaction name="actionBeenden"/>
    </widget>
    <widget class="QMenu" name="menuLernen">
     <property name="title">
      <string>Lernen</string>
     </property>
-    <addaction name="actionSet_lernen"/>
-    <addaction name="actionSet_ben"/>
+    <addaction name="mn_SetLernen"/>
+    <addaction name="mn_SetUeben"/>
     <addaction name="separator"/>
-    <addaction name="actionAusgew_hlte_lernen"/>
-    <addaction name="actionMarkierte_lernen"/>
+    <addaction name="mn_AusgewaehlteLernen"/>
+    <addaction name="mn_MarkierteLernen"/>
    </widget>
    <widget class="QMenu" name="menuMarketplace">
     <property name="title">
@@ -297,11 +297,6 @@ selection-color: rgb(0, 0, 0);]</string>
    <addaction name="menuImportieren"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="mn_Ueber">
-   <property name="text">
-    <string>Über</string>
-   </property>
-  </action>
   <action name="mn_NeuesSet">
    <property name="icon">
     <iconset resource="../ressources.qrc">
@@ -320,14 +315,6 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="text">
     <string>Neuer Ordner</string>
-   </property>
-  </action>
-  <action name="mn_Einstellungen">
-   <property name="checkable">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Einstellungen</string>
    </property>
   </action>
   <action name="mn_Herunterladen">
@@ -380,16 +367,7 @@ selection-color: rgb(0, 0, 0);]</string>
     <string>CSV importieren</string>
    </property>
   </action>
-  <action name="actionTestAktion">
-   <property name="icon">
-    <iconset>
-     <normaloff>../../../../../.designer/icons/delete_FILL0_wght500_GRAD0_opsz40.svg</normaloff>../../../../../.designer/icons/delete_FILL0_wght500_GRAD0_opsz40.svg</iconset>
-   </property>
-   <property name="text">
-    <string>TestAktion</string>
-   </property>
-  </action>
-  <action name="actionEinstellungen">
+  <action name="mn_Einstellungen">
    <property name="icon">
     <iconset resource="../ressources.qrc">
      <normaloff>:/icons/res/icons/settings_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
@@ -399,7 +377,7 @@ selection-color: rgb(0, 0, 0);]</string>
     <string>Einstellungen</string>
    </property>
   </action>
-  <action name="action_ber">
+  <action name="mn_Ueber">
    <property name="icon">
     <iconset resource="../ressources.qrc">
      <normaloff>:/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
@@ -418,7 +396,7 @@ selection-color: rgb(0, 0, 0);]</string>
     <string>Beenden</string>
    </property>
   </action>
-  <action name="actionSet_lernen">
+  <action name="mn_SetLernen">
    <property name="icon">
     <iconset resource="../ressources.qrc">
      <normaloff>:/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</normaloff>
@@ -428,7 +406,7 @@ selection-color: rgb(0, 0, 0);]</string>
     <string>Set lernen</string>
    </property>
   </action>
-  <action name="actionSet_ben">
+  <action name="mn_SetUeben">
    <property name="icon">
     <iconset resource="../ressources.qrc">
      <normaloff>:/icons/res/icons/model_training_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/model_training_FILL0_wght400_GRAD0_opsz24.svg</iconset>
@@ -437,7 +415,7 @@ selection-color: rgb(0, 0, 0);]</string>
     <string>Set üben</string>
    </property>
   </action>
-  <action name="actionAusgew_hlte_lernen">
+  <action name="mn_AusgewaehlteLernen">
    <property name="icon">
     <iconset resource="../ressources.qrc">
      <normaloff>:/icons/res/icons/check_box_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
@@ -447,7 +425,7 @@ selection-color: rgb(0, 0, 0);]</string>
     <string>Ausgewählte lernen</string>
    </property>
   </action>
-  <action name="actionMarkierte_lernen">
+  <action name="mn_MarkierteLernen">
    <property name="icon">
     <iconset resource="../ressources.qrc">
      <normaloff>:/icons/res/icons/hotel_class_FILL0_wght400_GRAD0_opsz24.svg</normaloff>

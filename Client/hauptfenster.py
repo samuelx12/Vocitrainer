@@ -17,6 +17,7 @@ from trainingsfenster import Trainingsfenster
 from Mp_herunterladen import MpHerunterladen
 from Mp_Hochladen import MpHochladen
 from Mp_hochgeladeneVerwalten import MpHochgeladeneVerwalten
+from ueber import Ueber as Ueber_Fenster
 from importCSV import ImportCSV
 from typing import List
 from Mp_LogReg import log_reg
@@ -30,11 +31,12 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
     Datei ohne Gefahr neu überschrieben werden kann.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, version: str, *args, **kwargs):
         super(Hauptfenster, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Vocitrainer")
         self.setWindowIcon(QIcon("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"))
+        self.version = version
 
         # Bildschirmgrösse setzen
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
@@ -78,6 +80,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.mn_CSV_importieren.triggered.connect(self.mn_CSV_importieren_triggered)
         self.mn_Hochladen.triggered.connect(self.mn_Hochladen_triggered)
         self.mn_HochgeladeneVerwalten.triggered.connect(self.mn_hochgeladeneVerwalten_triggered)
+        self.mn_Ueber.triggered.connect(self.mn_Ueber_triggered)
 
         # Kontextmenüs aktivieren
         self.trw_Explorer.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -323,6 +326,13 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # Wenn im Explorer Items gelöscht werden wollen:
         if event.key() == Qt.Key_Delete and self.trw_Explorer.hasFocus():
             self.exploreritems_loeschen(self.trw_Explorer.selectedItems())
+
+    def mn_Ueber_triggered(self):
+        """Methode zum Aufrufen des Über-Fensters"""
+        self.ueber = Ueber_Fenster(self.version)
+        self.ueber.setModal(True)
+
+        self.ueber.exec_()
 
     def mn_Herunterladen_triggered(self):
         """Wird ausgeführt, wenn der Benutzer das Herunterladenmenü anwählt."""

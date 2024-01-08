@@ -13,10 +13,13 @@ import sys
 from hauptfenster import Hauptfenster
 import exception
 
+# VERSION HIER ANPASSEN
+version = "1.0"
+
 app = QApplication(sys.argv)
 app.setStyle("fusion")
 
-window = Hauptfenster()
+window = Hauptfenster(version)
 window.show()
 
 # Für Debugzwecke: Schönes Traceback installieren
