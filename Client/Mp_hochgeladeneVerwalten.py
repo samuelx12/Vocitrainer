@@ -7,7 +7,7 @@ Hier ist das Fenster, wo der Benutzer seine hochgeladenen Sets verwalten kann.
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from Client.res.qt.ui_mp_hochgeladeneVerwalten import Ui_Mp_HochgeladeneVerwalten
+from Client.res.ui_mp_hochgeladeneVerwalten import Ui_Mp_HochgeladeneVerwalten
 from network import Network
 
 

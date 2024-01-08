@@ -6,20 +6,21 @@ Der Code erstellt das Hauptfenster und Startet die QT-Eventloop. Von dieser aus 
 Signalen und Slots weiter.
 """
 
+from rich import traceback
+
 from PyQt5.QtWidgets import QApplication
 import sys
 from hauptfenster import Hauptfenster
 import exception
-from rich import traceback
-
-# Für Debugzwecke: Schönes Traceback installieren
-traceback.install()
 
 app = QApplication(sys.argv)
 app.setStyle("fusion")
 
 window = Hauptfenster()
 window.show()
+
+# Für Debugzwecke: Schönes Traceback installieren
+traceback.install()
 
 # trainingsfenster = Trainingsfenster()
 # trainingsfenster.show()

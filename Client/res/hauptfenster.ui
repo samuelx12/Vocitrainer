@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1023</width>
+    <height>734</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">selection-background-color: rgb(201, 220, 225);
+selection-color: rgb(0, 0, 0);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="cmd_SetLernen">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Set lernen</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../ressources.qrc">
+          <normaloff>:/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</normaloff>
+          <activeoff>:/icons/res/icons/note_stack_FILL1_wght500_GRAD0_opsz40.svg</activeoff>:/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="cmd_SetUeben">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Set üben</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../ressources.qrc">
+          <normaloff>:/icons/res/icons/model_training_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/model_training_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="cmd_Lernen">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Lernen</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../ressources.qrc">
+          <normaloff>:/icons/res/icons/check_box_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+          <activeoff>:/icons/res/icons/check_box_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/check_box_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="cmd_MarkierteLernen">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Markierte Lernen</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../ressources.qrc">
+          <normaloff>:/icons/res/icons/hotel_class_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+          <activeoff>:/icons/res/icons/hotel_class_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/hotel_class_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="hs_Menu">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QToolButton" name="cmd_Settings">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Einstellungen</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../ressources.qrc">
+          <normaloff>:/icons/res/icons/settings_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/settings_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="cmd_Beenden">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Beenden</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../ressources.qrc">
+          <normaloff>:/icons/res/icons/logout_FILL0_wght500_GRAD0_opsz40.svg</normaloff>:/icons/res/icons/logout_FILL0_wght500_GRAD0_opsz40.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line_UnterMenu">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSplitter" name="splitter">
+      <property name="font">
+       <font>
+        <stylestrategy>PreferAntialias</stylestrategy>
+       </font>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QTreeWidget" name="trw_Explorer">
+       <property name="styleSheet">
+        <string notr="true">selection-background-color: rgb(201, 220, 225);
+selection-color: rgb(0, 0, 0);</string>
+       </property>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QTableView" name="tbv_Liste">
+       <property name="styleSheet">
+        <string notr="true">selection-background-color: rgb(201, 220, 225);
+selection-color: rgb(0, 0, 0);</string>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContents</enum>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::ExtendedSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <attribute name="horizontalHeaderCascadingSectionResizes">
+        <bool>false</bool>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1023</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QMenu: [selection-background-color: rgb(201, 220, 225);
+selection-color: rgb(0, 0, 0);]
+
+QAction: [selection-background-color: rgb(201, 220, 225);
+selection-color: rgb(0, 0, 0);]</string>
+   </property>
+   <widget class="QMenu" name="menuVocitrainer">
+    <property name="title">
+     <string>Vocitrainer</string>
+    </property>
+    <addaction name="mn_NeuesSet"/>
+    <addaction name="mn_NeuerOrdner"/>
+    <addaction name="separator"/>
+    <addaction name="actionEinstellungen"/>
+    <addaction name="action_ber"/>
+    <addaction name="actionBeenden"/>
+   </widget>
+   <widget class="QMenu" name="menuLernen">
+    <property name="title">
+     <string>Lernen</string>
+    </property>
+    <addaction name="actionSet_lernen"/>
+    <addaction name="actionSet_ben"/>
+    <addaction name="separator"/>
+    <addaction name="actionAusgew_hlte_lernen"/>
+    <addaction name="actionMarkierte_lernen"/>
+   </widget>
+   <widget class="QMenu" name="menuMarketplace">
+    <property name="title">
+     <string>Marketplace</string>
+    </property>
+    <addaction name="mn_Herunterladen"/>
+    <addaction name="mn_Hochladen"/>
+    <addaction name="mn_HochgeladeneVerwalten"/>
+    <addaction name="mn_Profil"/>
+   </widget>
+   <widget class="QMenu" name="menuImportieren">
+    <property name="title">
+     <string>Importieren</string>
+    </property>
+    <addaction name="mn_CSV_importieren"/>
+   </widget>
+   <addaction name="menuVocitrainer"/>
+   <addaction name="menuLernen"/>
+   <addaction name="menuMarketplace"/>
+   <addaction name="menuImportieren"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="mn_Ueber">
+   <property name="text">
+    <string>Über</string>
+   </property>
+  </action>
+  <action name="mn_NeuesSet">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/note_stack_add_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/note_stack_add_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/note_stack_add_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Neues Set</string>
+   </property>
+  </action>
+  <action name="mn_NeuerOrdner">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/create_new_folder_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/create_new_folder_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/create_new_folder_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Neuer Ordner</string>
+   </property>
+  </action>
+  <action name="mn_Einstellungen">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Einstellungen</string>
+   </property>
+  </action>
+  <action name="mn_Herunterladen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/cloud_download_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/cloud_download_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/cloud_download_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Herunterladen</string>
+   </property>
+  </action>
+  <action name="mn_Hochladen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/cloud_upload_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/cloud_upload_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/cloud_upload_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Hochladen</string>
+   </property>
+  </action>
+  <action name="mn_HochgeladeneVerwalten">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/settings_system_daydream_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/settings_system_daydream_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/settings_system_daydream_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Hochgeladene verwalten</string>
+   </property>
+  </action>
+  <action name="mn_Profil">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/manage_accounts_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/manage_accounts_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/manage_accounts_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Profil</string>
+   </property>
+  </action>
+  <action name="mn_CSV_importieren">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/csv_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/csv_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/csv_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>CSV importieren</string>
+   </property>
+  </action>
+  <action name="actionTestAktion">
+   <property name="icon">
+    <iconset>
+     <normaloff>../../../../../.designer/icons/delete_FILL0_wght500_GRAD0_opsz40.svg</normaloff>../../../../../.designer/icons/delete_FILL0_wght500_GRAD0_opsz40.svg</iconset>
+   </property>
+   <property name="text">
+    <string>TestAktion</string>
+   </property>
+  </action>
+  <action name="actionEinstellungen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/settings_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/settings_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/settings_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Einstellungen</string>
+   </property>
+  </action>
+  <action name="action_ber">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/info_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Über</string>
+   </property>
+  </action>
+  <action name="actionBeenden">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/logout_FILL0_wght500_GRAD0_opsz40.svg</normaloff>:/icons/res/icons/logout_FILL0_wght500_GRAD0_opsz40.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Beenden</string>
+   </property>
+  </action>
+  <action name="actionSet_lernen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</normaloff>
+     <activeoff>:/icons/res/icons/note_stack_FILL1_wght500_GRAD0_opsz40.svg</activeoff>:/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Set lernen</string>
+   </property>
+  </action>
+  <action name="actionSet_ben">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/model_training_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/model_training_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Set üben</string>
+   </property>
+  </action>
+  <action name="actionAusgew_hlte_lernen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/check_box_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/check_box_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/check_box_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Ausgewählte lernen</string>
+   </property>
+  </action>
+  <action name="actionMarkierte_lernen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/hotel_class_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/hotel_class_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/hotel_class_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Markierte lernen</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

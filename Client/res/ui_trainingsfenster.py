@@ -16,7 +16,7 @@ class Ui_Trainingsfenster(object):
         Trainingsfenster.setObjectName("Trainingsfenster")
         Trainingsfenster.resize(585, 423)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Trainingsfenster.setWindowIcon(icon)
         Trainingsfenster.setLayoutDirection(QtCore.Qt.LeftToRight)
         Trainingsfenster.setStyleSheet("")

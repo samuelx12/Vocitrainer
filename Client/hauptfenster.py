@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import *
 from models import KartenModel
 from explorer_item import ExplorerItem
 import sqlite3
-from Client.res.qt.ui_hauptfenster import Ui_MainWindow
+from Client.res.ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
 from Mp_herunterladen import MpHerunterladen
 from Mp_Hochladen import MpHochladen
