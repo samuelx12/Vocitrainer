@@ -18,7 +18,7 @@ class MpHochladen(QDialog, Ui_Mp_Hochladen):
     def __init__(self, network: Network, set_id: int, *args, **kwargs):
         super(MpHochladen, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        self.setWindowTitle("Set hochladen")
+        self.setWindowTitle("Hochladen")
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)  # Hilfebutton ausblenden
         self.net = network
         self.set_id = set_id

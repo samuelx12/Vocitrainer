@@ -19,7 +19,7 @@ class MpHochgeladeneVerwalten(QDialog, Ui_Mp_HochgeladeneVerwalten):
     def __init__(self, network: Network, *args, **kwargs):
         super(MpHochgeladeneVerwalten, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        self.setWindowTitle("Herunterladen")
+        self.setWindowTitle("Hochgeladene Sets")
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)  # Hilfebutton ausblenden
         self.net = network
 

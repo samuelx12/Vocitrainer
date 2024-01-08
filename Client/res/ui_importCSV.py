@@ -15,6 +15,9 @@ class Ui_ImportCSV(object):
     def setupUi(self, ImportCSV):
         ImportCSV.setObjectName("ImportCSV")
         ImportCSV.resize(714, 657)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icons/res/icons/csv_FILL0_wght400_GRAD0_opsz24.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        ImportCSV.setWindowIcon(icon)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(ImportCSV)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.lbl_Titel = QtWidgets.QLabel(ImportCSV)
@@ -221,3 +224,4 @@ class Ui_ImportCSV(object):
         self.lbl_Warnung.setText(_translate("ImportCSV", "Warnung"))
         self.cmd_importieren.setText(_translate("ImportCSV", "Importieren"))
         self.cmd_abbrechen.setText(_translate("ImportCSV", "Abbrechen"))
+import ressources_rc

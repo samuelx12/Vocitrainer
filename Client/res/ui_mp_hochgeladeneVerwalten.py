@@ -15,6 +15,9 @@ class Ui_Mp_HochgeladeneVerwalten(object):
     def setupUi(self, Mp_HochgeladeneVerwalten):
         Mp_HochgeladeneVerwalten.setObjectName("Mp_HochgeladeneVerwalten")
         Mp_HochgeladeneVerwalten.resize(527, 385)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icons/res/icons/settings_system_daydream_FILL0_wght400_GRAD0_opsz24.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Mp_HochgeladeneVerwalten.setWindowIcon(icon)
         self.verticalLayout = QtWidgets.QVBoxLayout(Mp_HochgeladeneVerwalten)
         self.verticalLayout.setObjectName("verticalLayout")
         self.lbl_titel = QtWidgets.QLabel(Mp_HochgeladeneVerwalten)
@@ -45,3 +48,4 @@ class Ui_Mp_HochgeladeneVerwalten(object):
         Mp_HochgeladeneVerwalten.setWindowTitle(_translate("Mp_HochgeladeneVerwalten", "Hochgeladene Sets verwalten"))
         self.lbl_titel.setText(_translate("Mp_HochgeladeneVerwalten", "Hochgeladene Sets"))
         self.cmd_schliessen.setText(_translate("Mp_HochgeladeneVerwalten", "Schliessen"))
+import ressources_rc

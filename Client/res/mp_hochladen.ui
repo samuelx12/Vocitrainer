@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Set hochladen</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../ressources.qrc">
+    <normaloff>:/icons/res/icons/cloud_upload_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/cloud_upload_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
@@ -152,6 +156,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

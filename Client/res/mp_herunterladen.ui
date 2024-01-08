@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../ressources.qrc">
+    <normaloff>:/icons/res/icons/cloud_download_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/cloud_download_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -235,6 +239,8 @@ font: italic 10pt &quot;Segoe UI&quot;;</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

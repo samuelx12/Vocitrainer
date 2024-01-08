@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Hochgeladene Sets verwalten</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../ressources.qrc">
+    <normaloff>:/icons/res/icons/settings_system_daydream_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/settings_system_daydream_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="lbl_titel">
@@ -55,6 +59,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>
