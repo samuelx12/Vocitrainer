@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>res/icons/event_upcoming_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/wifi_off_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/delete_forever_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/help_FILL0_wght400_GRAD0_opsz24.svg</file>

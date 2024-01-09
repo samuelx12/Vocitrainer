@@ -110,7 +110,7 @@ selection-color: rgb(0, 0, 0);</string>
          <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
         </property>
         <property name="text">
-         <string>Markierte Lernen</string>
+         <string>Markierte lernen</string>
         </property>
         <property name="icon">
          <iconset resource="../ressources.qrc">
@@ -142,7 +142,7 @@ selection-color: rgb(0, 0, 0);</string>
        </spacer>
       </item>
       <item>
-       <widget class="QToolButton" name="cmd_Settings">
+       <widget class="QToolButton" name="cmd_Einstellungen">
         <property name="styleSheet">
          <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
         </property>
@@ -355,7 +355,7 @@ selection-color: rgb(0, 0, 0);]</string>
     <addaction name="separator"/>
     <addaction name="mn_Einstellungen"/>
     <addaction name="mn_Ueber"/>
-    <addaction name="actionBeenden"/>
+    <addaction name="mn_Beenden"/>
    </widget>
    <widget class="QMenu" name="menuLernen">
     <property name="title">
@@ -478,7 +478,7 @@ selection-color: rgb(0, 0, 0);]</string>
     <string>Über</string>
    </property>
   </action>
-  <action name="actionBeenden">
+  <action name="mn_Beenden">
    <property name="icon">
     <iconset resource="../ressources.qrc">
      <normaloff>:/icons/res/icons/logout_FILL0_wght500_GRAD0_opsz40.svg</normaloff>:/icons/res/icons/logout_FILL0_wght500_GRAD0_opsz40.svg</iconset>

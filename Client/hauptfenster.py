@@ -40,31 +40,33 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.setWindowIcon(QIcon("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"))
         self.version = version
 
+        self.set_angezeigt = False
+        self.liste_sichtbar(False)
+
         # Bildschirmgrösse setzen
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
         breite = bildschirm_geometrie.width()
         hoehe = bildschirm_geometrie.height()
         self.setGeometry(int(breite/6), int(hoehe/6), int(breite*2/3), int(hoehe*2/3))
+
         # Splitter richtig einteilen
         self.splitter.setSizes([100, 300])
         self.splitter.updateGeometry()
 
+        # ---------- Model ----------
         # Tabellen Model erstellen und zuweisen
         self.dbconn = sqlite3.connect('vocitrainerdb.db')
         self.kartenModel = KartenModel(dbconn=self.dbconn)
 
         # Tabellen Model Daten laden
-        # self.kartenModel.lade_daten(1)
         self.geladenes_set_explorer_item = None
-        self.set_angezeigt = False
-        self.liste_sichtbar(False)
 
         # Model zuweisen
         self.tbv_Liste.setModel(self.kartenModel)
         self.tbv_Liste.horizontalHeader().setSectionResizeMode(QHeaderView.Interactive)
         self.tbv_Liste.horizontalHeader().setStretchLastSection(True)
 
-        # Explorer vorbereiten
+        # ---------- Explorer vorbereiten ----------
         self.rootNode = self.trw_Explorer.invisibleRootItem()
         self.load_explorer()
         self.trw_Explorer.setDragEnabled(True)
@@ -73,25 +75,47 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.trw_Explorer.setDefaultDropAction(Qt.MoveAction)
         self.trw_Explorer.setSelectionMode(QTreeWidget.ExtendedSelection)
 
-        # Signals und Slots verbinden
-        self.cmd_Beenden.clicked.connect(self.cmd_beenden_clicked)
+        # Aktives Element im Explorer speichern
+        self.aktiveItems = []
+
+        # ---------- Signals und Slots verbinden ----------
+        # Ribbon Leiste
         self.cmd_SetLernen.clicked.connect(self.cmd_Setlernen_clicked)
-        self.trw_Explorer.doubleClicked.connect(self.trw_Explorer_doubleClicked)
-        self.trw_Explorer.dragEnterEvent = self.trw_Explorer_dragEnterEvent
-        self.trw_Explorer.dropEvent = self.trw_Explorer_dropEvent
-        # Menu
+        self.cmd_SetUeben.clicked.connect(self.cmd_SetUeben_clicked)
+        self.cmd_Lernen.clicked.connect(self.cmd_Lernen_clicked)
+        self.cmd_MarkierteLernen.clicked.connect(self.cmd_MarkierteLernen_clicked)
+        self.cmd_Einstellungen.clicked.connect(self.cmd_Einstellungen_clicked)
+        self.cmd_Beenden.clicked.connect(self.cmd_Beenden_clicked)
+
+        # Menü 'Vocitrainer'
+        self.mn_NeuesSet.triggered.connect(self.mn_NeuesSet_triggered)
+        self.mn_NeuerOrdner.triggered.connect(self.mn_NeuerOrdner_triggered)
+        self.mn_Ueber.triggered.connect(self.mn_Ueber_triggered)
+        self.mn_Beenden.triggered.connect(self.mn_Beenden_triggered)
+
+        # Menü 'Lernen'
+        self.mn_SetLernen.triggered.connect(self.mn_Lernen_triggered)
+        self.mn_SetUeben.triggered.connect(self.mn_SetUeben_triggered)
+        self.mn_AusgewaehlteLernen.triggered.connect(self.mn_MarkierteLernen_triggered)
+        self.mn_MarkierteLernen.triggered.connect(self.mn_MarkierteLernen_triggered)
+
+        # Menü 'Marketplace'
         self.mn_Herunterladen.triggered.connect(self.mn_Herunterladen_triggered)
-        self.mn_CSV_importieren.triggered.connect(self.mn_CSV_importieren_triggered)
         self.mn_Hochladen.triggered.connect(self.mn_Hochladen_triggered)
         self.mn_HochgeladeneVerwalten.triggered.connect(self.mn_hochgeladeneVerwalten_triggered)
-        self.mn_Ueber.triggered.connect(self.mn_Ueber_triggered)
+        self.mn_Profil.triggered.connect(self.mn_Profil_triggered)
+
+        # Menü 'Importieren'
+        self.mn_CSV_importieren.triggered.connect(self.mn_CSV_importieren_triggered)
 
         # Kontextmenüs aktivieren
         self.trw_Explorer.setContextMenuPolicy(Qt.CustomContextMenu)
         self.trw_Explorer.customContextMenuRequested.connect(self.trw_Explorer_Kontextmenu)
 
-        # Aktives Element im Explorer speichern
-        self.aktiveItems = []
+        # Andere Signale
+        self.trw_Explorer.doubleClicked.connect(self.trw_Explorer_doubleClicked)
+        self.trw_Explorer.dragEnterEvent = self.trw_Explorer_dragEnterEvent
+        self.trw_Explorer.dropEvent = self.trw_Explorer_dropEvent
 
     def liste_sichtbar(self, sichtbar: bool):
         """Kleine Funktion, welche die Meldung "nichts angezeigt" ausblenden und die Liste einblendet bzw. umgekehrt"""
@@ -100,9 +124,6 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.lbl_nichtsAngezeigt2.setVisible(not sichtbar)
         self.tbv_Liste.setVisible(sichtbar)
         self.frame_nichtsAngezeigt.setVisible(not sichtbar)
-
-    def cmd_beenden_clicked(self):
-        self.close()
 
     def msg_kein_set_aktiv(self):
         """
@@ -429,6 +450,48 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         if event.key() == Qt.Key_Delete and self.trw_Explorer.hasFocus():
             self.exploreritems_loeschen(self.trw_Explorer.selectedItems())
 
+    # -------------------------------------------------------
+    # ------------------------ SLOTS ------------------------
+    # -------------------------------------------------------
+
+    # --------------- MENÜ-LEISTE ---------------
+    def cmd_SetLernen_clicked(self):
+        """'Set lernen' Button in der Menü-Leiste geklickt"""
+        pass
+
+    def cmd_SetUeben_clicked(self):
+        """'Set üben' Button in der Menü-Leiste geklickt"""
+        pass
+
+    def cmd_Lernen_clicked(self):
+        """'Lernen' Button in der Menü-Leiste geklickt"""
+        pass
+
+    def cmd_MarkierteLernen_clicked(self):
+        """'Markierte lernen' Button in der Menü-Leiste geklickt"""
+        pass
+
+    def cmd_Einstellungen_clicked(self):
+        """'Einstellungen' Button in der Menü-Leiste geklickt"""
+        pass
+
+    def cmd_Beenden_clicked(self):
+        """Beenden Button geklickt"""
+        self.close()
+
+    # --------------- MENÜ VOCITRAINER ---------------
+    def mn_NeuesSet_triggered(self):
+        """'Neues Set' Option in dem Vocitrainer-Menü geklickt"""
+        pass
+
+    def mn_NeuerOrdner_triggered(self):
+        """'Neuer Ordner' Option in dem Vocitrainer-Menü geklickt"""
+        pass
+
+    def mn_Einstellungen_triggered(self):
+        """'Einstellungen' Option in dem Vocitrainer-Menü geklickt"""
+        pass
+
     def mn_Ueber_triggered(self):
         """Methode zum Aufrufen des Über-Fensters"""
         self.ueber = Ueber_Fenster(self.version)
@@ -436,6 +499,28 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
         self.ueber.exec_()
 
+    def mn_Beenden_triggered(self):
+        """Wir aufgerufen, wenn im Menü beenden geklickt wird."""
+        self.close()
+
+    # --------------- MENÜ LERNEN ---------------
+    def mn_SetLernen_triggered(self):
+        """'Set lernen' Option in dem Lernen-Menü geklickt"""
+        pass
+
+    def mn_SetUeben_triggered(self):
+        """'Set üben' Option in dem Lernen-Menü geklickt"""
+        pass
+
+    def mn_Lernen_triggered(self):
+        """'Lernen' Option in dem Lernen-Menü geklickt"""
+        pass
+
+    def mn_MarkierteLernen_triggered(self):
+        """'MarkierteLernen' Option in dem Lernen-Menü geklickt"""
+        pass
+
+    # --------------- MENÜ MARKETPLACE ---------------
     def mn_Herunterladen_triggered(self):
         """Wird ausgeführt, wenn der Benutzer das Herunterladenmenü anwählt."""
         try:
@@ -447,13 +532,6 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.mp_Herunterladen.setModal(True)
 
         self.mp_Herunterladen.exec_()
-
-    def mn_CSV_importieren_triggered(self):
-        """Das CSV-Importieren Fenster wird über das Menu geöffnet."""
-        self.importCSV = ImportCSV(self)
-        self.importCSV.setModal(True)
-
-        self.importCSV.exec_()
 
     def mn_Hochladen_triggered(self):
         """Das Fenster um das momentan offene Set hochzuladen wird geöffnet"""
@@ -492,3 +570,25 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.mp_hochgeladeneVerwalten = MpHochgeladeneVerwalten(net)
         self.mp_hochgeladeneVerwalten.setModal(True)
         self.mp_hochgeladeneVerwalten.exec_()
+
+    def mn_Profil_triggered(self):
+        """Wird aufgerufen, wenn im Marcetplace Menü 'Profil' geklickt wird."""
+
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setWindowIcon(QIcon(':/icons/res/icons/event_upcoming_FILL0_wght400_GRAD0_opsz24.svg'))
+        msg.setWindowTitle("Coming soon")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setText(
+            "Dieses Feature ist noch nicht hinzugefügt.\n" +
+            "Es wird aber bald kommen."
+        )
+        msg.exec_()
+
+    # --------------- MENÜ IMPORTIEREN ---------------
+    def mn_CSV_importieren_triggered(self):
+        """Das CSV-Importieren Fenster wird über das Menu geöffnet."""
+        self.importCSV = ImportCSV(self)
+        self.importCSV.setModal(True)
+
+        self.importCSV.exec_()
