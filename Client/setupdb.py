@@ -18,7 +18,7 @@ cursor.execute('''
         ordner_name TEXT,
         farbe TEXT,
         urordner_id INTEGER,
-        FOREIGN KEY (urordner_id) REFERENCES ordner (ordner_id)
+        FOREIGN KEY (urordner_id) REFERENCES ordner (ordner_id) ON DELETE CASCADE
     )
 ''')
 
@@ -31,7 +31,7 @@ cursor.execute('''
         beschreibung TEXT,
         sprache TEXT,
         urordner_id INTEGER,
-        FOREIGN KEY (urordner_id) REFERENCES ordner (ordner_id)
+        FOREIGN KEY (urordner_id) REFERENCES ordner (ordner_id) ON DELETE CASCADE
     )
 ''')
 
@@ -48,7 +48,7 @@ cursor.execute('''
         markiert INTEGER,
         schwierigkeit INTEGER,
         set_id INTEGER,
-        FOREIGN KEY (set_id) REFERENCES vociset (set_id)
+        FOREIGN KEY (set_id) REFERENCES vociset (set_id) ON DELETE CASCADE
     )
 ''')
 

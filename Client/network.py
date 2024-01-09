@@ -58,7 +58,7 @@ class Network:
         """
         nachricht = [3, prompt, anzahl_resultate]
         antwort = self.sendRecv(nachricht)
-        print("Ergebnisse der Suche: ", antwort[1])
+        # print("Ergebnisse der Suche: ", antwort[1])
         return antwort[1]
 
     def vociset_herunterladen(self, set_id: int) -> tuple:

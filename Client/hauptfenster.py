@@ -22,6 +22,7 @@ from importCSV import ImportCSV
 from typing import List
 from Mp_LogReg import log_reg
 from karte_tuple import Karte
+from rich import print as rprint
 
 
 class Hauptfenster(QMainWindow, Ui_MainWindow):
@@ -316,9 +317,49 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         """'Löschen' Option aus dem Kontextmenu ausführen"""
         self.exploreritems_loeschen(self.kontext_elemente)
 
-    def exploreritems_loeschen(self, items):
+    def exploreritems_loeschen(self, items: List[ExplorerItem]):
         """Löscht Elemente aus dem Explorer"""
         print(items)  # todo Hier Lösch Option bauen
+
+        # Warnung anzeigen, dass das Löschen entgültig ist
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Warning)
+        msg.setWindowTitle("Vocitrainer")
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg.setText(
+            """Achtung! Der Löschvorgang kann nicht rückgängig gemacht werden.
+            Wollen sie fortfahren?"""
+        )
+        antwort = msg.exec_()
+
+        if antwort == QMessageBox.No:
+            return
+
+        loesch_ids = []
+        offenes_set_geloescht = False
+
+        for item in items:
+            loesch_ids.append([item.id, item.typ])
+            item.setHidden(True)
+            if item.id == self.geladenes_set_explorer_item:
+                offenes_set_geloescht = True
+
+        rprint("[blue]Lösch Ids:")
+        rprint(loesch_ids)
+
+        # Datenbankcursor erstellen
+        cursor = self.dbconn.cursor()
+
+        for loesch_id in loesch_ids:
+            if loesch_id[1] == "ordner":
+                sql = """DELETE FROM ordner WHERE ordner_id=?"""
+            else:
+                sql = """DELETE FROM vociset WHERE set_id=?"""
+
+            cursor.execute(sql, (loesch_id[0],))
+
+        cursor.close()
+        self.dbconn.commit()
 
     def keyPressEvent(self, event: QKeyEvent, *args, **kwargs):
         """Überschreibung der bereits bestehenden Methode"""

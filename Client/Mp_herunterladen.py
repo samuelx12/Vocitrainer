@@ -34,7 +34,7 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
         breite = bildschirm_geometrie.width()
         hoehe = bildschirm_geometrie.height()
-        self.setGeometry(int(breite * 4/12), int(hoehe * 3/8), int(breite * 1/3), int(hoehe * 1/6))
+        self.setGeometry(int(breite * 4/12), int(hoehe * 3/8), int(breite * 1/3), int(hoehe * 1/4))
 
         # Signale mit Slots verbinden
         self.cmd_schliessen.clicked.connect(self.cmd_schliessen_clicked)
@@ -57,7 +57,7 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
     def txt_suche_textChanged(self):
         if self.txt_suche.text().split():
             resultate = self.net.vociset_suche(self.txt_suche.text(), 10)
-            print(resultate)
+
             if resultate:
                 # Tabelle neu laden
                 self.lade_tabelle(resultate)
