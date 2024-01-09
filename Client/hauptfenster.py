@@ -380,11 +380,11 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Warning)
         msg.setWindowIcon(QIcon(':/icons/res/icons/delete_forever_FILL0_wght400_GRAD0_opsz24.svg'))
-        msg.setWindowTitle("Vocitrainer")
+        msg.setWindowTitle("Löschbestätigung")
         msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         msg.setText(
-            """Achtung! Der Löschvorgang kann nicht rückgängig gemacht werden.
-            Wollen sie fortfahren?"""
+            "Achtung! Der Löschvorgang kann nicht rückgängig gemacht werden.\n"
+            + "Wollen sie fortfahren?"
         )
         antwort = msg.exec_()
 
@@ -457,6 +457,19 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def mn_Hochladen_triggered(self):
         """Das Fenster um das momentan offene Set hochzuladen wird geöffnet"""
+
+        if not self.set_angezeigt:
+            # Es ist kein Set angezeigt, auch wenn dass kartenModel noch das alte Set geladen hat.
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/error_FILL0_wght400_GRAD0_opsz24.svg'))
+            msg.setWindowTitle("Kein Set gewählt")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.setText(
+                "Es ist kein Set offen!\n" +
+                "Du musst ein Set öffnen, um dieses hochzuladen."
+            )
+
         erfolg, net = log_reg()
 
         if not erfolg:
