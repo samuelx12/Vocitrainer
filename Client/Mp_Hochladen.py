@@ -5,6 +5,7 @@ Hier ist das Fenster in welchem der Benutzer noch Name und Tags anpasst bevor es
 """
 
 from PyQt5.QtCore import *
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 from Client.res.ui_mp_hochladen import Ui_Mp_Hochladen
 from network import Network
@@ -15,6 +16,7 @@ class MpHochladen(QDialog, Ui_Mp_Hochladen):
     """
     Hier kann der Benutzer noch Name, Sprache und Tags anpassen, bevor das Set hochgeladen wird.
     """
+
     def __init__(self, network: Network, set_id: int, *args, **kwargs):
         super(MpHochladen, self).__init__(*args, **kwargs)
         self.setupUi(self)
@@ -31,7 +33,7 @@ class MpHochladen(QDialog, Ui_Mp_Hochladen):
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
         breite = bildschirm_geometrie.width()
         hoehe = bildschirm_geometrie.height()
-        self.setGeometry(int(breite * 4/12), int(hoehe * 3/8), int(breite * 1/3), int(hoehe * 1/6))
+        self.setGeometry(int(breite * 4 / 12), int(hoehe * 3 / 8), int(breite * 1 / 3), int(hoehe * 1 / 6))
 
         # Signale mit Slots verbinden
         self.cmd_abbrechen.clicked.connect(self.cmd_abbrechen_clicked)
@@ -69,14 +71,21 @@ class MpHochladen(QDialog, Ui_Mp_Hochladen):
         msg = QMessageBox()
         if erfolg:
             msg.setIcon(QMessageBox.Information)
-            msg.setWindowTitle("Vocitrainer - Erfolg")
+            msg.setWindowIcon(QIcon(':/icons/res/icons/download_done_FILL0_wght500_GRAD0_opsz40.svg'))
+            msg.setWindowTitle("Set hochgeladen")
             msg.setText(
-            "Das Set wurde auf den Server hochgeladen"
+                "Das Set wurde erfolgreich auf den Server hochgeladen!"
             )
         else:
             msg.setIcon(QMessageBox.Critical)
-            msg.setWindowTitle("Vocitrainer - Fehler")
-            msg.setText("Das Set konnte auf Grund eines unerwarteten Fehlers nicht hochgeladen werden.\n"
-                        "Überprüfen sie bitte ihre Internet-Verbindung")
+            msg.setWindowIcon(QIcon(':/icons/res/icons/wifi_off_FILL0_wght400_GRAD0_opsz24.svg'))
+            msg.setWindowTitle("Hochladen gescheitert")
+            msg.setText(
+                "Die Verbindung wurde unterbrochen und das Set konnte nicht hochgeladen werden!\n"
+                + "Überprüfen sie ihre Internetverbindung."
+            )
+            self.close()
+            msg.exec_()
+            return
 
         msg.exec_()

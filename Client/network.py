@@ -110,9 +110,11 @@ class Network:
         :return: bool Erfolg
         """
         nachricht = [8, vociset_datensatz, karten_datensaetze]
+
         try:
             antwort = self.sendRecv(nachricht)
             return antwort[1]
+
         except:
             return False
 
@@ -137,11 +139,9 @@ class Network:
         :return: bool Erfolg
         """
         nachricht = [10, set_id, aktion]
-        try:
-            antwort = self.sendRecv(nachricht)
-            return antwort[1]
-        except:
-            return False
+
+        antwort = self.sendRecv(nachricht)
+        return antwort[1]
 
 
 if __name__ == "__main__":

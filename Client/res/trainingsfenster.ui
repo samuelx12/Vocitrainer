@@ -14,8 +14,8 @@
    <string>Dialog</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</normaloff>../icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</iconset>
+   <iconset resource="../ressources.qrc">
+    <normaloff>:/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</normaloff>:/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
@@ -460,6 +460,8 @@ border-color: rgb(184, 225, 210);</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../ressources.qrc"/>
+ </resources>
  <connections/>
 </ui>

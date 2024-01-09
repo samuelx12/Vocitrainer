@@ -1,5 +1,10 @@
 <RCC>
   <qresource prefix="icons">
+    <file>res/icons/wifi_off_FILL0_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/delete_forever_FILL0_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/help_FILL0_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/error_FILL0_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/warning_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/login_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/edit_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/edit_FILL1_wght400_GRAD0_opsz24.svg</file>

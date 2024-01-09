@@ -56,7 +56,20 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
 
     def txt_suche_textChanged(self):
         if self.txt_suche.text().split():
-            resultate = self.net.vociset_suche(self.txt_suche.text(), 10)
+            try:
+                resultate = self.net.vociset_suche(self.txt_suche.text(), 10)
+            except:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Critical)
+                msg.setWindowIcon(QIcon(':/icons/res/icons/wifi_off_FILL0_wght400_GRAD0_opsz24.svg'))
+                msg.setWindowTitle("Verbindung unterbrochen")
+                msg.setText(
+                    "Die Verbindung wurde unterbrochen!\n"
+                    + "Überprüfen sie ihre Internetverbindung."
+                )
+                self.close()
+                msg.exec_()
+                return
 
             if resultate:
                 # Tabelle neu laden
@@ -131,7 +144,21 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         :return: None
         """
         # print(f"Lade Set mit der ID {set_id} herunter.")
-        vociset_datensatz, karten_datensaetze = self.net.vociset_herunterladen(set_id)
+        try:
+            vociset_datensatz, karten_datensaetze = self.net.vociset_herunterladen(set_id)
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/wifi_off_FILL0_wght400_GRAD0_opsz24.svg'))
+            msg.setWindowTitle("Verbindung unterbrochen")
+            msg.setText(
+                "Die Verbindung wurde unterbrochen!\n"
+                + "Überprüfen sie ihre Internetverbindung."
+            )
+            self.close()
+            msg.exec_()
+            return
+
         # print(vociset_datensatz)
         # print(karten_datensaetze)
 

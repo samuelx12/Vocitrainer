@@ -22,6 +22,7 @@ from importCSV import ImportCSV
 from typing import List
 from Mp_LogReg import log_reg
 from karte_tuple import Karte
+import ressources_rc
 from rich import print as rprint
 
 
@@ -55,6 +56,8 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # Tabellen Model Daten laden
         # self.kartenModel.lade_daten(1)
         self.geladenes_set_explorer_item = None
+        self.set_angezeigt = False
+        self.liste_sichtbar(False)
 
         # Model zuweisen
         self.tbv_Liste.setModel(self.kartenModel)
@@ -90,10 +93,60 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # Aktives Element im Explorer speichern
         self.aktiveItems = []
 
+    def liste_sichtbar(self, sichtbar: bool):
+        """Kleine Funktion, welche die Meldung "nichts angezeigt" ausblenden und die Liste einblendet bzw. umgekehrt"""
+
+        self.lbl_nichtsAngezeigt1.setVisible(not sichtbar)
+        self.lbl_nichtsAngezeigt2.setVisible(not sichtbar)
+        self.tbv_Liste.setVisible(sichtbar)
+        self.frame_nichtsAngezeigt.setVisible(not sichtbar)
+
     def cmd_beenden_clicked(self):
         self.close()
 
+    def msg_kein_set_aktiv(self):
+        """
+        Eine kleine Funktion, welche eine Error anzeigt, dass kein Set geöffnet sei.
+        Sie wird von den Methoden gerufen, welche die Trainings laden.
+        """
+
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setWindowIcon(QIcon(':/icons/res/icons/error_FILL0_wght400_GRAD0_opsz24.svg'))
+        msg.setWindowTitle("Vocitrainer")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setText(
+            "Es ist kein Set offen!\n" +
+            "Du musst ein Set öffnen, um dieses zu lernen."
+        )
+
+        msg.exec_()
+
+    def msg_verbindungsFehler(self):
+        """
+        Zeigt eine MessageBox an, dass die Verbindung fehlgeschlagen sei.
+        :return: None
+        """
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setWindowIcon(QIcon(':/icons/res/icons/wifi_off_FILL0_wght400_GRAD0_opsz24.svg'))
+        msg.setWindowTitle("Verbindung fehlgeschlagen")
+        msg.setText(
+            "Fehler bei der Verbindung mit dem Server!\n"
+            + "Überprüfen sie ihre Internetverbindung."
+        )
+        msg.exec_()
+
     def cmd_Setlernen_clicked(self):
+        """
+        Set Lernen
+        Der Intelligente Lernmodus lernt ein ganzes Set.
+        """
+        # Überprüfen, ob überhaupt ein Set gewählt ist.
+        if not self.set_angezeigt:
+            self.msg_kein_set_aktiv()
+            return
+
         # Daten laden und in das Datenformat konvertieren
         selection_model = self.tbv_Liste.selectionModel()
         gewaehlte_indices = selection_model.selectedRows()
@@ -157,7 +210,8 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         """Funktion, die ausgeführt wird, wenn ein Item im Explorer doppelt geklickt wird."""
         # Das zugehörige Explorer Item bekommen
 
-        # Möglicherweise wird dass Item direkt übergeben, nämlich dann, wenn die Funktion manuell aufgerufen wurde.
+        # Möglicherweise wird dass Item direkt übergeben, nämlich dann, wenn die Funktion manuell aufgerufen wurd
+        # um ein Set zu laden
         if item_direkt:
             item = item_direkt
         else:
@@ -171,6 +225,8 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         if item.typ == "vociset":
             self.kartenModel.lade_daten(item.id)
             self.geladenes_set_explorer_item = item
+            self.set_angezeigt = True
+            self.liste_sichtbar(True)
 
         # Alte Aktive entfernen
         for altesAktivesItem in self.aktiveItems:
@@ -314,16 +370,16 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.load_explorer()
 
     def trw_Explorer_Kontextmenu_Loeschen(self):
-        """'Löschen' Option aus dem Kontextmenu ausführen"""
+        """'Löschen Option aus dem Kontextmenu ausführen"""
         self.exploreritems_loeschen(self.kontext_elemente)
 
     def exploreritems_loeschen(self, items: List[ExplorerItem]):
-        """Löscht Elemente aus dem Explorer"""
-        print(items)  # todo Hier Lösch Option bauen
+        """Löscht Elemente aus dem Explorer und alle Daten die sie repräsentieren aus der Datenbank"""
 
         # Warnung anzeigen, dass das Löschen entgültig ist
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Warning)
+        msg.setWindowIcon(QIcon(':/icons/res/icons/delete_forever_FILL0_wght400_GRAD0_opsz24.svg'))
         msg.setWindowTitle("Vocitrainer")
         msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         msg.setText(
@@ -341,11 +397,16 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         for item in items:
             loesch_ids.append([item.id, item.typ])
             item.setHidden(True)
-            if item.id == self.geladenes_set_explorer_item:
+            if item.id == self.geladenes_set_explorer_item.id:
                 offenes_set_geloescht = True
 
-        rprint("[blue]Lösch Ids:")
-        rprint(loesch_ids)
+        # rprint("[blue]Lösch Ids:")
+        # rprint(loesch_ids)
+
+        # Wenn das offene Set gelöscht wird, darf es nicht mehr in der Tabelle offen sein
+        if offenes_set_geloescht:
+            self.set_angezeigt = False
+            self.liste_sichtbar(False)
 
         # Datenbankcursor erstellen
         cursor = self.dbconn.cursor()
@@ -377,7 +438,12 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def mn_Herunterladen_triggered(self):
         """Wird ausgeführt, wenn der Benutzer das Herunterladenmenü anwählt."""
-        self.mp_Herunterladen = MpHerunterladen(self)
+        try:
+            self.mp_Herunterladen = MpHerunterladen(self)
+        except:
+            self.msg_verbindungsFehler()
+            return
+
         self.mp_Herunterladen.setModal(True)
 
         self.mp_Herunterladen.exec_()
@@ -394,13 +460,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         erfolg, net = log_reg()
 
         if not erfolg:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Critical)
-            msg.setWindowTitle("Vocitrainer - Fehler")
-            msg.setText(
-                "Fehler bei der Verbindung / Authentifizierung mit dem Server!"
-            )
-            msg.exec_()
+            self.msg_verbindungsFehler()
             return
 
         offenes_set = self.kartenModel.geladenesSet
@@ -413,13 +473,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         erfolg, net = log_reg()
 
         if not erfolg:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Critical)
-            msg.setWindowTitle("Vocitrainer - Fehler")
-            msg.setText(
-                "Fehler bei der Verbindung / Authentifizierung mit dem Server!"
-            )
-            msg.exec_()
+            self.msg_verbindungsFehler()
             return
 
         self.mp_hochgeladeneVerwalten = MpHochgeladeneVerwalten(net)

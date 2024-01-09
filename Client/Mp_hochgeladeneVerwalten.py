@@ -32,7 +32,7 @@ class MpHochgeladeneVerwalten(QDialog, Ui_Mp_HochgeladeneVerwalten):
         # Signale mit Slots verbinden
         self.cmd_schliessen.clicked.connect(self.cmd_schliessen_clicked)
 
-        self.net = network
+        # Inhalte laden
         inhalte = self.net.verwalten_info()
         self.lade_tabelle(inhalte)
 
@@ -84,7 +84,21 @@ class MpHochgeladeneVerwalten(QDialog, Ui_Mp_HochgeladeneVerwalten):
             if button_index.isValid():
                 reihe = button_index.row()
                 set_id = self.inhalte[reihe][0]
-                self.net.verwalten_aktion(set_id, 0)
+                try:
+                    self.net.verwalten_aktion(set_id, 0)
+                    print("Das hat geklappt")
+                except:
+                    msg = QMessageBox()
+                    msg.setIcon(QMessageBox.Critical)
+                    msg.setWindowIcon(QIcon(':/icons/res/icons/wifi_off_FILL0_wght400_GRAD0_opsz24.svg'))
+                    msg.setWindowTitle("Verbindung unterbrochen")
+                    msg.setText(
+                        "Die Verbindung wurde unterbrochen!\n"
+                        + "Überprüfen sie ihre Internetverbindung."
+                    )
+                    self.close()
+                    msg.exec_()
+                    return
 
                 # Erfolgsnachricht auf dem Button ausgeben
                 erfolg_button = QPushButton("Gelöscht")

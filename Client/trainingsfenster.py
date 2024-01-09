@@ -14,6 +14,7 @@ from trainingscontroller import TC_Einfach, TC_Intelligent, TrainingFertig
 from karte_tuple import Karte
 from sqlite3 import Connection
 from typing import List
+import ressources_rc
 
 
 class Trainingsfenster(QDialog, Ui_Trainingsfenster):
@@ -297,6 +298,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             # Das Training ist fertig
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg'))
             msg.setWindowTitle("Vocitrainer")
             msg.setStandardButtons(QMessageBox.Ok)
             msg.setText(
@@ -309,6 +311,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             # Der Benutzer will das Training vorzeitig beenden.
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Question)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/help_FILL0_wght400_GRAD0_opsz24.svg'))
             msg.setWindowTitle("Vocitrainer")
             msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
             msg.setText(
