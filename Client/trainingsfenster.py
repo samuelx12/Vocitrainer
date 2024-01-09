@@ -35,7 +35,15 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             Falls in Phase 1 eine Frage gestellt wurde, die Antwort anzeigen.
     """
 
-    def __init__(self, daten: List[Karte], sprache: str, definition_lernen: bool, dbconn: Connection, *args, **kwargs):
+    def __init__(
+            self,
+            daten: List[Karte],
+            sprache: str,
+            controller_typ: str,
+            dbconn: Connection,
+            *args,
+            **kwargs
+    ):
         super(Trainingsfenster, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Vocitrainer")
@@ -44,16 +52,16 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.schliessen_ohne_kommentar = False
         self.oeffnen = True
         self.DBCONN = dbconn
-        self.controller_typ = "intelligent"
+        self.controller_typ = controller_typ
+
+        # todo Definition lernen von Einstellungen laden
+        self.definition_lernen: bool = False
 
         # Einstellung: Sprache gleich für alles Einstellen:
         self.sprache: str = sprache
         self.f_lbl_fremdsprache.setText(self.sprache + ":")
         self.a_lbl_fremdsprache_beschreibung.setText(self.sprache + ":")
         self.z_lbl_fremdsprache_beschreibung.setText(self.sprache + ":")
-
-        # Einstellung: Mit Definition lernen falls vorhanden einstellen
-        self.definition_lernen: bool = definition_lernen
 
         # Einstellung: Schwierigkeit anzeigen
         self.schwierigkeit_zeigen = True

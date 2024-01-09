@@ -19,7 +19,7 @@ from Mp_Hochladen import MpHochladen
 from Mp_hochgeladeneVerwalten import MpHochgeladeneVerwalten
 from ueber import Ueber as Ueber_Fenster
 from importCSV import ImportCSV
-from typing import List
+from typing import List, Union
 from Mp_LogReg import log_reg
 from karte_tuple import Karte
 import ressources_rc
@@ -80,7 +80,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
         # ---------- Signals und Slots verbinden ----------
         # Ribbon Leiste
-        self.cmd_SetLernen.clicked.connect(self.cmd_Setlernen_clicked)
+        self.cmd_SetLernen.clicked.connect(self.cmd_SetLernen_clicked)
         self.cmd_SetUeben.clicked.connect(self.cmd_SetUeben_clicked)
         self.cmd_Lernen.clicked.connect(self.cmd_Lernen_clicked)
         self.cmd_MarkierteLernen.clicked.connect(self.cmd_MarkierteLernen_clicked)
@@ -158,38 +158,6 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         )
         msg.exec_()
 
-    def cmd_Setlernen_clicked(self):
-        """
-        Set Lernen
-        Der Intelligente Lernmodus lernt ein ganzes Set.
-        """
-        # Überprüfen, ob überhaupt ein Set gewählt ist.
-        if not self.set_angezeigt:
-            self.msg_kein_set_aktiv()
-            return
-
-        # Daten laden und in das Datenformat konvertieren
-        selection_model = self.tbv_Liste.selectionModel()
-        gewaehlte_indices = selection_model.selectedRows()
-        gewaehlte_zeilen = [index.row() for index in gewaehlte_indices]
-
-        # Das ist für die Schwierigkeit_Training, die nicht in den Kartendaten ist.
-        #                                                         V
-        gewaehlte_karten = [Karte(*self.kartenModel.daten[zeile], 0) for zeile in gewaehlte_zeilen]
-
-        # print(gewaehlte_karten) # DEBUG Hier entkommentieren um zu sehen, welche Karten ins Training geladen werden
-
-        # Sprache herausfinden
-        cursor = self.dbconn.cursor()
-        sql = """SELECT sprache FROM main.vociset WHERE set_id = ?"""
-        cursor.execute(sql, (self.geladenes_set_explorer_item.id,))
-        sprache = cursor.fetchone()[0]
-
-        self.trainingsfenster = Trainingsfenster(gewaehlte_karten, sprache, False, self.dbconn)
-        self.trainingsfenster.setModal(True)
-        if self.trainingsfenster.oeffnen:
-            self.trainingsfenster.exec_()
-
     def load_explorer(self):
         def ebene_laden(parent, parent_id):
             """
@@ -258,6 +226,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             item.setActive(True)
             self.aktiveItems.append(item)
             item = item.parent()
+
         item.setActive(True)
         self.aktiveItems.append(item)
 
@@ -265,8 +234,6 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         """Funktion, die ausgeführt wird, wenn der Benutzer eine DragAndDrop beginnt."""
         if event.source() == self.trw_Explorer:
             event.acceptProposedAction()
-        else:
-            print("dragEnterEvent nicht zugelassen")
 
     def trw_Explorer_dropEvent(self, event: QDropEvent):
         """Dies ist die essenzielle DragAndDrop Funktion."""
@@ -451,25 +418,113 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             self.exploreritems_loeschen(self.trw_Explorer.selectedItems())
 
     # -------------------------------------------------------
+    # ---------------------- LERNMODI -----------------------
+    # -------------------------------------------------------
+
+    def lernen(self, controller: str, quelle: Union[0, 1, 2]) -> None:
+        """
+        Diese Funktion startet das Training.
+        :param controller: Welcher Trainings_Controller verwendet werden sollen
+        :param quelle: Ob alle Karten des Sets, nur Ausgewählte oder Markierte gelernt werden sollen.
+            0 => Alle
+            1 => Nur Ausgewählte
+            2 => Nur Markierte
+        :return: None
+        """
+        # Überprüfen, ob überhaupt ein Set gewählt ist.
+        if not self.set_angezeigt:
+            self.msg_kein_set_aktiv()
+            return
+
+        ausgewaehlte_vorhanden = False
+        if quelle == 1:
+            # Nur Ausgewählte Daten laden
+            selection_model = self.tbv_Liste.selectionModel()
+            gewaehlte_indices = selection_model.selectedRows()
+            karte_zeile = [index.row() for index in gewaehlte_indices]
+            if karte_zeile:
+                ausgewaehlte_vorhanden = True
+
+        print("quelle")
+        print(quelle)
+
+        if quelle == 0 or quelle == 2 or not ausgewaehlte_vorhanden:
+            # Alle Daten laden und in das Datenformat konvertieren
+            karte_zeile = [row for row in range(self.tbv_Liste.model().rowCount())]
+            print("Alle DATEN")
+
+        print("karte_zeile2")
+        print(karte_zeile)
+
+        # Das ist für den Schwierigkeit_Training Wert, der nicht in den Kartendaten ist.
+        #                                                         V
+        gewaehlte_karten_1 = [Karte(*self.kartenModel.daten[zeile], 0) for zeile in karte_zeile]
+
+        # Falls nur Markierte gewünscht alle anderen aussortieren
+        # Sonst einfach übernehmen
+        gewaehlte_karten_2 = []
+        if quelle == 2:
+            for gewaehlte_karte in gewaehlte_karten_1:
+                if gewaehlte_karte.markiert:
+                    gewaehlte_karten_2.append(gewaehlte_karte)
+        else:
+            gewaehlte_karten_2 = gewaehlte_karten_1
+
+        if not gewaehlte_karten_2:
+            # Falls keine Karten geladen wurden
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/error_FILL0_wght400_GRAD0_opsz24.svg'))
+            msg.setWindowTitle("Vocitrainer")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.setText(
+                "Es konnten keine Vokabeln geladen werden!\n" +
+                "Überprüfe, ob das Set (markierte) Karten enthält."
+            )
+            msg.exec_()
+            return
+
+        # Sprache herausfinden
+        cursor = self.dbconn.cursor()
+        sql = """SELECT sprache FROM main.vociset WHERE set_id = ?"""
+        cursor.execute(sql, (self.geladenes_set_explorer_item.id,))
+        sprache = cursor.fetchone()[0]
+
+        # Trainingsfenster öffnen
+        self.trainingsfenster = Trainingsfenster(gewaehlte_karten_2, sprache, controller, self.dbconn)
+        self.trainingsfenster.setModal(True)
+        if self.trainingsfenster.oeffnen:
+            self.trainingsfenster.exec_()
+
+    # -------------------------------------------------------
     # ------------------------ SLOTS ------------------------
     # -------------------------------------------------------
 
     # --------------- MENÜ-LEISTE ---------------
     def cmd_SetLernen_clicked(self):
         """'Set lernen' Button in der Menü-Leiste geklickt"""
-        pass
+        self.lernen("intelligent", 0)
 
     def cmd_SetUeben_clicked(self):
         """'Set üben' Button in der Menü-Leiste geklickt"""
-        pass
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowIcon(QIcon(':/icons/res/icons/event_upcoming_FILL0_wght400_GRAD0_opsz24.svg'))
+        msg.setWindowTitle("Coming soon")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setText(
+            "Der Trainingsmodus 'Set üben' ist die perfekte Ergänzung zu 'Set lernen'.\n" +
+            "Er momentan noch nicht verfügbar, wird aber bald hinzugefügt."
+        )
+        msg.exec_()
 
     def cmd_Lernen_clicked(self):
         """'Lernen' Button in der Menü-Leiste geklickt"""
-        pass
+        self.lernen("einfach", 1)
 
     def cmd_MarkierteLernen_clicked(self):
         """'Markierte lernen' Button in der Menü-Leiste geklickt"""
-        pass
+        self.lernen("einfach", 2)
 
     def cmd_Einstellungen_clicked(self):
         """'Einstellungen' Button in der Menü-Leiste geklickt"""
@@ -506,19 +561,28 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
     # --------------- MENÜ LERNEN ---------------
     def mn_SetLernen_triggered(self):
         """'Set lernen' Option in dem Lernen-Menü geklickt"""
-        pass
+        self.lernen("intelligent", 0)
 
     def mn_SetUeben_triggered(self):
         """'Set üben' Option in dem Lernen-Menü geklickt"""
-        pass
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowIcon(QIcon(':/icons/res/icons/event_upcoming_FILL0_wght400_GRAD0_opsz24.svg'))
+        msg.setWindowTitle("Coming soon")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setText(
+            "Der Trainingsmodus 'Set üben' ist die perfekte Ergänzung zu 'Set lernen'.\n" +
+            "Er momentan noch nicht verfügbar, wird aber bald hinzugefügt."
+        )
+        msg.exec_()
 
     def mn_Lernen_triggered(self):
         """'Lernen' Option in dem Lernen-Menü geklickt"""
-        pass
+        self.lernen("einfach", 1)
 
     def mn_MarkierteLernen_triggered(self):
         """'MarkierteLernen' Option in dem Lernen-Menü geklickt"""
-        pass
+        self.lernen("einfach", 2)
 
     # --------------- MENÜ MARKETPLACE ---------------
     def mn_Herunterladen_triggered(self):
