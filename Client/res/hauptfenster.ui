@@ -278,8 +278,14 @@ selection-color: rgb(0, 0, 0);</string>
              </item>
              <item>
               <widget class="QLabel" name="lbl_nichtsAngezeigt1">
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
                <property name="text">
                 <string>Kein Set ausgewählt.</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -287,6 +293,9 @@ selection-color: rgb(0, 0, 0);</string>
               <widget class="QLabel" name="lbl_nichtsAngezeigt2">
                <property name="text">
                 <string>Wähle eines links im Explorer aus oder lade dir ein Set vom Server herunter.</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
                <property name="wordWrap">
                 <bool>true</bool>

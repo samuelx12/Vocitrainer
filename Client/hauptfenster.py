@@ -47,7 +47,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
         breite = bildschirm_geometrie.width()
         hoehe = bildschirm_geometrie.height()
-        self.setGeometry(int(breite/6), int(hoehe/6), int(breite*2/3), int(hoehe*2/3))
+        self.setGeometry(int(breite/6), int(hoehe/6), int(breite*1/2), int(hoehe*2/3))
 
         # Splitter richtig einteilen
         self.splitter.setSizes([100, 300])
@@ -64,6 +64,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # Model zuweisen
         self.tbv_Liste.setModel(self.kartenModel)
         self.tbv_Liste.horizontalHeader().setSectionResizeMode(QHeaderView.Interactive)
+        # self.tbv_Liste.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tbv_Liste.horizontalHeader().setStretchLastSection(True)
 
         # ---------- Explorer vorbereiten ----------
