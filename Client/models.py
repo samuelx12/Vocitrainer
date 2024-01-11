@@ -30,6 +30,16 @@ class KartenModel(QAbstractTableModel):
         self.geladenesSet = None
         self.daten = None
 
+        self.spalte_kategorie_zuweisung = {
+            0: 6,  # Stern zum Markieren
+            1: 1,  # Wort
+            2: 2,  # Fremdwort
+            3: 3,  # Definition
+            4: 4,  # Bemerkung
+            5: 7,  # Schwierigkeit
+            # 6: 5,  # Lernfortschritt
+        }
+
     def rowCount(self, parent: QModelIndex = ...) -> int:
         """Vorgegebene Funktion welche die Anzahl Zeilen zurückgeben muss."""
         # print("rowCount: ", len(self.daten))
@@ -41,7 +51,7 @@ class KartenModel(QAbstractTableModel):
 
     def columnCount(self, parent: QModelIndex = ...) -> int:
         """Vorgegebene Funktion welche die Anzahl Spalten zurückgeben muss."""
-        return 6
+        return len(self.spalte_kategorie_zuweisung)
 
     def data(self, index: QModelIndex, role: int = ...) -> typing.Any:
         """
@@ -53,20 +63,7 @@ class KartenModel(QAbstractTableModel):
         reihe = index.row()
         spalte = index.column()
 
-        spalte_kategorie_zuweisung = {
-            0: 6,  # Stern zum Markieren
-            1: 1,  # Wort
-            2: 2,  # Fremdwort
-            3: 3,  # Definition
-            4: 4,  # Bemerkung
-            5: 7,  # Schwierigkeit
-            # 6: 5,  # Lernfortschritt
-        }
-
-        if role == Qt.UserRole:
-            print("UserRole")
-
-        kategorie = spalte_kategorie_zuweisung[spalte]
+        kategorie = self.spalte_kategorie_zuweisung[spalte]
 
         if role in (Qt.DisplayRole, Qt.EditRole):
             # Text des Feldes
@@ -122,8 +119,11 @@ class KartenModel(QAbstractTableModel):
             else:
                 return Qt.Checked
 
-        elif role == Qt.DecorationRole and spalte == 0:
-            return QIcon(':/icons/res/icons/wifi_off_FILL0_wght400_GRAD0_opsz24.svg')
+        elif role == Qt.DecorationRole and kategorie == 6:
+            if self.daten[reihe][6] == 0:
+                return QIcon(':/icons/res/icons/rund_star_FILL0_wght400_GRAD0_opsz24.svg')
+            else:
+                return QIcon(':/icons/res/icons/rund_star_FILL1_wght400_GRAD0_opsz24.svg')
 
         # return self.daten[reihe][spalte]
 
@@ -153,18 +153,22 @@ class KartenModel(QAbstractTableModel):
 
         self.endResetModel()
 
-        # print(karte_liste)
-
     def flags(self, index: QModelIndex) -> Qt.ItemFlags:
         """
         Vorgegebene Funktion, welche als Antwort die Eigenschaft des Feldes (Aktiv, Bearbeitbar...) zurück gibt.
         """
-        if index.column() == 0:
+        kategorie = self.spalte_kategorie_zuweisung[index.column()]
+
+        if kategorie == 6:
             flags = \
                 QtCore.Qt.ItemFlag.ItemIsEnabled | \
                 QtCore.Qt.ItemFlag.ItemIsSelectable | \
-                Qt.ItemFlag.ItemIsUserCheckable | \
-                Qt.ItemFlag.ItemIsEditable
+                Qt.ItemFlag.ItemIsUserCheckable
+        elif kategorie == 7:
+            flags = \
+                QtCore.Qt.ItemFlag.ItemIsEnabled | \
+                QtCore.Qt.ItemFlag.ItemIsSelectable
+
         else:
             flags =\
                 QtCore.Qt.ItemFlag.ItemIsEditable |\
@@ -177,30 +181,60 @@ class KartenModel(QAbstractTableModel):
         """
         Vorgegebene Funktion welche es ermöglicht, den Inhalt der Tabelle direkt in dieser zu bearbeiten.
         Dazu wird zu erst die Karten Id in Erfahrung gebracht (In den Daten immer der erste Eintrag der zweiten Ebene).
-        Mit dieser wird die Änderung gleich in die Datenbank geschrieben, und dann mit lade_daten auch in die
-        self.daten Liste übernommen, von wo aus sie angezeigt wird.
+        Mit dieser wird die Änderung gleich in die Datenbank geschrieben.
         """
         reihe = index.row()
         spalte = index.column()
+        kategorie = self.spalte_kategorie_zuweisung[spalte]
 
-        if role in (Qt.DisplayRole, Qt.EditRole):
-            print(f"Bearbeite: {index.row()}, {index.column()}")
+        # Cursor für die Datenbank erstellen
+        cursor = self.dbconn.cursor()
 
-            # Wenn die neue Version leer ist:
-            if not value:
+        # Id der Karte für Änderungen an der DB
+        karten_ID = self.daten[index.row()][0]
+
+        # ---------------- TEXT ÄNDERN ----------------
+        if role == Qt.EditRole and kategorie in [1, 2, 3, 4]:
+
+            # Wenn die neue Version leer ist (Bemerkung und Definition sind leer erlaubt)
+            if not value and kategorie not in [1, 2]:
+                cursor.close()
                 return False
 
-            # Zuerst muss die Karten ID herausgefunden werden,
-            # damit die Änderung direkt in der Datenbank vorgenommen werden kann und
-            # dann über die lade_daten Funktion auch in der Liste, der geladenen Karten gespeichert wird.
-            karten_ID = self.daten[index.row][0]
-            # print(karten_ID)
+            # Änderung im Cache anpassen
+            self.daten[reihe][kategorie] = value
 
-        elif role == Qt.CheckStateRole:
-            if value == Qt.Checked:
-                self.daten[reihe][6] = 1
+            # Änderen in der DB speichern
+            if kategorie == 1:
+                sql = """UPDATE karte SET wort=? WHERE karte_id=?"""
+            elif kategorie == 2:
+                sql = """UPDATE karte SET fremdwort=? WHERE karte_id=?"""
+            elif kategorie == 3:
+                sql = """UPDATE karte SET definition=? WHERE karte_id=?"""
             else:
-                self.daten[reihe][6] = 0
+                sql = """UPDATE karte SET bemerkung=? WHERE karte_id=?"""
+
+            cursor.execute(sql, (value, karten_ID))
+
+            cursor.close()
+            self.dbconn.commit()
+
+        # ---------------- MARKIERUNG ÄNDERN ----------------
+        elif role == Qt.CheckStateRole and kategorie == 6:
+            if value == Qt.Checked:
+                markiert = 1
+            else:
+                markiert = 0
+
+            # Cache updaten
+            self.daten[reihe][6] = markiert
+
+            # DB updaten
+            sql = """UPDATE karte SET markiert=? WHERE karte_id=?"""
+            cursor.execute(sql, (markiert, karten_ID))
+
+            cursor.close()
+            self.dbconn.commit()
 
         return True
 

@@ -26,10 +26,10 @@ class ExplorerItem(QTreeWidgetItem):
         self.typ = typ
         self.txt = txt
         if typ == "ordner":
-            icon.addPixmap(QPixmap("res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
-            icon.addPixmap(QPixmap("res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
+            icon.addPixmap(QPixmap(":/icons/res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
+            icon.addPixmap(QPixmap(":/icons/res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
         elif typ == "vociset":
-            icon.addPixmap(QPixmap("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
+            icon.addPixmap(QPixmap(":/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
 
         self.setIcon(0, icon)
 
@@ -48,33 +48,35 @@ class ExplorerItem(QTreeWidgetItem):
             try:
                 self.setFont(0, font)
             except RuntimeError:
-                rprint(
-                    """[yellow]INFO Der "[italic]wrapped C/C++ object of type ExplorerItem has been""" +
-                    """deleted[/italic]"-Runtime Error wurde gerade abgefangen.""" +
-                    """ [green]Diese Nachricht kann ignoriert werden, obwohl sie mehrmals hintereinander auftritt."""
-                )
+                pass
+                # rprint(
+                #     """[yellow]INFO Der "[italic]wrapped C/C++ object of type ExplorerItem has been""" +
+                #     """deleted[/italic]"-Runtime Error wurde gerade abgefangen.""" +
+                #     """ [green]Diese Nachricht kann ignoriert werden, obwohl sie mehrmals hintereinander auftritt."""
+                # )
 
         if aktiv:
             if self.typ == "vociset":
-                icon.addPixmap(QPixmap("res/icons/note_stack_FILL1_wght500_GRAD0_opsz40.svg"), QIcon.Normal,
+                icon.addPixmap(QPixmap(":/icons/res/icons/note_stack_FILL1_wght500_GRAD0_opsz40.svg"), QIcon.Normal,
                                QIcon.Off)
             elif self.typ == "ordner":
-                icon.addPixmap(QPixmap("res/icons/folder_FILL1_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
-                icon.addPixmap(QPixmap("res/icons/folder_open_FILL1_wght500_GRAD0_opsz40.svg"), QIcon.Normal,
+                icon.addPixmap(QPixmap(":/icons/res/icons/folder_FILL1_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
+                icon.addPixmap(QPixmap(":/icons/res/icons/folder_open_FILL1_wght500_GRAD0_opsz40.svg"), QIcon.Normal,
                                QIcon.On)
         else:
             if self.typ == "vociset":
-                icon.addPixmap(QPixmap("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal,
+                icon.addPixmap(QPixmap(":/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal,
                                QIcon.Off)
             elif self.typ == "ordner":
-                icon.addPixmap(QPixmap("res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
-                icon.addPixmap(QPixmap("res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
+                icon.addPixmap(QPixmap(":/icons/res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
+                icon.addPixmap(QPixmap(":/icons/res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
 
         try:
             self.setIcon(0, icon)
         except RuntimeError:
-            rprint(
-                """[yellow]INFO Der "[italic]wrapped C/C++ object of type ExplorerItem has been""" +
-                """deleted[/italic]"-Runtime Error wurde gerade abgefangen.""" +
-                """ [green]Diese Nachricht kann ignoriert werden, obwohl sie mehrmals hintereinander auftritt."""
-            )
+            pass
+            # rprint(
+            #     """[yellow]INFO Der "[italic]wrapped C/C++ object of type ExplorerItem has been""" +
+            #     """deleted[/italic]"-Runtime Error wurde gerade abgefangen.""" +
+            #     """ [green]Diese Nachricht kann ignoriert werden, obwohl sie mehrmals hintereinander auftritt."""
+            # )

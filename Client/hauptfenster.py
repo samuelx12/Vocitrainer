@@ -119,12 +119,27 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.trw_Explorer.dropEvent = self.trw_Explorer_dropEvent
 
     def liste_sichtbar(self, sichtbar: bool):
-        """Kleine Funktion, welche die Meldung "nichts angezeigt" ausblenden und die Liste einblendet bzw. umgekehrt"""
+        """
+        Kleine Funktion, welche die Meldung "nichts angezeigt" ausblenden und die Liste einblendet bzw. umgekehrt.
+        Zudem werden die Lernen-Buttons und die Hochladen-Funktion disabled bzw. enabled.
+        """
 
         self.lbl_nichtsAngezeigt1.setVisible(not sichtbar)
         self.lbl_nichtsAngezeigt2.setVisible(not sichtbar)
         self.tbv_Liste.setVisible(sichtbar)
         self.frame_nichtsAngezeigt.setVisible(not sichtbar)
+
+        self.cmd_SetLernen.setEnabled(sichtbar)
+        self.cmd_SetUeben.setEnabled(sichtbar)
+        self.cmd_Lernen.setEnabled(sichtbar)
+        self.cmd_MarkierteLernen.setEnabled(sichtbar)
+
+        self.mn_SetLernen.setEnabled(sichtbar)
+        self.mn_SetUeben.setEnabled(sichtbar)
+        self.mn_AusgewaehlteLernen.setEnabled(sichtbar)
+        self.mn_MarkierteLernen.setEnabled(sichtbar)
+
+        self.mn_Hochladen.setEnabled(sichtbar)
 
     def msg_kein_set_aktiv(self):
         """
