@@ -7,11 +7,15 @@
     <x>0</x>
     <y>0</y>
     <width>1066</width>
-    <height>749</height>
+    <height>730</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../ressources.qrc">
+    <normaloff>:/icons/res/icons/Vocitrainer_V_Icon.svg</normaloff>:/icons/res/icons/Vocitrainer_V_Icon.svg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">selection-background-color: rgb(201, 220, 225);
@@ -391,8 +395,16 @@ selection-color: rgb(0, 0, 0);]</string>
     </property>
     <addaction name="mn_CSV_importieren"/>
    </widget>
+   <widget class="QMenu" name="menuSet">
+    <property name="title">
+     <string>Set</string>
+    </property>
+    <addaction name="mn_WoerterHinzufuegen"/>
+    <addaction name="mn_FortschrittZuruecksetzen"/>
+   </widget>
    <addaction name="menuVocitrainer"/>
    <addaction name="menuLernen"/>
+   <addaction name="menuSet"/>
    <addaction name="menuMarketplace"/>
    <addaction name="menuImportieren"/>
   </widget>
@@ -406,6 +418,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Neues Set</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="mn_NeuerOrdner">
    <property name="icon">
@@ -415,6 +430,9 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="text">
     <string>Neuer Ordner</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
    </property>
   </action>
   <action name="mn_Herunterladen">
@@ -533,6 +551,25 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="text">
     <string>Markierte lernen</string>
+   </property>
+  </action>
+  <action name="mn_WoerterHinzufuegen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/add_box_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/add_box_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/add_box_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Wörter hinzufügen</string>
+   </property>
+  </action>
+  <action name="mn_FortschrittZuruecksetzen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/remove_done_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/remove_done_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Fortschritt zurücksetzen</string>
    </property>
   </action>
  </widget>

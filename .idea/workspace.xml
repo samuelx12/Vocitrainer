@@ -5,12 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Client/neuesWort.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/res/icons/Vocitrainer_V_Icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/res/icons/add_box_FILL0_wght400_GRAD0_opsz24.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/res/icons/add_box_FILL1_wght400_GRAD0_opsz24.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/res/icons/remove_done_FILL0_wght400_GRAD0_opsz24.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/res/neuesWort.ui" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Client/res/ui_neuesWort.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/explorer_item.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/explorer_item.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/res/hauptfenster.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/hauptfenster.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/res/ueber.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/ueber.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/res/ui_hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/ui_hauptfenster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/res/ui_ueber.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/ui_ueber.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/ressources.qrc" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ressources.qrc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/ressources_rc.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ressources_rc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/ueber.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ueber.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/vocitrainerdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Client/vocitrainerdb.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/serverdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Server/serverdb.db" afterDir="false" />
     </list>
@@ -116,7 +127,7 @@
       <recent name="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server\certificate" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Server">
+  <component name="RunManager" selected="Python.Client">
     <configuration name="Client + Server" type="CompoundRunConfigurationType">
       <toRun name="Client" type="PythonConfigurationType" />
       <toRun name="Server" type="PythonConfigurationType" />
@@ -416,7 +427,9 @@
       <workItem from="1704954817827" duration="5461000" />
       <workItem from="1704975677679" duration="1316000" />
       <workItem from="1704986620964" duration="1100000" />
-      <workItem from="1704987741084" duration="2192000" />
+      <workItem from="1704987741084" duration="3971000" />
+      <workItem from="1705008079820" duration="3995000" />
+      <workItem from="1705041227345" duration="3618000" />
     </task>
     <task id="LOCAL-00001" summary="Restrukturierung für besseren Workflow mit Qt-Designer aufgrund der bisher gemachten Erfahrungen mit PyQt.">
       <option name="closed" value="true" />
@@ -786,7 +799,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704959503948</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="- Wenn kein Set aktiv, werden jetzt entsprechende Aktionen disabled&#10;- Rework der Tabelle inkl:&#10;    - Felder sind jetzt bearbeitbar. Die Änderungen werden permanent gespeichert.&#10;    - Spalte Markiert mit Checkbox.&#10;    - Nur durch Änderung in einem Dictionary kann die Reihenfolge der Spalten veränder werden.">
+      <option name="closed" value="true" />
+      <created>1704990240636</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1704990240636</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -805,7 +826,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="LogReg Modul vorerst fertig" />
     <MESSAGE value="Hochladen von Vocisets möglich" />
     <MESSAGE value="Hochladen einer neuen Version der schriftlichen Arbeit" />
     <MESSAGE value="Hochladen von Notizen zum effizienten Lernen" />
@@ -830,16 +850,17 @@
     <MESSAGE value="- Für alle Menüs und Button Slots erstellt und sie verbunden" />
     <MESSAGE value="- SetLernen, AusgewählteLernen, MarkierteLernen verbunden&#10;- SetÜben -&gt; Meldung &quot;Bald verfügbar&quot;" />
     <MESSAGE value="- Markiert Checkboxen in der Tabelle hinzugefügt" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Markiert Checkboxen in der Tabelle hinzugefügt" />
+    <MESSAGE value="- Wenn kein Set aktiv, werden jetzt entsprechende Aktionen disabled&#10;- Rework der Tabelle inkl:&#10;    - Felder sind jetzt bearbeitbar. Die Änderungen werden permanent gespeichert.&#10;    - Spalte Markiert mit Checkbox.&#10;    - Nur durch Änderung in einem Dictionary kann die Reihenfolge der Spalten veränder werden." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Wenn kein Set aktiv, werden jetzt entsprechende Aktionen disabled&#10;- Rework der Tabelle inkl:&#10;    - Felder sind jetzt bearbeitbar. Die Änderungen werden permanent gespeichert.&#10;    - Spalte Markiert mit Checkbox.&#10;    - Nur durch Änderung in einem Dictionary kann die Reihenfolge der Spalten veränder werden." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Vocitrainer$models.coverage" NAME="models Coverage Results" MODIFIED="1704571156791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Setup_DB.coverage" NAME="Setup DB Coverage Results" MODIFIED="1704782758957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Server.coverage" NAME="Server Coverage Results" MODIFIED="1704989330931" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Server.coverage" NAME="Server Coverage Results" MODIFIED="1704996988987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
     <SUITE FILE_PATH="coverage/Vocitrainer$woosch.coverage" NAME="woosch Coverage Results" MODIFIED="1695049758389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dokumentation" />
     <SUITE FILE_PATH="coverage/Vocitrainer$versuch_quizlet_export.coverage" NAME="versuch_quizlet_export Coverage Results" MODIFIED="1698415966000" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$suche_test.coverage" NAME="suche test Coverage Results" MODIFIED="1695025638975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1704989938820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1705046065109" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$.coverage" NAME=" Coverage Results" MODIFIED="1698414310010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$setupdb.coverage" NAME="setupdb Coverage Results" MODIFIED="1704663764299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Client_Network_Test.coverage" NAME="Client Network Test Coverage Results" MODIFIED="1694856592805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />

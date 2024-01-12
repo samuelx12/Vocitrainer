@@ -18,6 +18,7 @@ from Mp_herunterladen import MpHerunterladen
 from Mp_Hochladen import MpHochladen
 from Mp_hochgeladeneVerwalten import MpHochgeladeneVerwalten
 from ueber import Ueber as Ueber_Fenster
+from neuesWort import NeuesWort
 from importCSV import ImportCSV
 from typing import List, Union
 from Mp_LogReg import log_reg
@@ -33,12 +34,12 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
     Datei ohne Gefahr neu überschrieben werden kann.
     """
 
-    def __init__(self, version: str, *args, **kwargs):
+    def __init__(self, versionen: dict, *args, **kwargs):
         super(Hauptfenster, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Vocitrainer")
-        self.setWindowIcon(QIcon("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"))
-        self.version = version
+        # self.setWindowIcon(QIcon("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"))
+        self.versionen = versionen
 
         self.set_angezeigt = False
         self.liste_sichtbar(False)
@@ -100,6 +101,10 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.mn_AusgewaehlteLernen.triggered.connect(self.mn_MarkierteLernen_triggered)
         self.mn_MarkierteLernen.triggered.connect(self.mn_MarkierteLernen_triggered)
 
+        # Menü 'Set'
+        self.mn_WoerterHinzufuegen.triggered.connect(self.mn_WoerterHinzufuegen_triggered)
+        self.mn_FortschrittZuruecksetzen.triggered.connect(self.mn_FortschrittZuruecksetzen_triggered)
+
         # Menü 'Marketplace'
         self.mn_Herunterladen.triggered.connect(self.mn_Herunterladen_triggered)
         self.mn_Hochladen.triggered.connect(self.mn_Hochladen_triggered)
@@ -139,6 +144,9 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.mn_AusgewaehlteLernen.setEnabled(sichtbar)
         self.mn_MarkierteLernen.setEnabled(sichtbar)
 
+        self.mn_WoerterHinzufuegen.setEnabled(sichtbar)
+        self.mn_FortschrittZuruecksetzen.setEnabled(sichtbar)
+
         self.mn_Hochladen.setEnabled(sichtbar)
 
     def msg_kein_set_aktiv(self):
@@ -154,7 +162,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         msg.setStandardButtons(QMessageBox.Ok)
         msg.setText(
             "Es ist kein Set offen!\n" +
-            "Du musst ein Set öffnen, um dieses zu lernen."
+            "Du musst ein Set öffnen, um dieses zu lernen oder zu bearbeiten."
         )
 
         msg.exec_()
@@ -433,10 +441,6 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         if event.key() == Qt.Key_Delete and self.trw_Explorer.hasFocus():
             self.exploreritems_loeschen(self.trw_Explorer.selectedItems())
 
-    # -------------------------------------------------------
-    # ---------------------- LERNMODI -----------------------
-    # -------------------------------------------------------
-
     def lernen(self, controller: str, quelle: Union[0, 1, 2]) -> None:
         """
         Diese Funktion startet das Training.
@@ -461,16 +465,9 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             if karte_zeile:
                 ausgewaehlte_vorhanden = True
 
-        print("quelle")
-        print(quelle)
-
         if quelle == 0 or quelle == 2 or not ausgewaehlte_vorhanden:
             # Alle Daten laden und in das Datenformat konvertieren
             karte_zeile = [row for row in range(self.tbv_Liste.model().rowCount())]
-            print("Alle DATEN")
-
-        print("karte_zeile2")
-        print(karte_zeile)
 
         # Das ist für den Schwierigkeit_Training Wert, der nicht in den Kartendaten ist.
         #                                                         V
@@ -565,7 +562,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def mn_Ueber_triggered(self):
         """Methode zum Aufrufen des Über-Fensters"""
-        self.ueber = Ueber_Fenster(self.version)
+        self.ueber = Ueber_Fenster(self.versionen)
         self.ueber.setModal(True)
 
         self.ueber.exec_()
@@ -599,6 +596,28 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
     def mn_MarkierteLernen_triggered(self):
         """'MarkierteLernen' Option in dem Lernen-Menü geklickt"""
         self.lernen("einfach", 2)
+
+    # --------------- MENÜ Set ---------------
+    def mn_WoerterHinzufuegen_triggered(self):
+        """'Wörtern hinzufügen' Option im Set-Menü geklickt."""
+
+        # Überprüfen, ob überhaupt ein Set gewählt ist.
+        if not self.set_angezeigt:
+            self.msg_kein_set_aktiv()
+            return
+
+        # Fenster mit aufrufen und die Set_Id + Datenbankverbindung mitgeben
+        neueWoerter = NeuesWort(self.geladenes_set_explorer_item.id, self.dbconn)
+        neueWoerter.exec_()
+
+        self.trw_Explorer_doubleClicked(self.geladenes_set_explorer_item.id, self.geladenes_set_explorer_item)
+
+    def mn_FortschrittZuruecksetzen_triggered(self):
+        """
+        'Fortschritt zurückseten' Option im Set-Menü geklickt.
+        Dabei wird der Lernfortschritt und die Schwierigkeitsdaten für das aktive Lernset gelöscht.
+        """
+        pass  # todo Fortschritt zurücksetzen
 
     # --------------- MENÜ MARKETPLACE ---------------
     def mn_Herunterladen_triggered(self):

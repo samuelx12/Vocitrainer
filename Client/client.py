@@ -12,14 +12,19 @@ from PyQt5.QtWidgets import QApplication
 import sys
 from hauptfenster import Hauptfenster
 import exception
+from PyQt5.QtCore import QT_VERSION_STR, PYQT_VERSION_STR
 
 # VERSION HIER ANPASSEN
-version = "1.0"
+versionen = {
+    "vocitrainer": "1.0",
+    "qt": QT_VERSION_STR,
+    "pyqt": PYQT_VERSION_STR
+}
 
 app = QApplication(sys.argv)
 app.setStyle("fusion")
 
-window = Hauptfenster(version)
+window = Hauptfenster(versionen)
 window.show()
 
 # Für Debugzwecke: Schönes Traceback installieren

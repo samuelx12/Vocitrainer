@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="icons">
+    <file>res/icons/add_box_FILL0_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/add_box_FILL1_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/Vocitrainer_V_Icon.svg</file>
     <file>res/icons/rund_star_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/rund_star_FILL1_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/event_upcoming_FILL0_wght400_GRAD0_opsz24.svg</file>
@@ -16,6 +19,7 @@
     <file>res/icons/create_new_folder_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/create_new_folder_FILL1_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/note_stack_add_FILL0_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/remove_done_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/note_stack_add_FILL1_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/settings_system_daydream_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/settings_system_daydream_FILL1_wght400_GRAD0_opsz24.svg</file>
