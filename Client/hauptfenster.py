@@ -408,8 +408,9 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         for item in items:
             loesch_ids.append([item.id, item.typ])
             item.setHidden(True)
-            if item.id == self.geladenes_set_explorer_item.id:
-                offenes_set_geloescht = True
+            if self.geladenes_set_explorer_item:
+                if item.id == self.geladenes_set_explorer_item.id:
+                    offenes_set_geloescht = True
 
         # rprint("[blue]Lösch Ids:")
         # rprint(loesch_ids)
@@ -418,6 +419,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         if offenes_set_geloescht:
             self.set_angezeigt = False
             self.liste_sichtbar(False)
+            self.geladenes_set_explorer_item = None
 
         # Datenbankcursor erstellen
         cursor = self.dbconn.cursor()
@@ -550,7 +552,10 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     # --------------- MENÜ VOCITRAINER ---------------
     def mn_NeuesSet_triggered(self):
-        """'Neues Set' Option in dem Vocitrainer-Menü geklickt"""
+        """
+        'Neues Set' Option in dem Vocitrainer-Menü geklickt
+        Ablauf: 1. Informationen einholen, 2. in der DB einfügen, 3. im Explorer einfügen
+        """
         # Überstehender Ordner finden
         if self.geladenes_set_explorer_item:
             parent_element = self.geladenes_set_explorer_item.parent()
@@ -571,10 +576,11 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # In der Datenbank hinzufügen
         cursor = self.dbconn.cursor()
         sql = """
-                INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES (?, ?, ?, ?)
-                """
+        INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES (?, ?, ?, ?)
+"""
         cursor.execute(sql, ("Unbenanntes Set", "", sprache, parent_id))
 
+        gespeicherte_set_id = cursor.lastrowid
         cursor.close()
         self.dbconn.commit()
 
@@ -582,15 +588,50 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         ExplorerItem(
             "Unbenanntes Set",
             "vociset",
-            67, parent_element,
+            gespeicherte_set_id,
+            parent_element,
             "Englisch",
             ""
         )
-        pass
 
     def mn_NeuerOrdner_triggered(self):
-        """'Neuer Ordner' Option in dem Vocitrainer-Menü geklickt"""
-        pass
+        """
+        'Neuer Ordner' Option in dem Vocitrainer-Menü geklickt
+        Ablauf: 1. Informationen einholen, 2. in der DB einfügen, 3. im Explorer einfügen
+        """
+        # Überstehender Ordner finden
+        if self.geladenes_set_explorer_item:
+            parent_element = self.geladenes_set_explorer_item.parent()
+            if not parent_element:
+                parent_element = self.rootNode
+        else:
+            parent_element = self.rootNode
+
+        # Parent Id herausfinden
+        try:
+            parent_id = parent_element.id
+        except:
+            # Root Node
+            parent_id = 1
+
+        # In der Datenbank hinzufügen
+        cursor = self.dbconn.cursor()
+        sql = """
+        INSERT INTO ordner (ordner_name, urordner_id) VALUES (?, ?)
+"""
+        cursor.execute(sql, ("Unbenannter Ordner", parent_id))
+
+        gespeicherte_set_id = cursor.lastrowid
+        cursor.close()
+        self.dbconn.commit()
+
+        # Neues Element im Explorer erstellen
+        ExplorerItem(
+            "Unbenannter Ordner",
+            "ordner",
+            gespeicherte_set_id,
+            parent_element,
+        )
 
     def mn_Einstellungen_triggered(self):
         """'Einstellungen' Option in dem Vocitrainer-Menü geklickt"""

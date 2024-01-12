@@ -106,3 +106,8 @@ class ExplorerItem(QTreeWidgetItem):
             #     """deleted[/italic]"-Runtime Error wurde gerade abgefangen.""" +
             #     """ [green]Diese Nachricht kann ignoriert werden, obwohl sie mehrmals hintereinander auftritt."""
             # )
+
+    # def setHidden(self, ahide):
+    #     """Überschreibung der Hidden Methode"""
+    #     super().setHidden(ahide)
+    #     self.hidden = True
