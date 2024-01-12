@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="- Fehlermeldungen verbessert für 'Wörter hinzufügen'&#10;- Virtual Environment hochgeladen.">
+    <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB-Struktur.accdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Erste_Skizze_2023.06.3.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Dokumentation/Erste_Skizze_2023.06.3.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Struktur_Skizze_2023.08.25.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Dokumentation/Struktur_Skizze_2023.08.25.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testfile.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/delete_this_to.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/res/hauptfenster.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/hauptfenster.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/res/ui_hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/ui_hauptfenster.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/vocitrainerdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Client/vocitrainerdb.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -419,15 +416,7 @@
       <workItem from="1704987741084" duration="3971000" />
       <workItem from="1705008079820" duration="3995000" />
       <workItem from="1705041227345" duration="4320000" />
-      <workItem from="1705057132646" duration="2613000" />
-    </task>
-    <task id="LOCAL-00001" summary="Restrukturierung für besseren Workflow mit Qt-Designer aufgrund der bisher gemachten Erfahrungen mit PyQt.">
-      <option name="closed" value="true" />
-      <created>1691871508805</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1691871508805</updated>
+      <workItem from="1705057132646" duration="6722000" />
     </task>
     <task id="LOCAL-00002" summary="Erster unvollständiger Entwurf vom Trainingsfenster hinzugefügt&#10;Fusion Style aktiviert">
       <option name="closed" value="true" />
@@ -813,7 +802,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705057726049</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="- 'Set -&gt; Fortschritt zurücksetzen' hinzugefügt und getestet.">
+      <option name="closed" value="true" />
+      <created>1705060474981</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1705060474981</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -832,7 +829,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Bug behoben, das Wörter mit der ID des Clients hochgeladen werden." />
     <MESSAGE value="Änderung der Struktur:&#10;Alle QT Quelldateien liegen im Ressourcenordner 'qt'" />
     <MESSAGE value="- Erfolgsmeldung / Fehlermeldung bei Hochladen von Sets eingebaut&#10;- Einführung eines serverseitigen Downloadzählers" />
     <MESSAGE value="Fehlerbehebung betreffend Hochgeladene Verwalten.&#10;Anzahl Downloads jetzt auch sichtbar" />
@@ -857,7 +853,8 @@
     <MESSAGE value="- Neues Menü 'Set' mit den Aktionen&#10;    - 'Wörter hinzufügen' -&gt; Komplett implementiert&#10;    - 'Fortschritt zurücksetzen' -&gt; noch nicht implementiert" />
     <MESSAGE value="- Fehlermeldungen verbessert für" />
     <MESSAGE value="- Fehlermeldungen verbessert für 'Wörter hinzufügen'&#10;- Virtual Environment hochgeladen." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Fehlermeldungen verbessert für 'Wörter hinzufügen'&#10;- Virtual Environment hochgeladen." />
+    <MESSAGE value="- 'Set -&gt; Fortschritt zurücksetzen' hinzugefügt und getestet." />
+    <option name="LAST_COMMIT_MESSAGE" value="- 'Set -&gt; Fortschritt zurücksetzen' hinzugefügt und getestet." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Vocitrainer$models.coverage" NAME="models Coverage Results" MODIFIED="1704571156791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
@@ -866,7 +863,7 @@
     <SUITE FILE_PATH="coverage/Vocitrainer$woosch.coverage" NAME="woosch Coverage Results" MODIFIED="1695049758389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dokumentation" />
     <SUITE FILE_PATH="coverage/Vocitrainer$versuch_quizlet_export.coverage" NAME="versuch_quizlet_export Coverage Results" MODIFIED="1698415966000" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$suche_test.coverage" NAME="suche test Coverage Results" MODIFIED="1695025638975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1705060360369" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1705064511721" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$.coverage" NAME=" Coverage Results" MODIFIED="1698414310010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$setupdb.coverage" NAME="setupdb Coverage Results" MODIFIED="1704663764299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Client_Network_Test.coverage" NAME="Client Network Test Coverage Results" MODIFIED="1694856592805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />

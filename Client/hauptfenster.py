@@ -103,6 +103,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
         # Menü 'Set'
         self.mn_WoerterHinzufuegen.triggered.connect(self.mn_WoerterHinzufuegen_triggered)
+        self.mn_AusgewaehlteWoerterLoeschen.triggered.connect(self.mn_AusgewaehlteWoerterLoeschen_triggered)
         self.mn_FortschrittZuruecksetzen.triggered.connect(self.mn_FortschrittZuruecksetzen_triggered)
 
         # Menü 'Marketplace'
@@ -434,10 +435,12 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def keyPressEvent(self, event: QKeyEvent, *args, **kwargs):
         """Überschreibung der bereits bestehenden Methode"""
-
         # Wenn im Explorer Items gelöscht werden wollen:
         if event.key() == Qt.Key_Delete and self.trw_Explorer.hasFocus():
             self.exploreritems_loeschen(self.trw_Explorer.selectedItems())
+
+        if event.key() == Qt.Key_Delete and self.tbv_Liste.hasFocus():
+            self.mn_AusgewaehlteWoerterLoeschen_triggered()
 
     def lernen(self, controller: str, quelle: Union[0, 1, 2]) -> None:
         """
@@ -573,6 +576,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
     def mn_SetLernen_triggered(self):
         """'Set lernen' Option in dem Lernen-Menü geklickt"""
         self.lernen("intelligent", 0)
+        self.kartenModel.lade_daten(self.geladenes_set_explorer_item.id)
 
     def mn_SetUeben_triggered(self):
         """'Set üben' Option in dem Lernen-Menü geklickt"""
@@ -609,6 +613,61 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         neueWoerter.exec_()
 
         self.trw_Explorer_doubleClicked(self.geladenes_set_explorer_item.id, self.geladenes_set_explorer_item)
+
+    def mn_AusgewaehlteWoerterLoeschen_triggered(self):
+        """'Ausgewählte Wörter löschen' Option im Set-Menü geklickt."""
+
+        # Überprüfen, ob überhaupt ein Set gewählt ist.
+        if not self.set_angezeigt:
+            self.msg_kein_set_aktiv()
+            return
+
+        # Nur Ausgewählte Daten laden
+        selection_model = self.tbv_Liste.selectionModel()
+        gewaehlte_indices = selection_model.selectedRows()
+        karte_zeilen = [index.row() for index in gewaehlte_indices]
+
+        karte_ids = [self.kartenModel.daten[zeile][0] for zeile in karte_zeilen]
+
+        if not karte_ids:
+            # Error wenn keine Sets ausgewählt wurden
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/error_FILL0_wght400_GRAD0_opsz24.svg'))
+            msg.setWindowTitle("Fehler")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.setText(
+                "Es sind keine zu löschenden Wörter ausgewählt!"
+            )
+            msg.exec_()
+            return
+
+        # Warnung anzeigen, dass das Löschen entgültig ist
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Warning)
+        msg.setWindowIcon(QIcon(':/icons/res/icons/delete_forever_FILL0_wght400_GRAD0_opsz24.svg'))
+        msg.setWindowTitle("Löschbestätigung")
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg.setText(
+            "Achtung! Der Löschvorgang kann nicht rückgängig gemacht werden.\n"
+            + "Wollen sie fortfahren?"
+        )
+        antwort = msg.exec_()
+
+        if antwort == QMessageBox.No:
+            return
+
+        cursor = self.dbconn.cursor()
+        sql = """DELETE FROM karte WHERE karte_id=?"""
+
+        for karte_id in karte_ids:
+            print(karte_id)
+            cursor.execute(sql, (karte_id,))
+
+        cursor.close()
+        self.dbconn.commit()
+
+        self.kartenModel.lade_daten(self.geladenes_set_explorer_item.id)
 
     def mn_FortschrittZuruecksetzen_triggered(self):
         """

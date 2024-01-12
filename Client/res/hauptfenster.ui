@@ -400,6 +400,7 @@ selection-color: rgb(0, 0, 0);]</string>
      <string>Set</string>
     </property>
     <addaction name="mn_WoerterHinzufuegen"/>
+    <addaction name="mn_AusgewaehlteWoerterLoeschen"/>
     <addaction name="mn_FortschrittZuruecksetzen"/>
    </widget>
    <addaction name="menuVocitrainer"/>
@@ -494,6 +495,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Einstellungen</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="mn_Ueber">
    <property name="icon">
@@ -523,6 +527,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Set lernen</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
   </action>
   <action name="mn_SetUeben">
    <property name="icon">
@@ -531,6 +538,9 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="text">
     <string>Set üben</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
    </property>
   </action>
   <action name="mn_AusgewaehlteLernen">
@@ -542,6 +552,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Ausgewählte lernen</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
   </action>
   <action name="mn_MarkierteLernen">
    <property name="icon">
@@ -551,6 +564,9 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="text">
     <string>Markierte lernen</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
    </property>
   </action>
   <action name="mn_WoerterHinzufuegen">
@@ -570,6 +586,16 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="text">
     <string>Fortschritt zurücksetzen</string>
+   </property>
+  </action>
+  <action name="mn_AusgewaehlteWoerterLoeschen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/delete_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/delete_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/delete_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Ausgewählte Wörter löschen</string>
    </property>
   </action>
  </widget>
