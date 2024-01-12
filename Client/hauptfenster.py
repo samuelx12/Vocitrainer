@@ -305,8 +305,6 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
             # Wenn im Ursprungsrdner danach keine Items mehr sind, Ordner als geschlossen anzeigen
             if ausgewaehltes_item.parent():
-                print("Das geht")
-                print(ausgewaehltes_item.parent().childCount())
                 if ausgewaehltes_item.parent().childCount() == 1:
                     ausgewaehltes_item.parent().setExpanded(False)
 
@@ -617,7 +615,35 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         'Fortschritt zurückseten' Option im Set-Menü geklickt.
         Dabei wird der Lernfortschritt und die Schwierigkeitsdaten für das aktive Lernset gelöscht.
         """
-        pass  # todo Fortschritt zurücksetzen
+        if not self.set_angezeigt:
+            self.msg_kein_set_aktiv()
+            return
+
+        # Warnung anzeigen, dass das Löschen entgültig ist
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Warning)
+        msg.setWindowIcon(QIcon(':/icons/res/icons/warning_FILL0_wght400_GRAD0_opsz24.svg'))
+        msg.setWindowTitle("Zurücksetzen bestätigen")
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg.setText(
+            "Achtung! Das Zurücksetzen des Fortschrittes kann nicht rückgängig gemacht werden.\n"
+            + "Wollen sie fortfahren?"
+        )
+        antwort = msg.exec_()
+
+        if antwort == QMessageBox.No:
+            return
+
+        set_id = self.geladenes_set_explorer_item.id
+
+        sql = """UPDATE karte SET lernfortschritt=0, schwierigkeit=-1 WHERE set_id=?"""
+
+        cursor = self.dbconn.cursor()
+        cursor.execute(sql, (set_id,))
+        cursor.close()
+        self.dbconn.commit()
+
+        self.kartenModel.lade_daten(set_id)
 
     # --------------- MENÜ MARKETPLACE ---------------
     def mn_Herunterladen_triggered(self):
