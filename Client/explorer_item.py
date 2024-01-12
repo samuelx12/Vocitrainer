@@ -15,7 +15,15 @@ class ExplorerItem(QTreeWidgetItem):
     Das Explorer Item ist eine Zeile in der Übersicht der Lernsets, die rechts angezeigt wird.
     """
 
-    def __init__(self, txt, typ, id, parent: QTreeWidgetItem = None):
+    def __init__(
+            self,
+            txt: str,
+            typ: str,
+            id: int,
+            parent: QTreeWidgetItem = None,
+            sprache: str = "Fremdsprache",
+            beschreibung: str = ""
+    ):
         """
         @param txt: Der Text den das Item zeigt
         """
@@ -25,11 +33,29 @@ class ExplorerItem(QTreeWidgetItem):
         self.id = id
         self.typ = typ
         self.txt = txt
+        self.sprache = sprache
+
         if typ == "ordner":
-            icon.addPixmap(QPixmap(":/icons/res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
-            icon.addPixmap(QPixmap(":/icons/res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
+            icon.addPixmap(
+                QPixmap(":/icons/res/icons/folder_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
+            icon.addPixmap(
+                QPixmap(":/icons/res/icons/folder_open_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.On)
         elif typ == "vociset":
-            icon.addPixmap(QPixmap(":/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
+            icon.addPixmap(
+                QPixmap(":/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"), QIcon.Normal, QIcon.Off)
+
+            if beschreibung == "":
+                tooltip = (
+                        f"Sprache: {sprache}\n" +
+                        "Beschreibung: (leer)"
+                )
+            else:
+                tooltip = (
+                        f"Sprache: {sprache}\n" +
+                        "Beschreibung:\n" +
+                        beschreibung
+                )
+            self.setToolTip(0, tooltip)
 
         self.setIcon(0, icon)
 

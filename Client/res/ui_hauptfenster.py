@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1066, 730)
+        MainWindow.resize(1066, 776)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/res/icons/Vocitrainer_V_Icon.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -312,6 +312,7 @@ class Ui_MainWindow(object):
         self.mn_Profil.setText(_translate("MainWindow", "Profil"))
         self.mn_CSV_importieren.setText(_translate("MainWindow", "CSV importieren"))
         self.mn_Einstellungen.setText(_translate("MainWindow", "Einstellungen"))
+        self.mn_Einstellungen.setShortcut(_translate("MainWindow", "Ctrl+S"))
         self.mn_Ueber.setText(_translate("MainWindow", "Über"))
         self.mn_Beenden.setText(_translate("MainWindow", "Beenden"))
         self.mn_SetLernen.setText(_translate("MainWindow", "Set lernen"))

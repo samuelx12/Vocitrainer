@@ -33,13 +33,12 @@ class KartenModel(QAbstractTableModel):
         self.sprache = "Fremdsprache"
 
         self.spalte_kategorie_zuweisung = {
-            0: 6,  # Stern zum Markieren
-            1: 1,  # Wort
-            2: 2,  # Fremdwort
-            3: 3,  # Definition
-            4: 4,  # Bemerkung
-            5: 7,  # Schwierigkeit
-            # 6: 5,  # Lernfortschritt
+            0: 1,  # Wort
+            1: 2,  # Fremdwort
+            2: 3,  # Definition
+            3: 4,  # Bemerkung
+            4: 7,  # Schwierigkeit
+            5: 5,  # Lernfortschritt
         }
 
     def rowCount(self, parent: QModelIndex = ...) -> int:
@@ -64,7 +63,7 @@ class KartenModel(QAbstractTableModel):
                 if kategorie == 1:
                     return "Deutsch"
                 elif kategorie == 2:
-                    return "Fremdsprache"
+                    return self.sprache
                 elif kategorie == 3:
                     return "Definition"
                 elif kategorie == 4:
@@ -120,6 +119,16 @@ class KartenModel(QAbstractTableModel):
                     return "Sehr schwer"
                 else:
                     return "Unbekannt."
+            elif kategorie == 5:
+                lernfortschritt = self.daten[reihe][5]
+                if lernfortschritt == 0:
+                    return "Ungelernt"
+                elif lernfortschritt == 1:
+                    return "Am lernen"
+                elif lernfortschritt == 2:
+                    return "Gelernt"
+                else:
+                    return "Lernfortschritt unbekannt"
 
         elif role == Qt.ForegroundRole:
             # Farbe des Textes
@@ -137,26 +146,17 @@ class KartenModel(QAbstractTableModel):
                 elif schwierigkeit == 3:
                     return QColor(255, 0, 0)
 
-        elif role == Qt.UserRole and spalte == 0:
-            # Markieren Button zurückgeben
-            cmd_Markieren = QPushButton()
-            cmd_Markieren.setText("Hallo")
-
-            return cmd_Markieren
-
-        elif role == Qt.CheckStateRole and kategorie == 6:
+        elif role == Qt.CheckStateRole and spalte == 0:
             if self.daten[reihe][6] == 0:
                 return Qt.Unchecked
             else:
                 return Qt.Checked
 
-        elif role == Qt.DecorationRole and kategorie == 6:
+        elif role == Qt.DecorationRole and spalte == 0:
             if self.daten[reihe][6] == 0:
                 return QIcon(':/icons/res/icons/rund_star_FILL0_wght400_GRAD0_opsz24.svg')
             else:
                 return QIcon(':/icons/res/icons/rund_star_FILL1_wght400_GRAD0_opsz24.svg')
-
-        # return self.daten[reihe][spalte]
 
     def lade_daten(self, set_id):
         """"
@@ -165,6 +165,11 @@ class KartenModel(QAbstractTableModel):
         """
         self.beginResetModel()
         cursor = self.dbconn.cursor()
+
+        # Sprache herausfinden
+        sql = """SELECT sprache FROM vociset WHERE set_id = ?"""
+        cursor.execute(sql, (set_id,))
+        self.sprache = cursor.fetchone()[0]
 
         # SQL-Abfrage, um bestimmte Spalten aus der Tabelle karte abzurufen
         query = """
@@ -190,12 +195,7 @@ class KartenModel(QAbstractTableModel):
         """
         kategorie = self.spalte_kategorie_zuweisung[index.column()]
 
-        if kategorie == 6:
-            flags = \
-                QtCore.Qt.ItemFlag.ItemIsEnabled | \
-                QtCore.Qt.ItemFlag.ItemIsSelectable | \
-                Qt.ItemFlag.ItemIsUserCheckable
-        elif kategorie == 7:
+        if kategorie == 7 or kategorie == 5:
             flags = \
                 QtCore.Qt.ItemFlag.ItemIsEnabled | \
                 QtCore.Qt.ItemFlag.ItemIsSelectable
@@ -205,6 +205,9 @@ class KartenModel(QAbstractTableModel):
                 QtCore.Qt.ItemFlag.ItemIsEditable |\
                 QtCore.Qt.ItemFlag.ItemIsEnabled |\
                 QtCore.Qt.ItemFlag.ItemIsSelectable
+
+        if index.column() == 0:
+            flags |= Qt.ItemFlag.ItemIsUserCheckable
 
         return flags
 
@@ -251,7 +254,7 @@ class KartenModel(QAbstractTableModel):
             self.dbconn.commit()
 
         # ---------------- MARKIERUNG ÄNDERN ----------------
-        elif role == Qt.CheckStateRole and kategorie == 6:
+        elif role == Qt.CheckStateRole and spalte == 0:
             if value == Qt.Checked:
                 markiert = 1
             else:

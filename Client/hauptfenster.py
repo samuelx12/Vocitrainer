@@ -214,7 +214,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
                 ebene_laden(neuer_ordner, i_ordner[0])
 
             for i_vociset in vocisets:
-                ExplorerItem(i_vociset[1], "vociset", i_vociset[0], parent=parent)
+                ExplorerItem(i_vociset[1], "vociset", i_vociset[0], parent, i_vociset[3], i_vociset[2])
 
         self.trw_Explorer.clear()
         lade_cursor = self.dbconn.cursor()
@@ -551,6 +551,41 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
     # --------------- MENÜ VOCITRAINER ---------------
     def mn_NeuesSet_triggered(self):
         """'Neues Set' Option in dem Vocitrainer-Menü geklickt"""
+        # Überstehender Ordner finden
+        if self.geladenes_set_explorer_item:
+            parent_element = self.geladenes_set_explorer_item.parent()
+            if not parent_element:
+                parent_element = self.rootNode
+        else:
+            parent_element = self.rootNode
+
+        # todo Standartsprache für neue Sets einbauen
+        sprache = "Englisch"
+        # Parent Id herausfinden
+        try:
+            parent_id = parent_element.id
+        except:
+            # Root Node
+            parent_id = 1
+
+        # In der Datenbank hinzufügen
+        cursor = self.dbconn.cursor()
+        sql = """
+                INSERT INTO vociset (set_name, beschreibung, sprache, urordner_id) VALUES (?, ?, ?, ?)
+                """
+        cursor.execute(sql, ("Unbenanntes Set", "", sprache, parent_id))
+
+        cursor.close()
+        self.dbconn.commit()
+
+        # Neues Element im Explorer erstellen
+        ExplorerItem(
+            "Unbenanntes Set",
+            "vociset",
+            67, parent_element,
+            "Englisch",
+            ""
+        )
         pass
 
     def mn_NeuerOrdner_triggered(self):
