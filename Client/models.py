@@ -9,7 +9,7 @@ aussehen aber die in sich enthaltenen Daten anders verwalten.
 
 Momentan ist hier nur das KartenModel.
 """
-from PyQt5.QtCore import QAbstractTableModel, QModelIndex, Qt
+from PyQt5.QtCore import QAbstractTableModel, QModelIndex, Qt, QVariant
 from PyQt5 import QtCore
 from PyQt5.QtGui import QColor, QIcon
 import typing
@@ -29,6 +29,8 @@ class KartenModel(QAbstractTableModel):
         self.dbconn = dbconn
         self.geladenesSet = None
         self.daten = None
+
+        self.sprache = "Fremdsprache"
 
         self.spalte_kategorie_zuweisung = {
             0: 6,  # Stern zum Markieren
@@ -52,6 +54,35 @@ class KartenModel(QAbstractTableModel):
     def columnCount(self, parent: QModelIndex = ...) -> int:
         """Vorgegebene Funktion welche die Anzahl Spalten zurückgeben muss."""
         return len(self.spalte_kategorie_zuweisung)
+
+    def headerData(self, section, orientation, role = ...):
+        """Überschreibe die Funktion, um den Titel der Spalten zu bestimmen."""
+
+        if role == Qt.DisplayRole:
+            if orientation == Qt.Horizontal:
+                kategorie = self.spalte_kategorie_zuweisung[section]
+                if kategorie == 1:
+                    return "Deutsch"
+                elif kategorie == 2:
+                    return "Fremdsprache"
+                elif kategorie == 3:
+                    return "Definition"
+                elif kategorie == 4:
+                    return "Bemerkung"
+                elif kategorie == 5:
+                    return "Lernfortschritt"
+                elif kategorie == 6:
+                    return "Markiert"
+                elif kategorie == 7:
+                    return "Schwierigkeit"
+                else:
+                    return QVariant()
+
+            elif orientation == Qt.Vertical:
+                return str(section + 1)
+
+        # Sonst nichts zurückgeben (Nichts = QVariant())
+        return QVariant()
 
     def data(self, index: QModelIndex, role: int = ...) -> typing.Any:
         """
