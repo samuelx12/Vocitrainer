@@ -28,8 +28,6 @@ try:
 except:
     stil = "Vocitrainer"
 
-print(stil)
-
 app = QApplication(sys.argv)
 if stil == "Vocitrainer":
     app.setStyle("fusion")
@@ -44,4 +42,5 @@ traceback.install()
 # trainingsfenster.show()
 
 # Start der Event loop
-app.exec()
+exit_code = app.exec_()
+sys.exit(exit_code)

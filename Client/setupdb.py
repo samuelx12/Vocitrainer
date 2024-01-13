@@ -7,6 +7,8 @@ Fallst die Datenbank bereits besteht, werden einfach noch mehr Testdaten eingef�
 
 import sqlite3
 
+testdaten_hinzufuegen = False
+
 # Verbindung zur Datenbank herstellen (erstellt die Datenbank, wenn sie nicht existiert)
 conn = sqlite3.connect('vocitrainerdb.db')
 cursor = conn.cursor()
@@ -54,6 +56,13 @@ cursor.execute('''
 
 # Testdaten in die Tabelle 'ordner' einfügen
 cursor.execute("INSERT INTO ordner (ordner_name, farbe, urordner_id) VALUES ('ROOT', 'Normal', NULL)")
+
+if not testdaten_hinzufuegen:
+    # Änderungen speichern und Verbindung schließen
+    conn.commit()
+    conn.close()
+    exit(0)
+
 cursor.execute("INSERT INTO ordner (ordner_name, farbe, urordner_id) VALUES ('Unterordner', 'Grün', 1)")
 cursor.execute("INSERT INTO ordner (ordner_name, farbe, urordner_id) VALUES ('U2 Ordner', 'Grün', 2)")
 

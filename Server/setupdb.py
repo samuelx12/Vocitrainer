@@ -7,6 +7,8 @@ Dieses Skript erstellt eine Testdatenbank mit Testdaten für den Server
 import sqlite3
 from datetime import datetime
 
+testdaten_hinzufuegen = False
+
 # Verbindung zur Datenbank herstellen (erstellt die Datenbank, wenn sie nicht existiert)
 conn = sqlite3.connect('serverdb.db')
 cursor = conn.cursor()
@@ -48,6 +50,12 @@ cursor.execute('''
         FOREIGN KEY (set_id) REFERENCES vociset (set_id) ON DELETE CASCADE 
     )
 ''')
+
+if not testdaten_hinzufuegen:
+    # Änderungen speichern und Verbindung schließen
+    conn.commit()
+    conn.close()
+    exit(0)
 
 # Testdaten in die Tabelle 'set' einfügen
 cursor.execute(
