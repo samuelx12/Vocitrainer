@@ -34,6 +34,7 @@ class ExplorerItem(QTreeWidgetItem):
         self.typ = typ
         self.txt = txt
         self.sprache = sprache
+        self.beschreibung = beschreibung
 
         if typ == "ordner":
             icon.addPixmap(
@@ -107,7 +108,33 @@ class ExplorerItem(QTreeWidgetItem):
             #     """ [green]Diese Nachricht kann ignoriert werden, obwohl sie mehrmals hintereinander auftritt."""
             # )
 
-    # def setHidden(self, ahide):
-    #     """Überschreibung der Hidden Methode"""
-    #     super().setHidden(ahide)
-    #     self.hidden = True
+    def tooltip_neuladen(self):
+        """ToolTip neuladen"""
+        if self.beschreibung == "":
+            tooltip = (
+                    f"Sprache: {self.sprache}\n" +
+                    "Beschreibung: (leer)"
+            )
+        else:
+            tooltip = (
+                    f"Sprache: {self.sprache}\n" +
+                    "Beschreibung:\n" +
+                    self.beschreibung
+            )
+
+        self.setToolTip(0, tooltip)
+
+    def set_name(self, name: str):
+        """Setter für den Namen."""
+        self.txt = name
+        self.setText(0, self.txt)
+
+    def set_sprache(self, sprache: str):
+        """Setter für die Sprache."""
+        self.sprache = sprache
+        self.tooltip_neuladen()
+
+    def set_beschreibung(self, beschreibung: str):
+        """Setter für die Beschreibung."""
+        self.beschreibung = beschreibung
+        self.tooltip_neuladen()

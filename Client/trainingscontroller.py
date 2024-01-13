@@ -8,6 +8,7 @@ from karte_tuple import Karte
 from typing import Iterable
 from rich import print as rprint
 from sqlite3 import Connection
+from configobj import ConfigObj
 
 
 class TestTraining:
@@ -107,17 +108,22 @@ class TC_Intelligent:
         # Countervariable
         self.i = 0
 
-        # Einstellbare aber während dem Training konstante Millersche Zahl (siehe Dokumentation)
-        self.MZ = 5
+        try:
+            config = ConfigObj('settings.ini')
+            # Einstellbare aber während dem Training konstante Millersche Zahl (siehe Dokumentation)
+            self.MZ = int(config['Lernen']['mz'])
 
-        # Einstellbare aber während dem Training konstante Zahl, ab wie vielen Fehlern eine Karte als schwierig gilt.
-        self.fehlertoleranz = 2
+            # Einstellbare aber während dem Training konstante Zahl, ab wie vielen Fehlern eine Karte als schwierig gilt
+            self.fehlertoleranz = int(config['Lernen']['ft'])
+        except:
+            self.MZ = 7
+            self.fehlertoleranz = 2
 
         # Liste für die noch ungelerten Vokabeln
         self.ungelernt = []
 
         # Liste für die Vokabeln, welche gerade gelernt werden.
-        self.lernend = [None for i in range(7)]
+        self.lernend = [None for i in range(self.MZ)]
 
         # Liste für die gelernten Vokabeln.
         self.gelernt = []

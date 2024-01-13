@@ -113,6 +113,7 @@ class Ui_mpLogReg(object):
         spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem4)
         self.cmd_log = QtWidgets.QPushButton(self.page_log)
+        self.cmd_log.setDefault(True)
         self.cmd_log.setObjectName("cmd_log")
         self.horizontalLayout_3.addWidget(self.cmd_log)
         spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -224,6 +225,7 @@ class Ui_mpLogReg(object):
         spacerItem13 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_6.addItem(spacerItem13)
         self.cmd_reg = QtWidgets.QPushButton(self.page_reg)
+        self.cmd_reg.setDefault(True)
         self.cmd_reg.setObjectName("cmd_reg")
         self.horizontalLayout_6.addWidget(self.cmd_reg)
         spacerItem14 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -240,7 +242,7 @@ class Ui_mpLogReg(object):
         self.horizontalLayout.addWidget(self.stackedWidget)
 
         self.retranslateUi(mpLogReg)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(mpLogReg)
 
     def retranslateUi(self, mpLogReg):

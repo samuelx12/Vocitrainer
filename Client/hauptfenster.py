@@ -24,6 +24,7 @@ from typing import List, Union
 from Mp_LogReg import log_reg
 from karte_tuple import Karte
 from einstellungen import Einstellungen
+from configobj import ConfigObj
 import ressources_rc
 from rich import print as rprint
 
@@ -72,6 +73,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # ---------- Explorer vorbereiten ----------
         self.rootNode = self.trw_Explorer.invisibleRootItem()
         self.load_explorer()
+        self.trw_Explorer.setHeaderLabel("Explorer")
         self.trw_Explorer.setDragEnabled(True)
         self.trw_Explorer.setAcceptDrops(True)
         self.trw_Explorer.setDropIndicatorShown(True)
@@ -116,6 +118,13 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
         # Menü 'Importieren'
         self.mn_CSV_importieren.triggered.connect(self.mn_CSV_importieren_triggered)
+
+        # Kontextmenü
+        self.kontextmn_Aktualisieren.triggered.connect(self.kontextmn_Aktualisieren_triggered)
+        self.kontextmn_Umbenennen.triggered.connect(self.kontextmn_Umbenennen_triggered)
+        self.kontextmn_spracheAendern.triggered.connect(self.kontextmn_spracheAendern_triggered)
+        self.kontextmn_beschreibungAendern.triggered.connect(self.kontextmn_beschreibungAendern_triggered)
+        self.kontextmn_Loeschen.triggered.connect(self.kontextmn_Loeschen_triggered)
 
         # Kontextmenüs aktivieren
         self.trw_Explorer.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -363,29 +372,26 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         kontext = QMenu(self)
         kontext.setStyleSheet("selection-background-color: rgb(201, 220, 225);selection-color: rgb(0, 0, 0);")
 
-        aktualisieren = QAction("Aktualisieren", self)
-        aktualisieren.setIcon(QIcon("res/icons/refresh_FILL0_wght500_GRAD0_opsz40.svg"))
-        # noinspection PyUnresolvedReferences
-        aktualisieren.triggered.connect(self.trw_Explorer_Kontextmenu_Aktualisieren)
-        kontext.addAction(aktualisieren)
+        if len(self.kontext_elemente) == 1:
+            element: ExplorerItem = self.kontext_elemente[0]
 
-        loeschen = QAction("Löschen", self)
-        loeschen.setIcon(QIcon("res/icons/delete_FILL0_wght500_GRAD0_opsz40.svg"))
-        # noinspection PyUnresolvedReferences
-        loeschen.triggered.connect(self.trw_Explorer_Kontextmenu_Loeschen)
-        kontext.addAction(loeschen)
+            # Umbenennen Option falls nur ein Item
+            kontext.addAction(self.kontextmn_Umbenennen)
+
+            if element.typ == "vociset":
+                # Sprache ändern
+                kontext.addAction(self.kontextmn_spracheAendern)
+
+                # Beschreibung ändern
+                kontext.addAction(self.kontextmn_beschreibungAendern)
+
+        # Aktualisieren Option
+        kontext.addAction(self.kontextmn_Aktualisieren)
+
+        # Löschen Option
+        kontext.addAction(self.kontextmn_Loeschen)
 
         kontext.exec_(self.trw_Explorer.viewport().mapToGlobal(point))
-
-    def trw_Explorer_Kontextmenu_Aktualisieren(self):
-        """'Aktualisieren' Option aus dem Kontextmenu ausführen"""
-        self.aktiveItems = []
-        self.trw_Explorer.clear()
-        self.load_explorer()
-
-    def trw_Explorer_Kontextmenu_Loeschen(self):
-        """'Löschen Option aus dem Kontextmenu ausführen"""
-        self.exploreritems_loeschen(self.kontext_elemente)
 
     def exploreritems_loeschen(self, items: List[ExplorerItem]):
         """Löscht Elemente aus dem Explorer und alle Daten die sie repräsentieren aus der Datenbank"""
@@ -452,6 +458,99 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         einstellungen = Einstellungen()
         einstellungen.setModal(True)
         einstellungen.exec_()
+
+    def set_umbenennen(self, set_id: int, alt: str = "", typ: str = "vociset") -> Union[bool, str]:
+        """Diese Funktion zeigt dem Benutzer ein Dialog um das Set (Set ID = set_id) umzubenennen."""
+
+        if typ == "vociset":
+            titel = "Set umbenennen"
+            text = "Gib ein neuer Name für das Set ein."
+        else:
+            titel = "Ordner umbenennen"
+            text = "Gib ein neuer Name für den Ordner ein."
+
+        neuer_name, erfolg = QInputDialog.getText(
+            self,
+            titel,
+            text,
+            QLineEdit.Normal,
+            alt
+        )
+
+        if not erfolg:
+            return False
+
+        cursor = self.dbconn.cursor()
+
+        if typ == "vociset":
+            sql = """UPDATE vociset SET set_name=? WHERE set_id=?"""
+        else:
+            sql = """UPDATE ordner SET ordner_name=? WHERE ordner_id=?"""
+
+        cursor.execute(sql, (neuer_name, set_id))
+
+        cursor.close()
+        self.dbconn.commit()
+
+        return neuer_name
+
+    def set_spracheAendern(self, set_id: int, alt: str = "") -> Union[bool, str]:
+        """Diese Funktion ändert die Sprache des übergebenen Sets."""
+        if alt == "Englisch":
+            sprache_index = 0
+        elif alt == "Französisch":
+            sprache_index = 1
+        elif alt == "Latein":
+            sprache_index = 2
+        elif alt == "Spanisch":
+            sprache_index = 3
+        elif alt == "Italienisch":
+            sprache_index = 4
+        else:
+            sprache_index = 0
+
+        neue_sprache, erfolg = QInputDialog.getItem(
+            self,
+            "Sprache ändern",
+            "Wähle die aktualisierte Sprache.",
+            ["Englisch", "Französisch", "Latein", "Spanisch", "Italienisch"],
+            sprache_index,
+            False
+        )
+
+        if not erfolg:
+            return False
+
+        cursor = self.dbconn.cursor()
+        sql = """UPDATE vociset SET sprache=? WHERE set_id=?"""
+        cursor.execute(sql, (neue_sprache, set_id))
+
+        cursor.close()
+        self.dbconn.commit()
+
+        return neue_sprache
+
+    def set_beschreibungAendern(self, set_id: int, alt: str = "") -> Union[bool, str]:
+        """Diese Funktion ändert die Beschreibung des übergebenen Sets."""
+        neue_beschreibung, erfolg = QInputDialog.getText(
+            self,
+            "Beschreibung ändern",
+            "Die Beschreibung kann hier bearbeitet werden.",
+            QLineEdit.Normal,
+            alt
+        )
+
+        if not erfolg:
+            return False
+
+        cursor = self.dbconn.cursor()
+        sql = """UPDATE vociset SET beschreibung=? WHERE set_id=?"""
+        cursor.execute(sql, (neue_beschreibung, set_id))
+
+        cursor.close()
+        self.dbconn.commit()
+
+        return neue_beschreibung
 
     def lernen(self, controller: str, quelle: Union[0, 1, 2]) -> None:
         """
@@ -520,6 +619,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.trainingsfenster.setModal(True)
         if self.trainingsfenster.oeffnen:
             self.trainingsfenster.exec_()
+            self.kartenModel.lade_daten(self.geladenes_set_explorer_item.id)
 
     # -------------------------------------------------------
     # ------------------------ SLOTS ------------------------
@@ -574,7 +674,12 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             parent_element = self.rootNode
 
         # todo Standartsprache für neue Sets einbauen
-        sprache = "Englisch"
+        try:
+            config = ConfigObj('settings.ini')
+            sprache = str(config['Allgemein']['neuesSetSprache'])
+        except Exception as e:
+            raise e
+            sprache = "Englisch"
         # Parent Id herausfinden
         try:
             parent_id = parent_element.id
@@ -599,7 +704,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             "vociset",
             gespeicherte_set_id,
             parent_element,
-            "Englisch",
+            sprache,
             ""
         )
 
@@ -852,3 +957,42 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.importCSV.setModal(True)
 
         self.importCSV.exec_()
+
+    # --------------- KONTEXTMENÜ ---------------
+    def kontextmn_Aktualisieren_triggered(self):
+        """'Aktualisieren' Option aus dem Kontextmenü ausführen"""
+        self.aktiveItems = []
+        self.trw_Explorer.clear()
+        self.load_explorer()
+
+    def kontextmn_Umbenennen_triggered(self):
+        """'Umbenennen' Aktion aus dem Kontextmenü ausführen"""
+        vociset: ExplorerItem = self.kontext_elemente[0]
+        set_id = vociset.id
+        name_alt = vociset.txt
+        typ = vociset.typ
+        neu = self.set_umbenennen(set_id, name_alt, typ)
+
+        vociset.set_name(neu)
+
+    def kontextmn_spracheAendern_triggered(self):
+        """'Sprache ändern' Aktion aus dem Kontextmenü ausführen"""
+        vociset: ExplorerItem = self.kontext_elemente[0]
+        set_id = vociset.id
+        sprache_alt = vociset.sprache
+        neu = self.set_spracheAendern(set_id, sprache_alt)
+
+        vociset.set_sprache(neu)
+
+    def kontextmn_beschreibungAendern_triggered(self):
+        """'Beschreibung ändern' Aktion aus dem Kontextmenü ausführen"""
+        vociset: ExplorerItem = self.kontext_elemente[0]
+        set_id = vociset.id
+        beschreibung_alt = vociset.beschreibung
+        neu = self.set_beschreibungAendern(set_id, beschreibung_alt)
+
+        vociset.set_beschreibung(neu)
+
+    def kontextmn_Loeschen_triggered(self):
+        """'Löschen Option aus dem Kontextmenu ausführen"""
+        self.exploreritems_loeschen(self.kontext_elemente)

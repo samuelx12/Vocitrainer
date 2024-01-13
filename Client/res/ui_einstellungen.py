@@ -184,6 +184,7 @@ class Ui_Einstellungen(object):
         spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_6.addItem(spacerItem10)
         self.cmd_ok = QtWidgets.QPushButton(Einstellungen)
+        self.cmd_ok.setDefault(True)
         self.cmd_ok.setObjectName("cmd_ok")
         self.horizontalLayout_6.addWidget(self.cmd_ok)
         self.cmd_abbrechen = QtWidgets.QPushButton(Einstellungen)

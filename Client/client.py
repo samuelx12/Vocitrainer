@@ -13,6 +13,7 @@ import sys
 from hauptfenster import Hauptfenster
 import exception
 from PyQt5.QtCore import QT_VERSION_STR, PYQT_VERSION_STR
+from configobj import ConfigObj
 
 # VERSION HIER ANPASSEN
 versionen = {
@@ -21,8 +22,17 @@ versionen = {
     "pyqt": PYQT_VERSION_STR
 }
 
+try:
+    config = ConfigObj("settings.ini")
+    stil = config['Allgemein']['stil']
+except:
+    stil = "Vocitrainer"
+
+print(stil)
+
 app = QApplication(sys.argv)
-app.setStyle("fusion")
+if stil == "Vocitrainer":
+    app.setStyle("fusion")
 
 window = Hauptfenster(versionen)
 window.show()

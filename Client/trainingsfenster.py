@@ -14,6 +14,7 @@ from trainingscontroller import TC_Einfach, TC_Intelligent, TrainingFertig
 from karte_tuple import Karte
 from sqlite3 import Connection
 from typing import List
+from configobj import ConfigObj
 import ressources_rc
 
 
@@ -54,8 +55,11 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.DBCONN = dbconn
         self.controller_typ = controller_typ
 
-        # todo Definition lernen von Einstellungen laden
-        self.definition_lernen: bool = False
+        try:
+            config = ConfigObj("settings.ini")
+            self.definition_lernen = bool(int(config['Lernen']['definitionLernen']))
+        except:
+            self.definition_lernen: bool = False
 
         # Einstellung: Sprache gleich für alles Einstellen:
         self.sprache: str = sprache
@@ -111,9 +115,6 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
                 return
 
             self.schwierigkeit_zeigen = True
-            self.controller.set_MZ(2)
-
-        self.definition_lernen = False
 
         # Erste Frage laden
         self.phase1()

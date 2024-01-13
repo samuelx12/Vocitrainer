@@ -1,5 +1,10 @@
 <RCC>
   <qresource prefix="icons">
+    <file>res/icons/glyphs_FILL0_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/edit_note_FILL0_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/edit_note_FILL1_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/auto_delete_FILL0_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/auto_delete_FILL1_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/note_stack_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/change_circle_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/change_circle_FILL1_wght400_GRAD0_opsz24.svg</file>

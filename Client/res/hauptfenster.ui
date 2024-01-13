@@ -591,11 +591,68 @@ selection-color: rgb(0, 0, 0);]</string>
   <action name="mn_AusgewaehlteWoerterLoeschen">
    <property name="icon">
     <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/auto_delete_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/auto_delete_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/auto_delete_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Ausgewählte Wörter löschen</string>
+   </property>
+  </action>
+  <action name="kontextmn_Umbenennen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/edit_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/edit_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/edit_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Umbenennen</string>
+   </property>
+  </action>
+  <action name="kontextmn_Aktualisieren">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/refresh_FILL0_wght500_GRAD0_opsz40.svg</normaloff>:/icons/res/icons/refresh_FILL0_wght500_GRAD0_opsz40.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Aktualisieren</string>
+   </property>
+   <property name="toolTip">
+    <string>Explorer neu Laden</string>
+   </property>
+  </action>
+  <action name="kontextmn_Loeschen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
      <normaloff>:/icons/res/icons/delete_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
      <activeoff>:/icons/res/icons/delete_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/delete_FILL0_wght400_GRAD0_opsz24.svg</iconset>
    </property>
    <property name="text">
-    <string>Ausgewählte Wörter löschen</string>
+    <string>Löschen</string>
+   </property>
+   <property name="toolTip">
+    <string>Löschen</string>
+   </property>
+  </action>
+  <action name="kontextmn_spracheAendern">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/glyphs_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/glyphs_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Sprache ändern</string>
+   </property>
+  </action>
+  <action name="kontextmn_beschreibungAendern">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/edit_note_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/edit_note_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/edit_note_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Beschreibung ändern</string>
+   </property>
+   <property name="toolTip">
+    <string>Beschreibung ändern</string>
    </property>
   </action>
  </widget>

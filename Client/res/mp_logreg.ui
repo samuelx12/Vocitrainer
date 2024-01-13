@@ -26,7 +26,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_log">
       <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -228,6 +228,9 @@
             <widget class="QPushButton" name="cmd_log">
              <property name="text">
               <string>Login</string>
+             </property>
+             <property name="default">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -506,6 +509,9 @@
             <widget class="QPushButton" name="cmd_reg">
              <property name="text">
               <string>Registrieren</string>
+             </property>
+             <property name="default">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
