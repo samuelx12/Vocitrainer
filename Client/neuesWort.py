@@ -6,7 +6,7 @@ Hier ist das Fenster in welchem der Benutzer noch Name und Tags anpasst bevor es
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from Client.res.ui_neuesWort import Ui_NeuesWort
+from res.ui_neuesWort import Ui_NeuesWort
 from sqlite3 import Connection
 
 

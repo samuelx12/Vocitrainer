@@ -6,7 +6,7 @@ Dieses Fenster gibt kurze Info über den Vocitrainer und die Versionen von Qt un
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from Client.res.ui_ueber import Ui_Ueber
+from res.ui_ueber import Ui_Ueber
 
 
 class Ueber(QDialog, Ui_Ueber):

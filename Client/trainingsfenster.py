@@ -9,7 +9,7 @@ verbunden wurden (Qt-Konzept)
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from Client.res.ui_trainingsfenster import Ui_Trainingsfenster
+from res.ui_trainingsfenster import Ui_Trainingsfenster
 from trainingscontroller import TC_Einfach, TC_Intelligent, TrainingFertig
 from karte_tuple import Karte
 from sqlite3 import Connection

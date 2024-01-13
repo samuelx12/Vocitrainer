@@ -5,7 +5,7 @@ Hier ist das Herunterladen Fenster des Menu Marketplace.
 """
 
 from PyQt5.QtWidgets import *
-from Client.res.ui_importCSV import Ui_ImportCSV
+from res.ui_importCSV import Ui_ImportCSV
 import sqlite3
 import csv
 from explorer_item import ExplorerItem

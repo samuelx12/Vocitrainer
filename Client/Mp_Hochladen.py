@@ -7,7 +7,7 @@ Hier ist das Fenster in welchem der Benutzer noch Name und Tags anpasst bevor es
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
-from Client.res.ui_mp_hochladen import Ui_Mp_Hochladen
+from res.ui_mp_hochladen import Ui_Mp_Hochladen
 from network import Network
 import sqlite3
 

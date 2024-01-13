@@ -9,7 +9,7 @@ Man erstellt dann ein LogReg-Fenster und führt dessen Methode LogReg aus.
 
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from Client.res.ui_mp_logreg import Ui_mpLogReg
+from res.ui_mp_logreg import Ui_mpLogReg
 from network import Network
 from validate_email import validate_email
 from configobj import ConfigObj

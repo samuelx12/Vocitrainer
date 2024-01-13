@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import *
 from models import KartenModel
 from explorer_item import ExplorerItem
 import sqlite3
-from Client.res.ui_hauptfenster import Ui_MainWindow
+from res.ui_hauptfenster import Ui_MainWindow
 from trainingsfenster import Trainingsfenster
 from Mp_herunterladen import MpHerunterladen
 from Mp_Hochladen import MpHochladen
@@ -23,6 +23,7 @@ from importCSV import ImportCSV
 from typing import List, Union
 from Mp_LogReg import log_reg
 from karte_tuple import Karte
+from einstellungen import Einstellungen
 import ressources_rc
 from rich import print as rprint
 
@@ -92,6 +93,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # Menü 'Vocitrainer'
         self.mn_NeuesSet.triggered.connect(self.mn_NeuesSet_triggered)
         self.mn_NeuerOrdner.triggered.connect(self.mn_NeuerOrdner_triggered)
+        self.mn_Einstellungen.triggered.connect(self.mn_Einstellungen_triggered)
         self.mn_Ueber.triggered.connect(self.mn_Ueber_triggered)
         self.mn_Beenden.triggered.connect(self.mn_Beenden_triggered)
 
@@ -146,6 +148,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.mn_MarkierteLernen.setEnabled(sichtbar)
 
         self.mn_WoerterHinzufuegen.setEnabled(sichtbar)
+        self.mn_AusgewaehlteWoerterLoeschen.setEnabled(sichtbar)
         self.mn_FortschrittZuruecksetzen.setEnabled(sichtbar)
 
         self.mn_Hochladen.setEnabled(sichtbar)
@@ -544,7 +547,9 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def cmd_Einstellungen_clicked(self):
         """'Einstellungen' Button in der Menü-Leiste geklickt"""
-        pass
+        einstellungen = Einstellungen()
+        einstellungen.setModal(True)
+        einstellungen.exec_()
 
     def cmd_Beenden_clicked(self):
         """Beenden Button geklickt"""
@@ -635,7 +640,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def mn_Einstellungen_triggered(self):
         """'Einstellungen' Option in dem Vocitrainer-Menü geklickt"""
-        pass
+        self.cmd_Einstellungen_clicked()
 
     def mn_Ueber_triggered(self):
         """Methode zum Aufrufen des Über-Fensters"""
