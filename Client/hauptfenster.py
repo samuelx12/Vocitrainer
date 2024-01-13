@@ -108,7 +108,12 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # Menü 'Set'
         self.mn_WoerterHinzufuegen.triggered.connect(self.mn_WoerterHinzufuegen_triggered)
         self.mn_AusgewaehlteWoerterLoeschen.triggered.connect(self.mn_AusgewaehlteWoerterLoeschen_triggered)
+        # ----
         self.mn_FortschrittZuruecksetzen.triggered.connect(self.mn_FortschrittZuruecksetzen_triggered)
+        self.mn_setUmbenennen.triggered.connect(self.mn_setUmbenennen_triggered)
+        self.mn_spracheAendern.triggered.connect(self.mn_spracheAendern_triggered)
+        self.mn_beschreibungAendern.triggered.connect(self.mn_beschreibungAendern_triggered)
+        self.mn_loeschen.triggered.connect(self.mn_loeschen_triggered)
 
         # Menü 'Marketplace'
         self.mn_Herunterladen.triggered.connect(self.mn_Herunterladen_triggered)
@@ -159,6 +164,10 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.mn_WoerterHinzufuegen.setEnabled(sichtbar)
         self.mn_AusgewaehlteWoerterLoeschen.setEnabled(sichtbar)
         self.mn_FortschrittZuruecksetzen.setEnabled(sichtbar)
+        self.mn_setUmbenennen.setEnabled(sichtbar)
+        self.mn_spracheAendern.setEnabled(sichtbar)
+        self.mn_beschreibungAendern.setEnabled(sichtbar)
+        self.mn_loeschen.setEnabled(sichtbar)
 
         self.mn_Hochladen.setEnabled(sichtbar)
 
@@ -201,25 +210,19 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             Diese Funktion ladet Rekursiv die Ordnerstruktur
             """
             # Ordner dieser Ebene laden
-            query = "SELECT ordner_id, ordner_name, farbe, urordner_id FROM ordner WHERE urordner_id = ?"
+            query = """
+            SELECT ordner_id, ordner_name, farbe, urordner_id FROM ordner WHERE urordner_id = ? ORDER BY ordner_name
+"""
             lade_cursor.execute(query, (parent_id,))
-            result = lade_cursor.fetchall()
-
-            # Resultat in Liste umwandeln
-            ordner = []
-            for reihe in result:
-                ordner.append(reihe)
+            ordner = lade_cursor.fetchall()
 
             # Vocisets dieser Ebene laden
-            query = "SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE urordner_id = ?"
+            query = """
+            SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE urordner_id = ? ORDER BY set_name
+"""
             lade_cursor.execute(query, (parent_id,))
             # print(parent_id)
-            result = lade_cursor.fetchall()
-
-            # Resultat in Liste umwandeln
-            vocisets = []
-            for reihe in result:
-                vocisets.append(reihe)
+            vocisets = lade_cursor.fetchall()
 
             for i_ordner in ordner:
                 neuer_ordner = ExplorerItem(i_ordner[1], "ordner", i_ordner[0], parent=parent)
@@ -667,13 +670,15 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         """
         # Überstehender Ordner finden
         if self.geladenes_set_explorer_item:
-            parent_element = self.geladenes_set_explorer_item.parent()
-            if not parent_element:
+            try:
+                parent_element = self.geladenes_set_explorer_item.parent()
+                if not parent_element:
+                    parent_element = self.rootNode
+            except:
                 parent_element = self.rootNode
         else:
             parent_element = self.rootNode
 
-        # todo Standartsprache für neue Sets einbauen
         try:
             config = ConfigObj('settings.ini')
             sprache = str(config['Allgemein']['neuesSetSprache'])
@@ -894,6 +899,40 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
         self.kartenModel.lade_daten(set_id)
 
+    def mn_setUmbenennen_triggered(self):
+        """'Set umbenennne' Option im Set-Menü geklickt."""
+        vociset: ExplorerItem = self.geladenes_set_explorer_item
+        set_id = vociset.id
+        name_alt = vociset.txt
+        typ = vociset.typ
+        neu = self.set_umbenennen(set_id, name_alt, typ)
+
+        vociset.set_name(neu)
+
+    def mn_spracheAendern_triggered(self):
+        """'Sprache ändern' Option im Set-Menü geklickt."""
+        vociset: ExplorerItem = self.geladenes_set_explorer_item
+        set_id = vociset.id
+        sprache_alt = vociset.sprache
+        neu = self.set_spracheAendern(set_id, sprache_alt)
+
+        vociset.set_sprache(neu)
+        self.kartenModel.lade_daten()
+        self.kartenModel.headerDataChanged.emit(Qt.Horizontal, 0, len(self.kartenModel.spalte_kategorie_zuweisung) - 1)
+
+    def mn_beschreibungAendern_triggered(self):
+        """'Beschreibung ändern' Option im Set-Menü geklickt."""
+        vociset: ExplorerItem = self.geladenes_set_explorer_item
+        set_id = vociset.id
+        beschreibung_alt = vociset.beschreibung
+        neu = self.set_beschreibungAendern(set_id, beschreibung_alt)
+
+        vociset.set_beschreibung(neu)
+
+    def mn_loeschen_triggered(self):
+        """'Set löschen' Option im Set-Menü geklickt."""
+        self.exploreritems_loeschen([self.geladenes_set_explorer_item])
+
     # --------------- MENÜ MARKETPLACE ---------------
     def mn_Herunterladen_triggered(self):
         """Wird ausgeführt, wenn der Benutzer das Herunterladenmenü anwählt."""
@@ -983,6 +1022,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         neu = self.set_spracheAendern(set_id, sprache_alt)
 
         vociset.set_sprache(neu)
+        self.kartenModel.headerDataChanged(Qt.Horizontal, 0, len(self.kartenModel.spalte_kategorie_zuweisung) - 1)
 
     def kontextmn_beschreibungAendern_triggered(self):
         """'Beschreibung ändern' Aktion aus dem Kontextmenü ausführen"""

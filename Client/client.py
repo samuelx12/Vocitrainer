@@ -7,13 +7,15 @@ Signalen und Slots weiter.
 """
 
 from rich import traceback
-
 from PyQt5.QtWidgets import QApplication
 import sys
 from hauptfenster import Hauptfenster
 import exception
 from PyQt5.QtCore import QT_VERSION_STR, PYQT_VERSION_STR
 from configobj import ConfigObj
+
+# Für Debugzwecke: Schönes Traceback installieren
+traceback.install()
 
 # VERSION HIER ANPASSEN
 versionen = {
@@ -34,9 +36,6 @@ if stil == "Vocitrainer":
 
 window = Hauptfenster(versionen)
 window.show()
-
-# Für Debugzwecke: Schönes Traceback installieren
-traceback.install()
 
 # trainingsfenster = Trainingsfenster()
 # trainingsfenster.show()

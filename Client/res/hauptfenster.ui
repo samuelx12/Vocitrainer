@@ -401,7 +401,12 @@ selection-color: rgb(0, 0, 0);]</string>
     </property>
     <addaction name="mn_WoerterHinzufuegen"/>
     <addaction name="mn_AusgewaehlteWoerterLoeschen"/>
+    <addaction name="separator"/>
     <addaction name="mn_FortschrittZuruecksetzen"/>
+    <addaction name="mn_setUmbenennen"/>
+    <addaction name="mn_spracheAendern"/>
+    <addaction name="mn_beschreibungAendern"/>
+    <addaction name="mn_loeschen"/>
    </widget>
    <addaction name="menuVocitrainer"/>
    <addaction name="menuLernen"/>
@@ -653,6 +658,45 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="toolTip">
     <string>Beschreibung ändern</string>
+   </property>
+  </action>
+  <action name="mn_setUmbenennen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/edit_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/edit_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/edit_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Set umbenennen</string>
+   </property>
+  </action>
+  <action name="mn_spracheAendern">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/glyphs_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/glyphs_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Sprache ändern</string>
+   </property>
+  </action>
+  <action name="mn_beschreibungAendern">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/edit_note_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/edit_note_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/edit_note_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Beschreibung ändern</string>
+   </property>
+  </action>
+  <action name="mn_loeschen">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/delete_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+     <activeoff>:/icons/res/icons/delete_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/delete_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Set löschen</string>
    </property>
   </action>
  </widget>

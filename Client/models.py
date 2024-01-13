@@ -29,6 +29,7 @@ class KartenModel(QAbstractTableModel):
         self.dbconn = dbconn
         self.geladenesSet = None
         self.daten = None
+        self.set_id = 0
 
         self.sprache = "Fremdsprache"
 
@@ -158,13 +159,18 @@ class KartenModel(QAbstractTableModel):
             else:
                 return QIcon(':/icons/res/icons/rund_star_FILL1_wght400_GRAD0_opsz24.svg')
 
-    def lade_daten(self, set_id):
+    def lade_daten(self, set_id: int = -1):
         """"
         Eigene Funktion, welche die Daten temporär aus der Datenbank lädt und in der Variable 'self.daten' speichert.
         Vorsicht: Muss immer (manuell) aufgerufen werden, wenn sich etwas an den Daten geändert hat.
         """
         self.beginResetModel()
         cursor = self.dbconn.cursor()
+
+        if set_id == -1:
+            set_id = self.set_id
+        else:
+            self.set_id = set_id
 
         # Sprache herausfinden
         sql = """SELECT sprache FROM vociset WHERE set_id = ?"""
