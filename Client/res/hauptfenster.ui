@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../ressources.qrc">
-    <normaloff>:/icons/res/icons/Vocitrainer_V_Icon.svg</normaloff>:/icons/res/icons/Vocitrainer_V_Icon.svg</iconset>
+    <normaloff>:/icons/res/icons/Vocitrainer_Icon.svg</normaloff>:/icons/res/icons/Vocitrainer_Icon.svg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">selection-background-color: rgb(201, 220, 225);
@@ -27,6 +27,9 @@ selection-color: rgb(0, 0, 0);</string>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="cmd_SetLernen">
+        <property name="statusTip">
+         <string>Set lernen: Dieser intelligente Lernmodus hilft Ihnen, Vokabeln schnell zu lernen, indem er die Schwierigkeit der Wörter beachtet und diese in 2 Stufen lernt.</string>
+        </property>
         <property name="autoFillBackground">
          <bool>false</bool>
         </property>
@@ -54,6 +57,9 @@ selection-color: rgb(0, 0, 0);</string>
       </item>
       <item>
        <widget class="QPushButton" name="cmd_SetUeben">
+        <property name="statusTip">
+         <string>Set üben: Übt das Set mit ihnen und beachtet dabei die Schwierigkeit. (Bald verfügbar)</string>
+        </property>
         <property name="autoFillBackground">
          <bool>false</bool>
         </property>
@@ -80,6 +86,9 @@ selection-color: rgb(0, 0, 0);</string>
       </item>
       <item>
        <widget class="QPushButton" name="cmd_Lernen">
+        <property name="statusTip">
+         <string>Lernen: Fragt das Set bzw. die ausgewählten Wörter, bis alle einmal richtig beantwortet wurden.</string>
+        </property>
         <property name="autoFillBackground">
          <bool>false</bool>
         </property>
@@ -107,6 +116,9 @@ selection-color: rgb(0, 0, 0);</string>
       </item>
       <item>
        <widget class="QPushButton" name="cmd_MarkierteLernen">
+        <property name="statusTip">
+         <string>Lernen: Fragt alle markierten Wörter ab, bis alle einmal richtig beantwortet wurden.</string>
+        </property>
         <property name="autoFillBackground">
          <bool>false</bool>
         </property>
@@ -154,6 +166,9 @@ selection-color: rgb(0, 0, 0);</string>
       </item>
       <item>
        <widget class="QToolButton" name="cmd_Einstellungen">
+        <property name="statusTip">
+         <string>Einstellungen: Passen Sie das Verhalten des Vocitrainers in den Einstellungen an.</string>
+        </property>
         <property name="styleSheet">
          <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
         </property>
@@ -177,6 +192,9 @@ selection-color: rgb(0, 0, 0);</string>
       </item>
       <item>
        <widget class="QToolButton" name="cmd_Beenden">
+        <property name="statusTip">
+         <string>Beenden: Verlassen sie den Vocitrainer.</string>
+        </property>
         <property name="styleSheet">
          <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
         </property>
@@ -431,6 +449,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Neues Set</string>
    </property>
+   <property name="statusTip">
+    <string>Neues Set</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
    </property>
@@ -442,6 +463,9 @@ selection-color: rgb(0, 0, 0);]</string>
      <activeoff>:/icons/res/icons/create_new_folder_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/create_new_folder_FILL0_wght400_GRAD0_opsz24.svg</iconset>
    </property>
    <property name="text">
+    <string>Neuer Ordner</string>
+   </property>
+   <property name="statusTip">
     <string>Neuer Ordner</string>
    </property>
    <property name="shortcut">
@@ -457,6 +481,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Herunterladen</string>
    </property>
+   <property name="statusTip">
+    <string>Suchen und laden sie Sets von anderen Nutzern vom Marketplace herunter.</string>
+   </property>
   </action>
   <action name="mn_Hochladen">
    <property name="icon">
@@ -466,6 +493,9 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="text">
     <string>Hochladen</string>
+   </property>
+   <property name="statusTip">
+    <string>Laden sie das ausgewählte Set auf den Marketplace hoch, um es anderen zur Verfügung zu stellen.</string>
    </property>
   </action>
   <action name="mn_HochgeladeneVerwalten">
@@ -477,6 +507,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Hochgeladene verwalten</string>
    </property>
+   <property name="statusTip">
+    <string>Verwalten sie die Sets, welche sie auf den Marketplace hochgeladen haben.</string>
+   </property>
   </action>
   <action name="mn_Profil">
    <property name="icon">
@@ -486,6 +519,9 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="text">
     <string>Profil</string>
+   </property>
+   <property name="statusTip">
+    <string>Profil verwalten</string>
    </property>
   </action>
   <action name="mn_CSV_importieren">
@@ -497,6 +533,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>CSV importieren</string>
    </property>
+   <property name="statusTip">
+    <string>Importieren sie ein Set aus einer CSV Datei.</string>
+   </property>
   </action>
   <action name="mn_Einstellungen">
    <property name="icon">
@@ -505,6 +544,9 @@ selection-color: rgb(0, 0, 0);]</string>
      <activeoff>:/icons/res/icons/settings_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/settings_FILL0_wght400_GRAD0_opsz24.svg</iconset>
    </property>
    <property name="text">
+    <string>Einstellungen</string>
+   </property>
+   <property name="statusTip">
     <string>Einstellungen</string>
    </property>
    <property name="shortcut">
@@ -520,6 +562,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Über</string>
    </property>
+   <property name="statusTip">
+    <string>Informationen über den Vocitrainer</string>
+   </property>
   </action>
   <action name="mn_Beenden">
    <property name="icon">
@@ -527,6 +572,9 @@ selection-color: rgb(0, 0, 0);]</string>
      <normaloff>:/icons/res/icons/logout_FILL0_wght500_GRAD0_opsz40.svg</normaloff>:/icons/res/icons/logout_FILL0_wght500_GRAD0_opsz40.svg</iconset>
    </property>
    <property name="text">
+    <string>Beenden</string>
+   </property>
+   <property name="statusTip">
     <string>Beenden</string>
    </property>
   </action>
@@ -539,6 +587,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Set lernen</string>
    </property>
+   <property name="statusTip">
+    <string>Set lernen: Dieser intelligente Lernmodus hilft Ihnen, Vokabeln schnell zu lernen, indem er die Schwierigkeit der Wörter beachtet und diese in 2 Stufen lernt.</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+1</string>
    </property>
@@ -550,6 +601,9 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="text">
     <string>Set üben</string>
+   </property>
+   <property name="statusTip">
+    <string>Set üben: Übt das Set mit ihnen und beachtet dabei die Schwierigkeit. (Bald verfügbar)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+2</string>
@@ -564,6 +618,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Ausgewählte lernen</string>
    </property>
+   <property name="statusTip">
+    <string>Lernen: Fragt das Set bzw. die ausgewählten Wörter, bis alle einmal richtig beantwortet wurden.</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+3</string>
    </property>
@@ -576,6 +633,9 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="text">
     <string>Markierte lernen</string>
+   </property>
+   <property name="statusTip">
+    <string>Lernen: Fragt alle markierten Wörter ab, bis alle einmal richtig beantwortet wurden.</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+4</string>
@@ -590,6 +650,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Wörter hinzufügen</string>
    </property>
+   <property name="statusTip">
+    <string>Wörter hinzufügen</string>
+   </property>
   </action>
   <action name="mn_FortschrittZuruecksetzen">
    <property name="icon">
@@ -599,6 +662,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Fortschritt zurücksetzen</string>
    </property>
+   <property name="statusTip">
+    <string>Fortschritt des intelligenten Lernmodus (Set lernen) löschen</string>
+   </property>
   </action>
   <action name="mn_AusgewaehlteWoerterLoeschen">
    <property name="icon">
@@ -607,6 +673,9 @@ selection-color: rgb(0, 0, 0);]</string>
      <activeoff>:/icons/res/icons/auto_delete_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/auto_delete_FILL0_wght400_GRAD0_opsz24.svg</iconset>
    </property>
    <property name="text">
+    <string>Ausgewählte Wörter löschen</string>
+   </property>
+   <property name="statusTip">
     <string>Ausgewählte Wörter löschen</string>
    </property>
   </action>
@@ -676,6 +745,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Set umbenennen</string>
    </property>
+   <property name="statusTip">
+    <string>Set umbenennen</string>
+   </property>
   </action>
   <action name="mn_spracheAendern">
    <property name="icon">
@@ -683,6 +755,9 @@ selection-color: rgb(0, 0, 0);]</string>
      <normaloff>:/icons/res/icons/glyphs_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/glyphs_FILL0_wght400_GRAD0_opsz24.svg</iconset>
    </property>
    <property name="text">
+    <string>Sprache ändern</string>
+   </property>
+   <property name="statusTip">
     <string>Sprache ändern</string>
    </property>
   </action>
@@ -695,6 +770,9 @@ selection-color: rgb(0, 0, 0);]</string>
    <property name="text">
     <string>Beschreibung ändern</string>
    </property>
+   <property name="statusTip">
+    <string>Beschreibung ändern</string>
+   </property>
   </action>
   <action name="mn_loeschen">
    <property name="icon">
@@ -703,6 +781,9 @@ selection-color: rgb(0, 0, 0);]</string>
      <activeoff>:/icons/res/icons/delete_FILL1_wght400_GRAD0_opsz24.svg</activeoff>:/icons/res/icons/delete_FILL0_wght400_GRAD0_opsz24.svg</iconset>
    </property>
    <property name="text">
+    <string>Set löschen</string>
+   </property>
+   <property name="statusTip">
     <string>Set löschen</string>
    </property>
   </action>

@@ -21,6 +21,7 @@ class Einstellungen(QDialog, Ui_Einstellungen):
         self.setModal(True)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)  # Hilfebutton ausblenden
         self.angemeldet = False
+        self.frame_willkommenEinstellungen.setVisible(False)
 
         # Einstellungen laden
         self.einstellungen_laden()

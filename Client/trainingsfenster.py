@@ -103,6 +103,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
                 # Es gibt gar nichts zu lernen
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Warning)
+                msg.setWindowIcon(QIcon(":/icons/res/icons/warning_FILL0_wght400_GRAD0_opsz24.svg"))
                 msg.setWindowTitle("Vocitrainer")
                 msg.setStandardButtons(QMessageBox.Ok)
                 msg.setText(

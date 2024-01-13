@@ -27,7 +27,7 @@ class Ui_Ueber(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.label_6 = QtWidgets.QLabel(Ueber)
         self.label_6.setText("")
-        self.label_6.setPixmap(QtGui.QPixmap(":/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"))
+        self.label_6.setPixmap(QtGui.QPixmap(":/icons/res/icons/Vocitrainer_Icon.svg"))
         self.label_6.setAlignment(QtCore.Qt.AlignCenter)
         self.label_6.setObjectName("label_6")
         self.verticalLayout_2.addWidget(self.label_6)

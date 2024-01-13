@@ -31,7 +31,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../ressources.qrc">:/icons/res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg</pixmap>
+          <pixmap resource="../ressources.qrc">:/icons/res/icons/Vocitrainer_Icon.svg</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

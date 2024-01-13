@@ -142,7 +142,7 @@ class TC_Intelligent:
                 pass
 
         # Falls es nichts zu lernen gibt
-        if len(self.ungelernt) == 0 and self.lernend == [None for i in range(7)]:
+        if len(self.ungelernt) == 0 and self.lernend == [None for i in range(self.MZ)]:
             raise TrainingFertig
 
         # self.debug_prints("Initialisierung des Controllers")
