@@ -146,6 +146,13 @@ selection-color: rgb(0, 0, 0);</string>
        </spacer>
       </item>
       <item>
+       <widget class="QCheckBox" name="box_definitionLernen">
+        <property name="text">
+         <string>Definition abfragen</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QToolButton" name="cmd_Einstellungen">
         <property name="styleSheet">
          <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>

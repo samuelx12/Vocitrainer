@@ -56,6 +56,13 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.splitter.setSizes([100, 300])
         self.splitter.updateGeometry()
 
+        # 'Definition lernen' Checkbox laden
+        try:
+            config = ConfigObj('settings.ini')
+            self.box_definitionLernen.setChecked(bool(int(config['Lernen']['definitionLernen'])))
+        except:
+            pass
+
         # ---------- Model ----------
         # Tabellen Model erstellen und zuweisen
         self.dbconn = sqlite3.connect('vocitrainerdb.db')
@@ -89,6 +96,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.cmd_SetUeben.clicked.connect(self.cmd_SetUeben_clicked)
         self.cmd_Lernen.clicked.connect(self.cmd_Lernen_clicked)
         self.cmd_MarkierteLernen.clicked.connect(self.cmd_MarkierteLernen_clicked)
+        self.box_definitionLernen.stateChanged.connect(self.box_definitionLernen_stateChanged)
         self.cmd_Einstellungen.clicked.connect(self.cmd_Einstellungen_clicked)
         self.cmd_Beenden.clicked.connect(self.cmd_Beenden_clicked)
 
@@ -156,11 +164,13 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.cmd_Lernen.setEnabled(sichtbar)
         self.cmd_MarkierteLernen.setEnabled(sichtbar)
 
+        # self.menuLernen.setEnabled(sichtbar)  # Wirkt nicht so gut
         self.mn_SetLernen.setEnabled(sichtbar)
         self.mn_SetUeben.setEnabled(sichtbar)
         self.mn_AusgewaehlteLernen.setEnabled(sichtbar)
         self.mn_MarkierteLernen.setEnabled(sichtbar)
 
+        # self.menuSet.setEnabled(sichtbar)  # Wirkt nicht so gut
         self.mn_WoerterHinzufuegen.setEnabled(sichtbar)
         self.mn_AusgewaehlteWoerterLoeschen.setEnabled(sichtbar)
         self.mn_FortschrittZuruecksetzen.setEnabled(sichtbar)
@@ -218,10 +228,10 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
             # Vocisets dieser Ebene laden
             query = """
-            SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE urordner_id = ? ORDER BY set_name
+            SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE urordner_id = ? ORDER BY sprache, set_name
 """
             lade_cursor.execute(query, (parent_id,))
-            # print(parent_id)
+
             vocisets = lade_cursor.fetchall()
 
             for i_ordner in ordner:
@@ -462,6 +472,13 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         einstellungen.setModal(True)
         einstellungen.exec_()
 
+        # 'Definition lernen' Checkbox laden
+        try:
+            config = ConfigObj('settings.ini')
+            self.box_definitionLernen.setChecked(bool(int(config['Lernen']['definitionLernen'])))
+        except:
+            pass
+
     def set_umbenennen(self, set_id: int, alt: str = "", typ: str = "vociset") -> Union[bool, str]:
         """Diese Funktion zeigt dem Benutzer ein Dialog um das Set (Set ID = set_id) umzubenennen."""
 
@@ -654,6 +671,17 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         """'Markierte lernen' Button in der Menü-Leiste geklickt"""
         self.lernen("einfach", 2)
 
+    def box_definitionLernen_stateChanged(self):
+        """Wird ausgeführt, wenn die 'Definition lernen' Checkbox geändert wird."""
+        definitionLernen = self.box_definitionLernen.isChecked()
+
+        try:
+            config = ConfigObj('settings.ini')
+            config['Lernen']['definitionLernen'] = int(definitionLernen)
+            config.write()
+        except:
+            pass
+
     def cmd_Einstellungen_clicked(self):
         """'Einstellungen' Button in der Menü-Leiste geklickt"""
         self.einstellungen_oeffnen()
@@ -682,8 +710,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         try:
             config = ConfigObj('settings.ini')
             sprache = str(config['Allgemein']['neuesSetSprache'])
-        except Exception as e:
-            raise e
+        except:
             sprache = "Englisch"
         # Parent Id herausfinden
         try:
@@ -1022,7 +1049,9 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         neu = self.set_spracheAendern(set_id, sprache_alt)
 
         vociset.set_sprache(neu)
-        self.kartenModel.headerDataChanged(Qt.Horizontal, 0, len(self.kartenModel.spalte_kategorie_zuweisung) - 1)
+        if self.set_angezeigt:
+            self.kartenModel.lade_daten(self.geladenes_set_explorer_item.id)
+            self.kartenModel.headerDataChanged.emit(Qt.Horizontal, 0, len(self.kartenModel.spalte_kategorie_zuweisung) - 1)
 
     def kontextmn_beschreibungAendern_triggered(self):
         """'Beschreibung ändern' Aktion aus dem Kontextmenü ausführen"""
