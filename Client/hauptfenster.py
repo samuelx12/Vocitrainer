@@ -447,6 +447,12 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         if event.key() == Qt.Key_Delete and self.tbv_Liste.hasFocus():
             self.mn_AusgewaehlteWoerterLoeschen_triggered()
 
+    def einstellungen_oeffnen(self):
+        """Diese Funktion öffneet die Einstellungen."""
+        einstellungen = Einstellungen()
+        einstellungen.setModal(True)
+        einstellungen.exec_()
+
     def lernen(self, controller: str, quelle: Union[0, 1, 2]) -> None:
         """
         Diese Funktion startet das Training.
@@ -547,9 +553,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def cmd_Einstellungen_clicked(self):
         """'Einstellungen' Button in der Menü-Leiste geklickt"""
-        einstellungen = Einstellungen()
-        einstellungen.setModal(True)
-        einstellungen.exec_()
+        self.einstellungen_oeffnen()
 
     def cmd_Beenden_clicked(self):
         """Beenden Button geklickt"""
@@ -640,7 +644,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def mn_Einstellungen_triggered(self):
         """'Einstellungen' Option in dem Vocitrainer-Menü geklickt"""
-        self.cmd_Einstellungen_clicked()
+        self.einstellungen_oeffnen()
 
     def mn_Ueber_triggered(self):
         """Methode zum Aufrufen des Über-Fensters"""
@@ -839,16 +843,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
     def mn_Profil_triggered(self):
         """Wird aufgerufen, wenn im Marcetplace Menü 'Profil' geklickt wird."""
 
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Critical)
-        msg.setWindowIcon(QIcon(':/icons/res/icons/event_upcoming_FILL0_wght400_GRAD0_opsz24.svg'))
-        msg.setWindowTitle("Coming soon")
-        msg.setStandardButtons(QMessageBox.Ok)
-        msg.setText(
-            "Dieses Feature ist noch nicht hinzugefügt.\n" +
-            "Es wird aber bald kommen."
-        )
-        msg.exec_()
+        self.einstellungen_oeffnen()
 
     # --------------- MENÜ IMPORTIEREN ---------------
     def mn_CSV_importieren_triggered(self):

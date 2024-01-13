@@ -5,24 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f908dcd2-d6b2-447a-8d03-be56e9f87b67" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Client/einstellungen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/res/einstellungen.ui" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/res/icons/note_stack_FILL0_wght400_GRAD0_opsz24.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Client/res/ui_einstellungen.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Mp_Hochladen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_Hochladen.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/Mp_LogReg.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_LogReg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Mp_herunterladen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_herunterladen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/Mp_hochgeladeneVerwalten.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Mp_hochgeladeneVerwalten.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/hauptfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/hauptfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/importCSV.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/importCSV.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/neuesWort.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/neuesWort.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ressources.qrc" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ressources.qrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ressources_rc.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ressources_rc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/einstellungen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/einstellungen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/res/einstellungen.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/einstellungen.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/res/ui_einstellungen.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/res/ui_einstellungen.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/settings.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Client/settings.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/trainingsfenster.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/trainingsfenster.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/ueber.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/ueber.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/vocitrainerdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Client/vocitrainerdb.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/serverdb.db" beforeDir="false" afterPath="$PROJECT_DIR$/Server/serverdb.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -458,15 +446,7 @@
       <workItem from="1705057132646" duration="7800000" />
       <workItem from="1705066960689" duration="6232000" />
       <workItem from="1705094313302" duration="6091000" />
-      <workItem from="1705137497065" duration="2760000" />
-    </task>
-    <task id="LOCAL-00005" summary="TreeWidget angefangen mit Icons">
-      <option name="closed" value="true" />
-      <created>1692995090656</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1692995090656</updated>
+      <workItem from="1705137497065" duration="4490000" />
     </task>
     <task id="LOCAL-00006" summary="Explorer fürs erste fertiggestellt">
       <option name="closed" value="true" />
@@ -852,7 +832,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705087153502</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="- Einstellungen erstellt">
+      <option name="closed" value="true" />
+      <created>1705143153995</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1705143153995</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -871,7 +859,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Teil 1 des Remakes des Trainingsfensters und allem drumherum&#10;- Neue Datenstruktur Karte&#10;- Trainingsfenster kennt jetzt zwei Phasen&#10;- Hauptfenster lädt die Daten der *ausgewählten&quot; Zeilen und konvertiert sie in das Format der 'Karte' Tuple&#10;- Hauptfenster lädt Sprache&#10;- Trainingsfenster hat eine neue Seite, die Zeigeseite&#10;- Wegen neuem Laptop: das ganze mit aktualisierten Versionen von Qt, Python und anderem&#10;- Einige kleine Verbesserungen und Bugfixes, die oben noch nicht dabei sind." />
     <MESSAGE value="Teil 2 des Remakes des Trainingsfensters und allem drumherum&#10;- Trainingsfenster so weit fertiggestellt&#10;- Option um Definitionen zu lernen&#10;- Besseres Design für falsche Antworten&#10;- Kleine strukturelle Anpassungen.&#10;Im Teil 3 steht jetzt noch der Intelligente Modus an" />
     <MESSAGE value="Teil 3 des Remakes des Trainingsfensters und allem drumherum&#10;- TC_Intelligen weit fortgeschritten.&#10;- Es gibt aber noch Bugs die behoben werden müssen." />
     <MESSAGE value="Zwischenspeicherung" />
@@ -896,16 +883,17 @@
     <MESSAGE value="- Tabellen Spaltennamen hinzugefügt" />
     <MESSAGE value="- Tabellen: Markiert-Spalte entfernt und in Wortspalte eingebaut.&#10;- ExplorerItem um Informationen über das Set ergänzt&#10;- ExplorerItem zeigt jetzt im ToolTipp Sprache und Bemerkung&#10;- Funktion &quot;Neues Set&quot; implementiert" />
     <MESSAGE value="- Funktion &quot;Neuer Ordner&quot; implementiert" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Funktion &quot;Neuer Ordner&quot; implementiert" />
+    <MESSAGE value="- Einstellungen erstellt" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Einstellungen erstellt" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Vocitrainer$models.coverage" NAME="models Coverage Results" MODIFIED="1704571156791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Setup_DB.coverage" NAME="Setup DB Coverage Results" MODIFIED="1705086295063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Server.coverage" NAME="Server Coverage Results" MODIFIED="1705137651727" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Server.coverage" NAME="Server Coverage Results" MODIFIED="1705143418228" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="C:\Users\Samuel\PycharmProjects\Vocitrainer\Server" />
     <SUITE FILE_PATH="coverage/Vocitrainer$woosch.coverage" NAME="woosch Coverage Results" MODIFIED="1695049758389" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Dokumentation" />
     <SUITE FILE_PATH="coverage/Vocitrainer$versuch_quizlet_export.coverage" NAME="versuch_quizlet_export Coverage Results" MODIFIED="1698415966000" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$suche_test.coverage" NAME="suche test Coverage Results" MODIFIED="1695025638975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1705143056930" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Vocitrainer$Client.coverage" NAME="Client Coverage Results" MODIFIED="1705144795933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$.coverage" NAME=" Coverage Results" MODIFIED="1698414310010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Vocitrainer$setupdb.coverage" NAME="setupdb Coverage Results" MODIFIED="1704663764299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
     <SUITE FILE_PATH="coverage/Vocitrainer$Client_Network_Test.coverage" NAME="Client Network Test Coverage Results" MODIFIED="1694856592805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />

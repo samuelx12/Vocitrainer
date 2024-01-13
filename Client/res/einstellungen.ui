@@ -433,6 +433,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QLabel" name="lbl_passwort">
+        <property name="text">
+         <string>Passwort</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

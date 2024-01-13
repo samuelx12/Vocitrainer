@@ -66,7 +66,6 @@ def hash_passwort(passwort):
 
     gehasht = hashlib.pbkdf2_hmac(hash_algorithmus, passwort, salt, iterationen)
 
-    print(gehasht)
     return gehasht
 
 
@@ -75,14 +74,14 @@ def speichere_logindaten(benutzername: str, email: str, passwort: bytes):
     try:
         config = ConfigObj('settings.ini')
     except:
-        # Neue Config Erstellen, wenn keien existiert
+        # Neue Config Erstellen, wenn keine existiert
         config = ConfigObj()
 
     try:
         config['Login']['benutzername'] = benutzername
         config['Login']['email'] = email
         config['Login']['passwort'] = passwort
-        config['Login']['eingeloggt'] = True
+        config['Login']['eingeloggt'] = 1
 
     except:
         # Fallst die Einträge noch nicht existieren: neue erstellen
@@ -90,7 +89,7 @@ def speichere_logindaten(benutzername: str, email: str, passwort: bytes):
             'benutzername': benutzername,
             'email': email,
             'passwort': passwort,
-            'eingeloggt': True
+            'eingeloggt': 1
         }
 
     config.write()
@@ -106,7 +105,7 @@ def lade_logindaten():
     except:
         return None
 
-    if not config['Login']['eingeloggt']:
+    if not bool(int(config['Login']['eingeloggt'])):
         # Keine Logindaten gespeichert
         return None
 
@@ -183,7 +182,8 @@ class MpLogReg(QDialog, Ui_mpLogReg):
 
         if erfolg:
             self.eingeloggt = True
-            print("Eingeloggt")  # #######
+            # Hier müsste eigentlich noch vom Server der zugehörige Benutzername geladen werden
+            speichere_logindaten("Unbekannt", email, passwort)
             self.close()
             return
         else:
@@ -196,7 +196,7 @@ class MpLogReg(QDialog, Ui_mpLogReg):
         # Überprüfen, ob die E-Mail gültig ist
         if not validate_email(self.txt_reg_email.text()):
             self.lbl_reg_fehler.setText("Ungültige E-Mail!")
-            print("Set ungültige EMail")
+
             return
 
         benutzername = self.txt_reg_benutzername.text()

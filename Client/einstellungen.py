@@ -8,6 +8,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from res.ui_einstellungen import Ui_Einstellungen
 from configobj import ConfigObj
+from Mp_LogReg import log_reg
 
 
 class Einstellungen(QDialog, Ui_Einstellungen):
@@ -36,15 +37,13 @@ class Einstellungen(QDialog, Ui_Einstellungen):
         Diese Funktion ladet die Einstellungen aus der settings.ini Datei in die UI.
         :return bool Erfolg
         """
-        print("Lade einstellungen")
+
         try:
             # Versuche Einstellungen zu laden
             config = ConfigObj("settings.ini")
 
             # Sektion Allgemein
             self.cmb_stil.setCurrentText(config['Allgemein']['stil'])
-            print("Willkommen: ", config['Allgemein']['willkommenMeldung'])
-            print(bool(int(config['Allgemein']['willkommenMeldung'])))
             self.box_willkommenMeldung.setChecked(bool(int(config['Allgemein']['willkommenMeldung'])))
             self.cmb_sprache.setCurrentText(config['Allgemein']['neuesSetSprache'])
 
@@ -79,9 +78,11 @@ class Einstellungen(QDialog, Ui_Einstellungen):
 
             self.lbl_benutzername.setVisible(self.angemeldet)
             self.benutzername = config['Login']['benutzername']
-            self.lbl_benutzername.setText(f"Benutzername: ")
+            self.lbl_benutzername.setText(f"Benutzername: {self.benutzername}")
 
+            self.lbl_passwort.setVisible(self.angemeldet)
             self.passwort = config['Login']['passwort']
+            self.lbl_passwort.setText("Passwort: *********")
 
         except Exception as e:
             # raise e
@@ -122,7 +123,7 @@ class Einstellungen(QDialog, Ui_Einstellungen):
             'willkommenMeldung': int(self.box_willkommenMeldung.isChecked()),
             'neuesSetSprache': self.cmb_sprache.currentText()
         }
-        print("Speichern")
+
         # Sektion Lernen
         mz_ui = self.cmb_mz.currentText()
         if mz_ui == "7 - Normal":
@@ -173,4 +174,38 @@ class Einstellungen(QDialog, Ui_Einstellungen):
 
     def cmd_xxMelden_clicked(self):
         """'OK'-Button wurde geklickt."""
-        pass
+        if self.angemeldet:
+            # Abmelden
+            self.email = ""
+            self.benutzername = ""
+            self.passwort = ""
+            self.angemeldet = False
+            self.cmd_xxMelden.setText("Anmelden")
+            self.lbl_profilStatus.setText("Abgemeldet")
+            self.lbl_email.setVisible(False)
+            self.lbl_benutzername.setVisible(False)
+            self.lbl_passwort.setVisible(False)
+        else:
+            # Anmelden
+            erfolg, net = log_reg()
+            if erfolg:
+                # LogReg Fenster speichert die Anmeldedaten in den Einstellungen
+                # Deshalb werden diese jetzt von dort neu geladen
+                config = ConfigObj("settings.ini")
+
+                # Sektion Login
+                self.angemeldet = bool(int(config['Login']['eingeloggt']))
+                self.lbl_profilStatus.setText("Angemeldet")
+                self.cmd_xxMelden.setText("Abmelden")
+
+                self.lbl_email.setVisible(self.angemeldet)
+                self.email = config['Login']['email']
+                self.lbl_email.setText(f"E-Mail: {self.email}")
+
+                self.lbl_benutzername.setVisible(self.angemeldet)
+                self.benutzername = config['Login']['benutzername']
+                self.lbl_benutzername.setText(f"Benutzername: {self.benutzername}")
+
+                self.lbl_passwort.setVisible(self.angemeldet)
+                self.passwort = config['Login']['passwort']
+                self.lbl_passwort.setText("Passwort: *********")
