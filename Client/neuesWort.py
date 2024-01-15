@@ -114,7 +114,6 @@ class NeuesWort(QDialog, Ui_NeuesWort):
         else:
             self.lbl_erfolg.setText(f"Insgesamt {self.wort_zaehler} Wörter hinzugefügt")
 
-
     def cmd_fertig_clicked(self):
         """Fertig -> Der Benutzer ist fertig und möchte den Dialog schliessen."""
         self.close()

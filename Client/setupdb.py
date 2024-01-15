@@ -13,6 +13,8 @@ testdaten_hinzufuegen = False
 conn = sqlite3.connect('vocitrainerdb.db')
 cursor = conn.cursor()
 
+cursor.execute("PRAGMA foreign_keys = ON")
+
 # Tabelle 'ordner' erstellen
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS ordner (

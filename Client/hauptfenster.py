@@ -446,6 +446,12 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         # Datenbankcursor erstellen
         cursor = self.dbconn.cursor()
 
+        # Eigentlich sollte das automatisch sein, aber es scheint, dieser Schritt ist nötig
+        # Die Fremdschlüssel haben die Bezeichnung: ON DELETE CASCADE
+        # Sprich, wird das Set gelöscht, werden die zugehörigen Karten auch gelöscht.
+        # Das dieser zweite Löschvorgang sicher ausgeführt wird, bewirkt eben dieser Befehl.
+        cursor.execute("PRAGMA foreign_keys = ON")
+
         for loesch_id in loesch_ids:
             if loesch_id[1] == "ordner":
                 sql = """DELETE FROM ordner WHERE ordner_id=?"""
