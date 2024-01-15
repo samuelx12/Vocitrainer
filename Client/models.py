@@ -236,10 +236,11 @@ class KartenModel(QAbstractTableModel):
         # ---------------- TEXT ÄNDERN ----------------
         if role == Qt.EditRole and kategorie in [1, 2, 3, 4]:
 
-            # Wenn die neue Version leer ist (Bemerkung und Definition sind leer erlaubt)
-            if not value and kategorie not in [1, 2]:
-                cursor.close()
-                return False
+            # Änderung das "" doch erlaubt ist. Zum Rückgängig machen wieder entkommentieren.
+            # # Wenn die neue Version leer ist (Bemerkung und Definition sind leer erlaubt)
+            # if not value and kategorie not in [1, 2]:
+            #     cursor.close()
+            #     return False
 
             # Änderung im Cache anpassen
             self.daten[reihe][kategorie] = value
