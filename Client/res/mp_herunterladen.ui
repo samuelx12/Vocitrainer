@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>594</width>
-    <height>528</height>
+    <height>540</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Vociset herunterladen</string>
+        <string>Set herunterladen</string>
        </property>
       </widget>
      </item>
@@ -42,7 +42,12 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="cbox_sprache">
+        <widget class="QComboBox" name="cmb_sprache">
+         <item>
+          <property name="text">
+           <string>Alle</string>
+          </property>
+         </item>
          <item>
           <property name="text">
            <string>Englisch</string>
@@ -55,6 +60,11 @@
          </item>
          <item>
           <property name="text">
+           <string>Latein</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>Spanisch</string>
           </property>
          </item>
@@ -63,6 +73,26 @@
            <string>Italienisch</string>
           </property>
          </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lbl_anzahlErgebnisse">
+         <property name="text">
+          <string>Anzahl Ergebnisse:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="intb_anzahlErgebnisse">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="singleStep">
+          <number>5</number>
+         </property>
+         <property name="value">
+          <number>20</number>
+         </property>
         </widget>
        </item>
        <item>

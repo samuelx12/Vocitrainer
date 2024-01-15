@@ -40,6 +40,8 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         self.cmd_schliessen.clicked.connect(self.cmd_schliessen_clicked)
         self.txt_suche.textChanged.connect(self.txt_suche_textChanged)
         self.cmd_refresh.clicked.connect(self.txt_suche_textChanged)
+        self.cmb_sprache.currentIndexChanged.connect(self.cmb_sprache_currentIndexChanged)
+        self.intb_anzahlErgebnisse.valueChanged.connect(self.intb_anzahlErgebnisse_valueChanged)
 
         # self.setStyleSheet(
         #     """font: 14pt "MS Shell Dlg 2";"""
@@ -55,9 +57,22 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         self.close()
 
     def txt_suche_textChanged(self):
+        self.aktualisieren()
+
+    def cmb_sprache_currentIndexChanged(self):
+        self.aktualisieren()
+
+    def intb_anzahlErgebnisse_valueChanged(self):
+        self.aktualisieren()
+
+    def aktualisieren(self):
         if self.txt_suche.text().split():
             try:
-                resultate = self.net.vociset_suche(self.txt_suche.text(), 10)
+                resultate = self.net.vociset_suche(
+                    self.txt_suche.text(),
+                    self.intb_anzahlErgebnisse.value(),
+                    self.cmb_sprache.currentText()
+                )
             except:
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Critical)

@@ -49,16 +49,17 @@ class Network:
         response = pickle.loads(response)
         return response
 
-    def vociset_suche(self, prompt: str, anzahl_resultate: int) -> list:
+    def vociset_suche(self, prompt: str, anzahl_resultate: int, sprache: str = "Alle") -> list:
         """
         Diese Funktion fordert den Server auf, nach dem Suchprompt zu suchen und die Ergebnisse zu senden
-        :param prompt: Der Suchprompt
+        :param prompt: Der Suchprompts
         :param anzahl_resultate: Die Anzahl Resultate, die der Server fetchen soll
+        :param sprache: Hier kann ein Filter für die Sprache eingestellt werden
         :return: Die Ergebnisse der Suche
         """
-        nachricht = [3, prompt, anzahl_resultate]
+        nachricht = [3, prompt, anzahl_resultate, sprache]
         antwort = self.sendRecv(nachricht)
-        # print("Ergebnisse der Suche: ", antwort[1])
+
         return antwort[1]
 
     def vociset_herunterladen(self, set_id: int) -> tuple:

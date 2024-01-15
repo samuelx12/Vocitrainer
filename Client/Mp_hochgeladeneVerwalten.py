@@ -45,7 +45,7 @@ class MpHochgeladeneVerwalten(QDialog, Ui_Mp_HochgeladeneVerwalten):
         wobei die Inhalte die Hochgeladenen Vocisets des angemeldeten Benutzers sind.
         inhalte = [set_id, set_name, beschreibung, sprache, anz_downloads]
         """
-        print("Inhalte:", inhalte)
+
         self.inhalte = inhalte
         self.tbl_hochgeladeneSets.clear()
         self.tbl_hochgeladeneSets.setColumnCount(4)
@@ -86,7 +86,6 @@ class MpHochgeladeneVerwalten(QDialog, Ui_Mp_HochgeladeneVerwalten):
                 set_id = self.inhalte[reihe][0]
                 try:
                     self.net.verwalten_aktion(set_id, 0)
-                    print("Das hat geklappt")
                 except:
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Critical)

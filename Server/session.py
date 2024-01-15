@@ -168,7 +168,7 @@ class Session(threading.Thread):
     def beantworte_kid3(self, nachricht) -> list:
         """
         Set suche:
-        [kid, prompt, sprache]
+        [kid, prompt, anzahl_resultat, sprache]
         """
 
         def zaehle_treffer(title: str) -> int:
@@ -185,26 +185,30 @@ class Session(threading.Thread):
 
         prompt: str = nachricht[1]
         anzahl_resultate: int = nachricht[2]
+        sprache: str = nachricht[3]
         gesplitteter_prompt = prompt.split()
 
-        # Ausgeführte Befehle für Debug Printen
+        # # Ausgeführte Befehle für Debug Printen
         # self.DBCONN.set_trace_callback(trace_callback)
 
         # Suchquery erstellen
         # Die 'LIKE's suchen alle sets heraus, welche eines der Wörter des Suchprompts im Namen haben
         query = """
-            SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE set_name LIKE '%' || ? || '%'
+            SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE (set_name LIKE '%' || ? || '%'
         """
         for i in range(len(gesplitteter_prompt) - 1):
             query += " OR set_name LIKE '%'+?+'%'"
+
+        query += ")"
+
+        if sprache != "Alle":
+            query += f" AND sprache='{sprache}'"
 
         self.CURSOR.execute(query, gesplitteter_prompt)
         ergebnisse = self.CURSOR.fetchmany(anzahl_resultate)
 
         # Jetzt werden die Resultate danach geordnet, wie viele Wörter des Suchprompts darin enthalten sind.
-        ergebnisse.sort(key=lambda resultat: zaehle_treffer(resultat[1]))
-
-        print(ergebnisse)
+        ergebnisse.sort(key=lambda resultat: zaehle_treffer(resultat[1]), reverse=True)
 
         return [3, ergebnisse]
 
@@ -307,6 +311,9 @@ class Session(threading.Thread):
         E-Mail Überprüfung
         :param nachricht: [kid, code]
         :return: [kid, bool: erfolg]
+
+        Das hier wäre eine Mögliche Erweiterung um dem ganzen eine Überprüfung von Emails hinzuzufügen.
+        Allerdings wäre das viel Arbeit mit wenig Wirkung und steht nicht im Fokus meiner Arbeit.
         """
         pass
 
@@ -382,9 +389,11 @@ class Session(threading.Thread):
         aktion = nachricht[2]
 
         if aktion == 0:
-            print("LÖSCH AUFTRAG GEGEBEN")
-            print(f"set_id: {set_id}")
-            print(f"self.eingeloggeter_user_id: {self.eingeloggter_user_id}")
+
+            # print("LÖSCH AUFTRAG GEGEBEN")
+            # print(f"set_id: {set_id}")
+            # print(f"self.eingeloggeter_user_id: {self.eingeloggter_user_id}")
+
             # Query zum löschen
             # "AND user_id ..." bewirkt, dass der Eintrag nur gelöscht wird, wenn das Set dem eingeloggten User gehört,
             # was eigentlich immer der Fall ist, aber theoretisch könnte man das manipulieren.
@@ -395,3 +404,7 @@ class Session(threading.Thread):
             self.CURSOR.execute(query, (set_id, self.eingeloggter_user_id))
 
             self.DBCONN.commit()
+
+            return [10, True]
+
+        return [10, False]
