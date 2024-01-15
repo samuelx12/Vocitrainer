@@ -188,27 +188,44 @@ class Session(threading.Thread):
         sprache: str = nachricht[3]
         gesplitteter_prompt = prompt.split()
 
-        # # Ausgeführte Befehle für Debug Printen
-        # self.DBCONN.set_trace_callback(trace_callback)
+        # Ausgeführte Befehle für Debug Printen
+        self.DBCONN.set_trace_callback(trace_callback)
 
         # Suchquery erstellen
         # Die 'LIKE's suchen alle sets heraus, welche eines der Wörter des Suchprompts im Namen haben
         query = """
-            SELECT set_id, set_name, beschreibung, sprache FROM vociset WHERE (set_name LIKE '%' || ? || '%'
-        """
+            SELECT v.set_id, v.set_name, v.beschreibung, v.sprache, v.anz_downloads, u.benutzername, u.gesperrt
+            FROM vociset v
+            JOIN user u ON v.user_id = u.user_id
+            WHERE (set_name LIKE '%' || ? || '%' OR beschreibung LIKE '%' || ? || '%'
+"""
         for i in range(len(gesplitteter_prompt) - 1):
-            query += " OR set_name LIKE '%'+?+'%'"
+            query += " OR set_name LIKE '%'+?+'%' OR beschreibung LIKE '%'+?+'%'"
 
         query += ")"
 
+        # Filterung nach Sprache
         if sprache != "Alle":
             query += f" AND sprache='{sprache}'"
 
-        self.CURSOR.execute(query, gesplitteter_prompt)
+        gesplitteter_prompt_doppelt = []
+        for splitter in gesplitteter_prompt:
+            gesplitteter_prompt_doppelt.append(splitter)
+            gesplitteter_prompt_doppelt.append(splitter)
+
+        self.CURSOR.execute(query, gesplitteter_prompt_doppelt)
         ergebnisse = self.CURSOR.fetchmany(anzahl_resultate)
 
+        # Entfernung von gesperrten Usern
+        i = 0
+        for ergbnis in ergebnisse:
+            if ergbnis[6] == 1:
+                ergebnisse.pop(i)
+            else:
+                i += 1
+
         # Jetzt werden die Resultate danach geordnet, wie viele Wörter des Suchprompts darin enthalten sind.
-        ergebnisse.sort(key=lambda resultat: zaehle_treffer(resultat[1]), reverse=True)
+        ergebnisse.sort(key=lambda resultat: zaehle_treffer((resultat[1] + resultat[2] + resultat[3])), reverse=True)
 
         return [3, ergebnisse]
 

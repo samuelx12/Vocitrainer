@@ -69,6 +69,8 @@ class Network:
         :return: Ein Tupel,
             Das erste Element enthält den Vociset Datensatz,
             Das zweite Element eine Liste von Karten Datensätzen
+
+            v.set_id, v.set_name, v.beschreibung, v.sprache, v.anz_downloads, u.benutzername, u.gesperrt
         """
         nachricht = [4, set_id]
         antwort = self.sendRecv(nachricht)

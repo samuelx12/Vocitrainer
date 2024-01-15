@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import *
 from res.ui_mp_herunterladen import Ui_mpHerunterladen
 from network import Network
 import sqlite3
+from rich import print as rprint
 
 
 class MpHerunterladen(QDialog, Ui_mpHerunterladen):
@@ -111,32 +112,44 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         """Ladet die Tabelle mit den Suchresultaten neu"""
 
         self.such_resultate = resultate
+        rprint(resultate)
 
         self.tbl_suche.clear()
-        self.tbl_suche.setColumnCount(2)
+        self.tbl_suche.setColumnCount(4)
         self.tbl_suche.setRowCount(len(self.such_resultate))
+
+        # Spaltenüberschriften
+        self.tbl_suche.setHorizontalHeaderLabels(["Set", "Autor", "Downloads", "Herunterladen"])
 
         # Spaltenbreite festlegen
         header = self.tbl_suche.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.Fixed)
         header.setSectionResizeMode(1, QHeaderView.Fixed)
+        header.setSectionResizeMode(2, QHeaderView.Fixed)
+        header.setSectionResizeMode(3, QHeaderView.Fixed)
 
-        # Die erste Spalte nimmt 2/3 des Platzes ein
-        header.resizeSection(0, int(self.width() * 2 / 3.3))
-
-        # Die zweite Spalte nimmt 1/3 des Platzes ein
-        header.resizeSection(1, int(self.width() * 1 / 3.3))
+        # Platzverteilungen
+        header.resizeSection(0, int(self.width() * 4 / 11))
+        header.resizeSection(1, int(self.width() * 2.5 / 11))
+        header.resizeSection(2, int(self.width() * 1 / 11))
+        header.resizeSection(3, int(self.width() * 2.5 / 11))
 
         for reihe in range(len(self.such_resultate)):
             # In die erste Spalte kommt der Set Name:
             self.tbl_suche.setItem(reihe, 0, QTableWidgetItem(self.such_resultate[reihe][1]))
 
-            # Erstellen eines Buttons für die zweite Spalte
+            # In die zweite Spalte kommt der User
+            self.tbl_suche.setItem(reihe, 1, QTableWidgetItem(self.such_resultate[reihe][5]))
+
+            # In die dritte Spalte kommt die Anzahl Downloads
+            self.tbl_suche.setItem(reihe, 2, QTableWidgetItem(str(self.such_resultate[reihe][4])))
+
+            # Erstellen eines Buttons für die vierte Spalte
             herunterladen_button = QPushButton("Herunterladen")
             herunterladen_button.setIcon(QIcon("res/icons/download_FILL0_wght500_GRAD0_opsz40.svg"))
             herunterladen_button.clicked.connect(self.set_herunterladen_button_clicked)
 
-            self.tbl_suche.setCellWidget(reihe, 1, herunterladen_button)
+            self.tbl_suche.setCellWidget(reihe, 3, herunterladen_button)
 
     def set_herunterladen_button_clicked(self):
         """
@@ -201,7 +214,7 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
 
         herunterladen_button = QPushButton("Heruntergeladen")
         herunterladen_button.setIcon(QIcon("res/icons/download_done_FILL0_wght500_GRAD0_opsz40.svg"))
-        self.tbl_suche.setCellWidget(zeile, 1, herunterladen_button)
+        self.tbl_suche.setCellWidget(zeile, 3, herunterladen_button)
 
         # print("Erfolgsmeldung!")
         # print(zeile)
