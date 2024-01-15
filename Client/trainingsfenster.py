@@ -55,20 +55,20 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.DBCONN = dbconn
         self.controller_typ = controller_typ
 
+        # Einstellung Fokusmodus und Definition lernen laden
         try:
             config = ConfigObj("settings.ini")
             self.definition_lernen = bool(int(config['Lernen']['definitionLernen']))
+            self.fokusmodus_aktiv = bool(int(config['Lernen']['fokusmodus']))
         except:
             self.definition_lernen: bool = False
+            self.fokusmodus_aktiv = False
 
         # Einstellung: Sprache gleich für alles Einstellen:
         self.sprache: str = sprache
         self.f_lbl_fremdsprache.setText(self.sprache + ":")
         self.a_lbl_fremdsprache_beschreibung.setText(self.sprache + ":")
         self.z_lbl_fremdsprache_beschreibung.setText(self.sprache + ":")
-
-        # Einstellung: Schwierigkeit anzeigen
-        self.schwierigkeit_zeigen = True
 
         # Bildschirmgrösse setzen
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())
@@ -117,6 +117,10 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
 
             self.schwierigkeit_zeigen = True
 
+        # Falls aber Fokusmodus, Schwierigkeit sowieso aus:
+        if self.fokusmodus_aktiv:
+            self.schwierigkeit_zeigen = False
+
         # Erste Frage laden
         self.phase1()
 
@@ -136,6 +140,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         :param seite: Auf welcher Seite
         :return:
         """
+        print("Schwierigkeitsfunktion")
 
         if seite == "f":
             schwierigkeits_label = self.f_lbl_schwierigkeit
@@ -147,6 +152,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         # Wenn Einstellung nicht aktiv ist:
         if not self.schwierigkeit_zeigen:
             schwierigkeits_label.setVisible(False)
+            print("Keine Schwierigkeit")
             return
 
         # Verbleibende Abfragen berechnen
@@ -245,6 +251,8 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             # Frageseite anzeigen
             self.stackedWidget.setCurrentIndex(0)
 
+        return
+
     def phase2(self):
         """
         In dieser Phase wird die Antwort von der Frage gezeigt.
@@ -308,6 +316,9 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         # Schwierigkeit anzeigen
         self.zeige_schwierigkeit(self.aktive_karte, "a")
 
+        # Fokusmodus umsetzen falls aktiviert
+        self.fokusmodus()
+
         # --- Antwortsseite anzeigen ---
         self.stackedWidget.setCurrentIndex(1)
 
@@ -350,6 +361,24 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
                 event.accept()  # Fenster wird geschlossen.
             else:
                 event.ignore()  # Sonst muss nichts passieren
+
+    def fokusmodus(self):
+        """
+        Diese Funktion blendet einfach alle Bemerkungs und Definitions Labels aus.
+        Zwar könnte man das alles schon vorher regeln, aber es bringt so keine Performance Einbussen und
+        macht den Code viel Lesbarer, da if-Konstrukte wegfallen.
+        Dafür muss jedoch self.fokusmodus True sein.
+        """
+        if not self.fokusmodus_aktiv:
+            return
+        
+        self.a_lbl_definition_wort.setVisible(False)
+        self.a_lbl_definition_beschreibung.setVisible(False)
+        self.a_lbl_bemerkung_wort.setVisible(False)
+        self.a_lbl_bemerkung_beschreibung.setVisible(False)
+
+        self.z_lbl_bemerkung_wort.setVisible(False)
+        self.z_lbl_bemerkung_beschreibung.setVisible(False)
 
     def training_beenden(self):
         """Wenn das Training beendet werden soll, wird diese Funktion aufgerufen."""

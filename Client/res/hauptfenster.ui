@@ -158,11 +158,22 @@ selection-color: rgb(0, 0, 0);</string>
        </spacer>
       </item>
       <item>
-       <widget class="QCheckBox" name="box_definitionLernen">
-        <property name="text">
-         <string>Definition abfragen</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QCheckBox" name="box_definitionLernen">
+          <property name="text">
+           <string>Definition abfragen</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="box_fokusmodus">
+          <property name="text">
+           <string>Erhöhter Fokus</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QToolButton" name="cmd_Einstellungen">

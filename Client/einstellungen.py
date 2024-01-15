@@ -63,6 +63,7 @@ class Einstellungen(QDialog, Ui_Einstellungen):
                 self.cmb_ft.setCurrentText("Hoch")
 
             self.box_definitionLernen.setChecked(bool(int(config['Lernen']['definitionLernen'])))
+            self.box_fokusmodus.setChecked(bool(int(config['Lernen']['fokusmodus'])))
 
             # Sektion Login
             self.angemeldet = bool(int(config['Login']['eingeloggt']))
@@ -99,6 +100,7 @@ class Einstellungen(QDialog, Ui_Einstellungen):
             self.cmb_mz.setCurrentText("7-Normal")
             self.cmb_ft.setCurrentText("Normal")
             self.box_definitionLernen.setChecked(False)
+            self.box_fokusmodus.setChecked(False)
 
             # Sektion Login
             self.angemeldet = False
@@ -143,7 +145,8 @@ class Einstellungen(QDialog, Ui_Einstellungen):
         config['Lernen'] = {
             'mz': mz,
             'ft': ft,
-            'definitionLernen': int(self.box_definitionLernen.isChecked())
+            'definitionLernen': int(self.box_definitionLernen.isChecked()),
+            'fokusmodus': int(self.box_fokusmodus.isChecked())
         }
 
         # Sektion Login

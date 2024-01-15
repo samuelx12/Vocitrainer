@@ -60,6 +60,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         try:
             config = ConfigObj('settings.ini')
             self.box_definitionLernen.setChecked(bool(int(config['Lernen']['definitionLernen'])))
+            self.box_fokusmodus.setChecked(bool(int(config['Lernen']['fokusmodus'])))
         except:
             pass
 
@@ -97,6 +98,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.cmd_Lernen.clicked.connect(self.cmd_Lernen_clicked)
         self.cmd_MarkierteLernen.clicked.connect(self.cmd_MarkierteLernen_clicked)
         self.box_definitionLernen.stateChanged.connect(self.box_definitionLernen_stateChanged)
+        self.box_fokusmodus.stateChanged.connect(self.box_fokusmodus_stateChanged)
         self.cmd_Einstellungen.clicked.connect(self.cmd_Einstellungen_clicked)
         self.cmd_Beenden.clicked.connect(self.cmd_Beenden_clicked)
 
@@ -478,10 +480,11 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         einstellungen.setModal(True)
         einstellungen.exec_()
 
-        # 'Definition lernen' Checkbox laden
+        # 'Definition lernen' und 'Fokusmodus' Checkbox laden
         try:
             config = ConfigObj('settings.ini')
             self.box_definitionLernen.setChecked(bool(int(config['Lernen']['definitionLernen'])))
+            self.box_fokusmodus.setChecked(bool(int(config['Lernen']['fokusmodus'])))
         except:
             pass
 
@@ -684,6 +687,17 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         try:
             config = ConfigObj('settings.ini')
             config['Lernen']['definitionLernen'] = int(definitionLernen)
+            config.write()
+        except:
+            pass
+
+    def box_fokusmodus_stateChanged(self):
+        """Wird ausgeführt, wenn die 'Definition lernen' Checkbox geändert wird."""
+        definitionLernen = self.box_fokusmodus.isChecked()
+
+        try:
+            config = ConfigObj('settings.ini')
+            config['Lernen']['fokusmodus'] = int(definitionLernen)
             config.write()
         except:
             pass
