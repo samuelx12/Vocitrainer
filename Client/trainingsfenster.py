@@ -271,14 +271,30 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             self.a_lbl_deineAntwort_wort.setVisible(True)
             self.a_lbl_deineAntwort_wort.setText(user_antwort)
 
+        self.a_lbl_deutsch_beschreibung.setText("Deutsch:")
         # Allenfalls Definition zeigen
-        if self.aktive_karte.bemerkung == "":
+        if self.aktive_karte.definition == "":
             self.a_lbl_definition_beschreibung.setVisible(False)
             self.a_lbl_definition_wort.setVisible(False)
         else:
-            self.a_lbl_definition_beschreibung.setVisible(True)
-            self.a_lbl_definition_wort.setVisible(True)
-            self.a_lbl_definition_wort.setText(self.aktive_karte.definition)
+            if self.definition_lernen:
+                # Allenfalls bei verfübarer Funktion, diese oben anzeigen.
+                self.a_lbl_deutsch_beschreibung.setText("Definition:")
+                self.a_lbl_deutsch_wort.setText(self.aktive_karte.definition)
+
+                if self.aktive_karte.wort == "":
+                    self.a_lbl_definition_beschreibung.setVisible(False)
+                    self.a_lbl_definition_wort.setVisible(False)
+                else:
+                    self.a_lbl_definition_beschreibung.setVisible(True)
+                    self.a_lbl_definition_beschreibung.setText("Deutsch:")
+                    self.a_lbl_definition_wort.setVisible(True)
+                    self.a_lbl_definition_wort.setText(self.aktive_karte.wort)
+            else:
+                self.a_lbl_definition_beschreibung.setVisible(True)
+                self.a_lbl_definition_beschreibung.setText("Definition:")
+                self.a_lbl_definition_wort.setVisible(True)
+                self.a_lbl_definition_wort.setText(self.aktive_karte.definition)
 
         # Allenfalls Bemerkung zeigen
         if self.aktive_karte.bemerkung == "":

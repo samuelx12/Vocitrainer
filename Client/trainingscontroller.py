@@ -11,20 +11,6 @@ from sqlite3 import Connection
 from configobj import ConfigObj
 
 
-class TestTraining:
-    def __int__(self):
-        pass
-
-    @staticmethod
-    def frage():
-        return ([1, "Haus", "house", "Ein Gebäude", 75, False, 3],)
-
-    @staticmethod
-    def antwort(antwort):
-        resultat = antwort == "house"
-        return [1, "Haus", "house", "Ein Gebäude", 75, False, 3], resultat
-
-
 class TC_Einfach:
     """
     Ein einfacher Trainingscontroller, der Wörter immer wiederholt, bis alle einmal richtig geschrieben wurden.
@@ -224,7 +210,7 @@ class TC_Intelligent:
             # Fragen
             return self.lernend[self.i], False
 
-    def antwort(self, richtig_beantwortet: str) -> Karte:
+    def antwort(self, richtig_beantwortet: bool) -> Karte:
         """
         Diese Funktion wird vom Fenster aufgerufen, um den Controller über das Resultat der letzten Abfrage
         zu informieren
