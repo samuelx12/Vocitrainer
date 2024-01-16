@@ -197,7 +197,10 @@ class Session(threading.Thread):
             SELECT v.set_id, v.set_name, v.beschreibung, v.sprache, v.anz_downloads, u.benutzername, u.gesperrt
             FROM vociset v
             JOIN user u ON v.user_id = u.user_id
-            WHERE (set_name LIKE '%' || ? || '%' OR beschreibung LIKE '%' || ? || '%'
+            WHERE u.gesperrt=0
+            AND (set_name LIKE '%' || ? || '%'
+            OR beschreibung LIKE '%' || ? || '%'
+            OR u.benutzername LIKE '%' || ? || '%'
 """
         for i in range(len(gesplitteter_prompt) - 1):
             query += " OR set_name LIKE '%'+?+'%' OR beschreibung LIKE '%'+?+'%'"
@@ -212,20 +215,25 @@ class Session(threading.Thread):
         for splitter in gesplitteter_prompt:
             gesplitteter_prompt_doppelt.append(splitter)
             gesplitteter_prompt_doppelt.append(splitter)
+            gesplitteter_prompt_doppelt.append(splitter)
 
         self.CURSOR.execute(query, gesplitteter_prompt_doppelt)
         ergebnisse = self.CURSOR.fetchmany(anzahl_resultate)
 
         # Entfernung von gesperrten Usern
         i = 0
-        for ergbnis in ergebnisse:
-            if ergbnis[6] == 1:
+        for ergebnis in ergebnisse:
+            if ergebnis[6] == 1:
+                print(ergebnis)
                 ergebnisse.pop(i)
             else:
                 i += 1
 
         # Jetzt werden die Resultate danach geordnet, wie viele Wörter des Suchprompts darin enthalten sind.
-        ergebnisse.sort(key=lambda resultat: zaehle_treffer((resultat[1] + resultat[2] + resultat[3])), reverse=True)
+        ergebnisse.sort(
+            key=lambda resultat: zaehle_treffer((resultat[1] + resultat[2] + resultat[3] + resultat[5])),
+            reverse=True
+        )
 
         return [3, ergebnisse]
 

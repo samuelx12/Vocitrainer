@@ -231,7 +231,7 @@
         <item>
          <widget class="QLabel" name="label_14">
           <property name="text">
-           <string>Intelligenter Lernmodus (&quot;Set lernen&quot;)</string>
+           <string>Lernen</string>
           </property>
          </widget>
         </item>
@@ -289,6 +289,28 @@
          </widget>
         </item>
         <item>
+         <widget class="QToolButton" name="toolButton_Info_MZ">
+          <property name="toolTip">
+           <string>Millersche Zahl
+George Miller hat in einem der meistzitiertesten Artikel der Psychologie die Erkenntnis dargelegt, dass das menschliche Gerhirn eine beschränkte Anzahl von Informationseinheiten im Kurzzeitgedächtnis behalten kann. Diese Zahl ist individuell und 7 plus/minus 2 gross und kann nicht trainiert werden. Der intelligente Lernmodus &quot;Set lernen&quot; benutzt diese Erkenntnis um ein effektiveres Lernen zu ermöglichen. Hier können Sie ihre &quot;persönliche Millersche Zahl&quot; eintragen.
+Ein Selbsttest um diese Zahl bei sich selbst herauszufinden, befindet sich in der dazugehörigen Maturaarbeit.</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>0</number>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../ressources.qrc">
+            <normaloff>:/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer_3">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -332,6 +354,27 @@
          </widget>
         </item>
         <item>
+         <widget class="QToolButton" name="toolButton_Info_FT">
+          <property name="toolTip">
+           <string>Fehlertoleranz
+Die Fehlertoleranz bestimmt, wie ab wie vielen falschen Antworten der Intelligente Modus &quot;Set lernen&quot; die Schwierigkeit eines Wortes als höher einschätzt.</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>0</number>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../ressources.qrc">
+            <normaloff>:/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -347,18 +390,94 @@
        </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="box_definitionLernen">
-        <property name="text">
-         <string>Definition lernen</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_12">
+        <item>
+         <widget class="QCheckBox" name="box_definitionLernen">
+          <property name="text">
+           <string>Definition lernen</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButton_Info_definitionLernen">
+          <property name="toolTip">
+           <string>Definition lernen
+Wenn diese Option an ist, fragt der Vocitrainer immer wo verfügbar mit der Definition ab.</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>0</number>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../ressources.qrc">
+            <normaloff>:/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_11">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="QCheckBox" name="box_fokusmodus">
-        <property name="text">
-         <string>Erhöhter Fokus</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_13">
+        <item>
+         <widget class="QCheckBox" name="box_fokusmodus">
+          <property name="text">
+           <string>Erhöhter Fokus</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="toolButton_Info_erhoehteFokus">
+          <property name="toolTip">
+           <string>Erhöhter Fokus
+Ist diese Option aktiviert, werden zusätzliche Informationen wie Bemerkung und Schwierigkeit während dem Lernen nicht angezeigt.</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>0</number>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../ressources.qrc">
+            <normaloff>:/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+          </property>
+          <property name="autoRaise">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_12">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

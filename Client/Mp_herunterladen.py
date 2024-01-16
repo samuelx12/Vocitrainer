@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import *
 from res.ui_mp_herunterladen import Ui_mpHerunterladen
 from network import Network
 import sqlite3
-from rich import print as rprint
+# from rich import print as rprint  # Für schöne Debugausgaben
 
 
 class MpHerunterladen(QDialog, Ui_mpHerunterladen):
@@ -112,7 +112,7 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         """Ladet die Tabelle mit den Suchresultaten neu"""
 
         self.such_resultate = resultate
-        rprint(resultate)
+        # rprint(resultate)
 
         self.tbl_suche.clear()
         self.tbl_suche.setColumnCount(4)
@@ -129,10 +129,10 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         header.setSectionResizeMode(3, QHeaderView.Fixed)
 
         # Platzverteilungen
-        header.resizeSection(0, int(self.width() * 4 / 11))
-        header.resizeSection(1, int(self.width() * 2.5 / 11))
-        header.resizeSection(2, int(self.width() * 1 / 11))
-        header.resizeSection(3, int(self.width() * 2.5 / 11))
+        header.resizeSection(0, int(self.width() * 4 / 10.9))
+        header.resizeSection(1, int(self.width() * 2.5 / 10.9))
+        header.resizeSection(2, int(self.width() * 1 / 10.9))
+        header.resizeSection(3, int(self.width() * 2.5 / 10.9))
 
         for reihe in range(len(self.such_resultate)):
             # In die erste Spalte kommt der Set Name:
