@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 server.py
-Beschreibung
+Hier ist die Hauptdatei des Servers.
 """
 
 import socket
 import ssl
 from rich import traceback
+from rich import print as rprint
 from session import Session
 
 # Für Debugzwecke: Schönes Traceback installieren
@@ -17,7 +18,7 @@ SERVER = "localhost"
 ADDR = (SERVER, PORT)
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-print("Vor wrap")
+
 # server = ssl.wrap_socket(
 #     sock=server,
 #     keyfile="server.key",
@@ -26,16 +27,25 @@ print("Vor wrap")
 #     cert_reqs=ssl.CERT_NONE,
 #     ssl_version=ssl.PROTOCOL_SSLv23
 # )
-print("nach wrap")
+
+# Gebe Informationen aus:
+rprint("[magenta]#############################")
+rprint("[blue]Starte Vocitrainer-Server...")
+rprint(f"[blue]Adress: {SERVER}")
+rprint(f"[blue]Port: {PORT}")
+
 server.bind(ADDR)
 server.listen(5)  # Server aktivieren, die Zahl ist die Anzahl maximaler Verbindungen
 
+rprint(f"[green]Erfolgreich gestartet!")
+rprint("[magenta]#############################")
+print()
 
 # Ab jetzt werden in einer Endlosschleife neue Verbindungen angenommen
 # und Sessions für jeden neuen Client erstellt und gestartet
 while True:
-    print("Warte auf neue Verbindungen...")
+    rprint("[cyan]Warte auf neue Verbindungen...")
     conn, addr = server.accept()
     session = Session(conn, addr)
-    print("Starte neue Session!")
+    rprint("[green]Starte neue Session!")
     session.start()
