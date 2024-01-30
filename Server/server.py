@@ -10,6 +10,9 @@ from rich import traceback
 from rich import print as rprint
 from session import Session
 
+# Server Version
+VERSION = "v0.1.0"
+
 # Für Debugzwecke: Schönes Traceback installieren
 traceback.install()
 
@@ -30,12 +33,23 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Gebe Informationen aus:
 rprint("[magenta]#############################")
+rprint(f"[blue]Server-Version: [cyan]{VERSION}")
 rprint("[blue]Starte Vocitrainer-Server...")
 rprint(f"[blue]Adress: {SERVER}")
 rprint(f"[blue]Port: {PORT}")
 
-server.bind(ADDR)
-server.listen(5)  # Server aktivieren, die Zahl ist die Anzahl maximaler Verbindungen
+try:
+    server.bind(ADDR)
+    server.listen(5)  # Server aktivieren, die Zahl ist die Anzahl maximaler Verbindungen
+except Exception as e:
+    rprint("[red]Start fehlgeschlagen!")
+    rprint("[magenta]#############################")
+
+    print()
+    rprint("[red]Fehlermeldung:")
+    rprint(f"[yellow]{str(e)}")
+
+    exit(1)
 
 rprint(f"[green]Erfolgreich gestartet!")
 rprint("[magenta]#############################")
