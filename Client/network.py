@@ -22,15 +22,15 @@ class Network:
         self.HEADER = 128
         self.FORMAT = 'utf-8'
         self.CONN = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # self.CONN = ssl.wrap_socket(
-        #     sock=self.CONN,
-        #     keyfile=None,
-        #     certfile=None,
-        #     server_side=False,
-        #     cert_reqs=ssl.CERT_NONE,
-        #     ssl_version=ssl.PROTOCOL_SSLv23
-        # )
         self.CONN.connect(ADDR)
+
+        # # SSL-Kontext erstellen
+        # ssl_kontext = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIEN)
+        # ssl_kontext.load_verify_locations('server.crt')  # Server-Zertifikat
+        # ssl_kontext.verify_mode = ssl.CERT_NONE
+        #
+        # # SSL-Handshake durchführen
+        # self.CONN = ssl_kontext.wrap_socket(self.CONN)
 
     def sendRecv(self, liste: list):
         """

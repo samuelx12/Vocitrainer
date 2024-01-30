@@ -21,7 +21,7 @@ def catch_exceptions(t, val, tb):
     tb: Traceback
     """
 
-    QtWidgets.QMessageBox.critical(None, "Ein Fehler ist aufgetreten", str(val))
+    QtWidgets.QMessageBox.critical(None, "Ein Fehler ist aufgetrete!n", str(val))
 
     old_hook(t, val, tb)
 

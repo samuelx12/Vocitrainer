@@ -31,7 +31,8 @@ def log_reg() -> typing.Tuple[bool, typing.Union[Network, None]]:
         # Fall 1: Benutzer hat sich bereits einmal eingeloggt -> automatisch verbinden
         try:
             net = Network()
-        except:
+        except Exception as e:
+            # raise e  #  Entfernen
             return False, None
 
         email = logindaten[1]

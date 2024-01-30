@@ -647,7 +647,17 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.trainingsfenster = Trainingsfenster(gewaehlte_karten_2, sprache, controller, self.dbconn)
         self.trainingsfenster.setModal(True)
         if self.trainingsfenster.oeffnen:
+
+            self.tbv_Liste.setVisible(False)
+            self.frame_nichtsAngezeigt.setVisible(True)
+
+            # Diese Funktion blockiert bis das Training vorbei ist
             self.trainingsfenster.exec_()
+
+            self.tbv_Liste.setVisible(True)
+            self.frame_nichtsAngezeigt.setVisible(False)
+
+            # Lade die Tabelle neu
             self.kartenModel.lade_daten(self.geladenes_set_explorer_item.id)
 
     # -------------------------------------------------------
@@ -985,7 +995,8 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         """Wird ausgeführt, wenn der Benutzer das Herunterladenmenü anwählt."""
         try:
             self.mp_Herunterladen = MpHerunterladen(self)
-        except:
+        except Exception as e:
+            # raise e  # Entfernen
             self.msg_verbindungsFehler()
             return
 

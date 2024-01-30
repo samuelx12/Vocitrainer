@@ -19,7 +19,7 @@ traceback.install()
 
 # VERSION HIER ANPASSEN
 versionen = {
-    "vocitrainer": "1.0",
+    "vocitrainer": "v0.1.0",
     "qt": QT_VERSION_STR,
     "pyqt": PYQT_VERSION_STR
 }
@@ -36,9 +36,6 @@ if stil == "Vocitrainer":
 
 window = Hauptfenster(versionen)
 window.show()
-
-# trainingsfenster = Trainingsfenster()
-# trainingsfenster.show()
 
 # Start der Event loop
 exit_code = app.exec_()

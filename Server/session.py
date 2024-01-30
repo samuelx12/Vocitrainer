@@ -77,13 +77,14 @@ class Session(threading.Thread):
         :return: None
         """
 
-        # Zuerst Verbindung verschlüsseln (momentan entfernt)
-
-        # print(self.empfangen())
+        # # Zuerst Verbindung verschlüsseln (momentan entfernt)
+        # # SSL-Kontext erstellen
+        # ssl_kontext = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        # ssl_kontext.load_cert_chain(certfile='server.crt', keyfile='server.key')
         #
-        # self.senden([3, "Auch Hallo"])
+        # # SSL Handshake
+        # self.conn = ssl_kontext.wrap_socket(self.conn, server_side=True,)
 
-        print("DBconn erstellt")
         self.DBCONN = sqlite3.connect('serverdb.db')
         self.CURSOR = self.DBCONN.cursor()
 
@@ -188,8 +189,8 @@ class Session(threading.Thread):
         sprache: str = nachricht[3]
         gesplitteter_prompt = prompt.split()
 
-        # Ausgeführte Befehle für Debug Printen
-        self.DBCONN.set_trace_callback(trace_callback)
+        # # Ausgeführte Befehle für Debug Printen
+        # self.DBCONN.set_trace_callback(trace_callback)
 
         # Suchquery erstellen
         # Die 'LIKE's suchen alle sets heraus, welche eines der Wörter des Suchprompts im Namen haben

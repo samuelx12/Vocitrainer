@@ -140,7 +140,6 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         :param seite: Auf welcher Seite
         :return:
         """
-        print("Schwierigkeitsfunktion")
 
         if seite == "f":
             schwierigkeits_label = self.f_lbl_schwierigkeit
@@ -152,7 +151,6 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         # Wenn Einstellung nicht aktiv ist:
         if not self.schwierigkeit_zeigen:
             schwierigkeits_label.setVisible(False)
-            print("Keine Schwierigkeit")
             return
 
         # Verbleibende Abfragen berechnen
@@ -354,6 +352,8 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             msg.setText(
                 "Willst du das Training beenden?"
             )
+            msg.button(QMessageBox.Yes).setText("Ja")
+            msg.button(QMessageBox.No).setText("Nein")
             antwort = msg.exec_()
 
             if antwort == QMessageBox.Yes:
