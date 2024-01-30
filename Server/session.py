@@ -8,9 +8,10 @@ import threading
 import ssl
 import pickle
 import time
-from typing import List, Iterable
+from typing import List
 from datetime import datetime
 import sqlite3
+from rich import print as rprint
 
 
 class Session(threading.Thread):
@@ -160,8 +161,7 @@ class Session(threading.Thread):
 
             else:
                 antwort = ["FEHLER"]
-                print("ERROR mit kid:")
-                print(kid)
+                rprint(f"[yellow]Ungültige Request vom Client empfangen.")
 
             if self.verbunden:
                 self.senden(antwort)
@@ -225,7 +225,6 @@ class Session(threading.Thread):
         i = 0
         for ergebnis in ergebnisse:
             if ergebnis[6] == 1:
-                print(ergebnis)
                 ergebnisse.pop(i)
             else:
                 i += 1
@@ -274,16 +273,14 @@ class Session(threading.Thread):
         email = nachricht[1]
         passwort = str(nachricht[2])
 
-        print("E-Mail>>", email)
-        print("Login Passwort (hash): ", passwort)
-
         query = """SELECT user_id FROM user WHERE email = ? AND passwort = ?"""
         self.CURSOR.execute(query, (email, passwort))
 
         id = self.CURSOR.fetchone()
-        print("ID: ", id)
+
         if id:
             self.eingeloggter_user_id = id[0]
+            rprint(f"[cyan]Der Benutzer mit der E-Mail '{email}' hat sich eingeloggt.")
             return [5, True]
         else:
             return [5, False]
@@ -301,9 +298,6 @@ class Session(threading.Thread):
         benutzername = nachricht[1]
         email = nachricht[2]
         passwort = str(nachricht[3])
-
-        print("E-Mail>>", email)
-        print("Registriertes Passwort (hash): ", passwort)
 
         # Überprüfen ob der Benutzername bereits existiert
         self.CURSOR.execute('SELECT COUNT(*) FROM user WHERE benutzername = ?', (benutzername,))
@@ -328,6 +322,9 @@ class Session(threading.Thread):
 
         # Änderngen speichern
         self.DBCONN.commit()
+
+        # Info für das Terminal
+        rprint(f"[cyan]Ein neuer Benutzer mit der E-Mail '{email}' hat sich registriert.")
 
         # Erfolg zurückmelden
         return [6, 0]
