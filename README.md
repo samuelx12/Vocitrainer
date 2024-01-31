@@ -1,10 +1,11 @@
+![](https://vocitrainer.admuel.ch/wp-content/uploads/2024/01/Vocitrainer_Logo_Quadrat.svg)
+
 # Vocitrainer
 
 ![Static Badge](https://img.shields.io/badge/vocitrainer-v0.1.0-darkcyan)
 [![Static Badge](https://img.shields.io/badge/webseite-vocitrainer.admuel.ch-darkgreen)](https://vocitrainer.admuel.ch)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/samuelx12/vocitrainer/total)
 ![GitHub Repo stars](https://img.shields.io/github/stars/samuelx12/vocitrainer)
-![GitHub repo size](https://img.shields.io/github/repo-size/samuelx12/vocitrainer)
 ![GitHub License](https://img.shields.io/github/license/samuelx12/vocitrainer)
 ![GitHub issues by-label](https://img.shields.io/github/issues/samuelx12/vocitrainer/bug)
 [![Static Badge](https://img.shields.io/badge/Fehler_melden-yellow)](https://github.com/samuelx12/Vocitrainer/issues/new)
