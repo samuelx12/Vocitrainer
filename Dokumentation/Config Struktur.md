@@ -32,7 +32,16 @@ config.write()
 ***
 ## Struktur
 
-- Profil
+- Allgemein
+  - stil
+  - willkommenMeldung (in den Einstellungen aber momentan nicht verwendet)
+  - neuesSetSprache
+- Lernen
+  - mz (=Millersche Zahl)
+  - ft (=Fehlertoleranz)
+  - definitionLernen
+  - fokusmodus
+- Login
   - email
   - passwort
   - benutzername

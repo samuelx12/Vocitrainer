@@ -11,7 +11,7 @@ from rich import print as rprint
 from session import Session
 
 # Server Version
-VERSION = "v0.1.0"
+VERSION = "v0.1.0-pre"
 
 # Für Debugzwecke: Schönes Traceback installieren
 traceback.install()
