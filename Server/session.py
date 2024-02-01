@@ -172,13 +172,18 @@ class Session(threading.Thread):
         [kid, prompt, anzahl_resultat, sprache]
         """
 
-        def zaehle_treffer(title: str) -> int:
+        def zaehle_treffer(titel: str) -> int:
             """
             Zählt die Anzahl Wörter im Titel, die im Suchbegriff vorkommen.
             :param title: Der Titel in dem gesucht werden soll
             :return: Die Anzahl der Wörter im Titel, die im Suchbegriff vorkommen.
             """
-            anz_treffer = sum(wort.lower() in title.lower() for wort in gesplitteter_prompt)
+            gesplitteter_titel = titel.split()
+            anz_treffer = sum(
+                sum([wort.lower() in titel_teil.lower() for titel_teil in gesplitteter_titel])
+                for wort in gesplitteter_prompt
+            )
+            print("Titel: ", titel, " Prompt: ", gesplitteter_prompt, " Anzahl Treffer: ", anz_treffer)
             return anz_treffer
 
         def trace_callback(statement):
@@ -190,21 +195,23 @@ class Session(threading.Thread):
         gesplitteter_prompt = prompt.split()
 
         # # Ausgeführte Befehle für Debug Printen
-        # self.DBCONN.set_trace_callback(trace_callback)
+        self.DBCONN.set_trace_callback(trace_callback)
 
         # Suchquery erstellen
         # Die 'LIKE's suchen alle sets heraus, welche eines der Wörter des Suchprompts im Namen haben
         query = """
-            SELECT v.set_id, v.set_name, v.beschreibung, v.sprache, v.anz_downloads, u.benutzername, u.gesperrt
-            FROM vociset v
-            JOIN user u ON v.user_id = u.user_id
-            WHERE u.gesperrt=0
-            AND (set_name LIKE '%' || ? || '%'
-            OR beschreibung LIKE '%' || ? || '%'
-            OR u.benutzername LIKE '%' || ? || '%'
-"""
+                    SELECT v.set_id, v.set_name, v.beschreibung, v.sprache, v.anz_downloads, u.benutzername, u.gesperrt
+                    FROM vociset v
+                    JOIN user u ON v.user_id = u.user_id
+                    WHERE u.gesperrt=0
+                    AND (set_name LIKE '%' || ? || '%'
+                    OR beschreibung LIKE '%' || ? || '%'
+                    OR u.benutzername LIKE '%' || ? || '%'
+        """
         for i in range(len(gesplitteter_prompt) - 1):
-            query += " OR set_name LIKE '%'+?+'%' OR beschreibung LIKE '%'+?+'%'"
+            query += """ OR set_name LIKE '%' || ? || '%' 
+            OR beschreibung LIKE '%' || ? || '%' 
+            OR u.benutzername LIKE '%' || ? || '%'"""
 
         query += ")"
 
@@ -218,6 +225,7 @@ class Session(threading.Thread):
             gesplitteter_prompt_doppelt.append(splitter)
             gesplitteter_prompt_doppelt.append(splitter)
 
+        # print("Query: ", query, " Argumente: ", gesplitteter_prompt_doppelt)
         self.CURSOR.execute(query, gesplitteter_prompt_doppelt)
         ergebnisse = self.CURSOR.fetchmany(anzahl_resultate)
 
@@ -231,7 +239,8 @@ class Session(threading.Thread):
 
         # Jetzt werden die Resultate danach geordnet, wie viele Wörter des Suchprompts darin enthalten sind.
         ergebnisse.sort(
-            key=lambda resultat: zaehle_treffer((resultat[1] + resultat[2] + resultat[3] + resultat[5])),
+            key=lambda resultat:
+            zaehle_treffer((resultat[1] + " " + resultat[2] + " " + resultat[3] + " " + resultat[5])),
             reverse=True
         )
 
