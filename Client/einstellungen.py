@@ -5,6 +5,7 @@ Hier kann der Benutzer verschiedene Sachen einstellen.
 """
 
 from PyQt5.QtCore import *
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 from res.ui_einstellungen import Ui_Einstellungen
 from configobj import ConfigObj
@@ -159,6 +160,21 @@ class Einstellungen(QDialog, Ui_Einstellungen):
 
         config.write()
 
+    def msg_verbindungsFehler(self):
+        """
+        Zeigt eine MessageBox an, dass die Verbindung fehlgeschlagen sei.
+        :return: None
+        """
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setWindowIcon(QIcon(':/icons/res/icons/wifi_off_FILL0_wght400_GRAD0_opsz24.svg'))
+        msg.setWindowTitle("Verbindung fehlgeschlagen")
+        msg.setText(
+            "Fehler bei der Verbindung mit dem Server!\n"
+            + "Überprüfen sie ihre Internetverbindung."
+        )
+        msg.exec_()
+
     def cmd_ok_clicked(self):
         """'OK'-Button wurde geklickt."""
         self.einstellungen_speichern()
@@ -213,3 +229,5 @@ class Einstellungen(QDialog, Ui_Einstellungen):
                 self.lbl_passwort.setVisible(self.angemeldet)
                 self.passwort = config['Login']['passwort']
                 self.lbl_passwort.setText("Passwort: *********")
+            else:
+                self.msg_verbindungsFehler()

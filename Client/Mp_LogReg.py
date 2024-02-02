@@ -44,7 +44,11 @@ def log_reg() -> typing.Tuple[bool, typing.Union[Network, None]]:
 
     # Fall 2: Keine Logindaten gespeichert -> LogReg-Fenster für Anmeldung öffnen
     # oder automatische Anmeldung (Fall 1) fehlgeschlagen
-    fenster = MpLogReg()
+    try:
+        fenster = MpLogReg()
+    except:
+        return False, None
+
     fenster.setModal(True)
 
     fenster.exec_()
@@ -124,7 +128,7 @@ class MpLogReg(QDialog, Ui_mpLogReg):
     def __init__(self, *args, **kwargs):
         super(MpLogReg, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        self.setWindowTitle("Login erforderlich")
+        self.setWindowTitle("Anmelden")
         self.lbl_log_fehler.setText("")
         self.lbl_reg_fehler.setText("")
         self.stackedWidget.setCurrentIndex(0)
@@ -160,6 +164,7 @@ class MpLogReg(QDialog, Ui_mpLogReg):
         self.txt_log_email.setText(self.txt_reg_email.text())  # E-Mail übernehmen
         self.lbl_log_fehler_email.setText(self.lbl_reg_fehler_email.text())
         self.lbl_log_fehler.setText("")
+        self.setWindowTitle("Anmelden")
 
         self.txt_log_email_editingFinished()
 
@@ -170,6 +175,7 @@ class MpLogReg(QDialog, Ui_mpLogReg):
         self.txt_reg_email.setText(self.txt_log_email.text())  # E-Mail übernehmen
         self.lbl_reg_fehler_email.setText(self.lbl_log_fehler_email.text())
         self.lbl_reg_fehler.setText("")
+        self.setWindowTitle("Registrieren")
 
         self.stackedWidget.setCurrentIndex(1)
 
