@@ -17,7 +17,12 @@ from rich import print as rprint
 class Session(threading.Thread):
     """
     Damit mehrere Clients gleichzeitig vom Server verarbeitet werden können, werden Clients in Threads behandelt.
-    Dies ist dieser Session Thread.
+    Ausgeführt wird die run()-Methode.
+    Sie besteht aus einer Endlosschleife:
+        1. Auf Nachricht von Client warten
+        2. Kommunikations ID der Nachricht ermitteln (Beschrieben in 'Dokumentation/Netzwerk_Kommunikation.md'
+        3. Je nach Kommunikations ID die ensprechende Funktion aufrufen, welche die Anforderung dann bearbeitet
+        4. Antwort versenden
     """
     def __init__(self, conn, addr):
         super().__init__()

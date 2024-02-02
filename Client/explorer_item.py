@@ -12,7 +12,7 @@ from rich import print as rprint
 
 class ExplorerItem(QTreeWidgetItem):
     """
-    Das Explorer Item ist eine Zeile in der Übersicht der Lernsets, die rechts angezeigt wird.
+    Das Explorer Item ist ein Element in der Übersicht der Lernsets (Explorer), die rechts angezeigt wird.
     """
 
     def __init__(

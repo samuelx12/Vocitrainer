@@ -51,3 +51,6 @@ Achtung: Manchmal wird das Programm vom Windows Defender fälschlicherweise als 
 
 ## Fehler melden
 Fehlermeldungen oder Anregungen für neue Funktionen etc. können [hier](https://github.com/samuelx12/Vocitrainer/issues/new) registriert werden.
+
+## Dokumentation
+Wer sich mit dem Projekt und dessen Programmierung genauer befassen will, empfehle ich zuerst die Datei `Dokumentation/Programm_Struktur.md` zu lesen. Im selben Ordner befinden sich weitere hilfreiche Dokumentationen und Skizzen einzelner Bereiche des Projekts. Zudem ist der Code ausführlich mit Kommentaren versehen.

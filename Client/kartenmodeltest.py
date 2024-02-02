@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+kartenmodeltest.py
+Hier ist ein Test für das Kartenmodel geschrieben.
+"""
+
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QTableView, QVBoxLayout)
 from PyQt5.QtCore import Qt, QAbstractTableModel, QModelIndex

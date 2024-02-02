@@ -2,6 +2,9 @@
 """
 server.py
 Hier ist die Hauptdatei des Servers.
+Zuerst werden einige Einstellungen geladen, mit welchen dann der Server gestartet wird.
+Ab dann läuft eine Endlosschleife, welche kontinuierlich neue Anfragen annimmt und für jede Verbindung einen
+eigenen Thread startet.
 """
 
 import socket

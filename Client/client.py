@@ -2,7 +2,7 @@
 """
 client.py
 Das Hauptfile, aus diesem werden die anderen Dateien eingebunden.
-Der Code erstellt das Hauptfenster und Startet die QT-Eventloop. Von dieser aus läuft das Programm mittels
+Der Code erstellt das Hauptfenster und startet die QT-Eventloop. Von dieser aus läuft das Programm mittels
 Signalen und Slots weiter.
 """
 

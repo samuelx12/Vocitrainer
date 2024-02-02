@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 neuesWort.py
-Hier ist das Fenster in welchem der Benutzer noch Name und Tags anpasst bevor es hochgeladen wird.
+Enthält das Fenster um einem Set neue Wörter hinzuzufügen.
 """
 
 from PyQt5.QtCore import *

@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 network.py
-Hier sind verschiedene Helfer die die Kommunikation mit dem Server betreffen.
+Enthält die Klassen Netzwerk. Siehe deren Doc-String
 """
 
 import pickle
 import socket
-import ssl
-from typing import Iterable
 
 
 class Network:
@@ -23,14 +21,6 @@ class Network:
         self.FORMAT = 'utf-8'
         self.CONN = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.CONN.connect(ADDR)
-
-        # # SSL-Kontext erstellen
-        # ssl_kontext = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIEN)
-        # ssl_kontext.load_verify_locations('server.crt')  # Server-Zertifikat
-        # ssl_kontext.verify_mode = ssl.CERT_NONE
-        #
-        # # SSL-Handshake durchführen
-        # self.CONN = ssl_kontext.wrap_socket(self.CONN)
 
     def sendRecv(self, liste: list):
         """
@@ -150,4 +140,5 @@ class Network:
 if __name__ == "__main__":
     net = Network(("localhost", 4647))
 
+    # Beim direkten ausführen einen Test laufen lassen
     print(net.sendRecv([1, "Hallo"]))

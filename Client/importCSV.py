@@ -20,8 +20,8 @@ class ImportCSV(QDialog, Ui_ImportCSV):
         self.setupUi(self)
         self.hauptfenster = hauptfenster
 
-        self.int_spalteWort.setValue(1)
-        self.int_spalteFremdwort.setValue(2)
+        self.int_spalteWort.setValue(2)
+        self.int_spalteFremdwort.setValue(1)
 
         # Bildschirmgrösse setzen
         bildschirm_geometrie = QDesktopWidget().screenGeometry(QDesktopWidget().primaryScreen())

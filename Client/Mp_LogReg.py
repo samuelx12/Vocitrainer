@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 Mp_LogReg.py
-Dieses Fenster wird immer angezeigt, wenn der Benutzer nicht angemeldet ist und
-ein Konto für seine nächste Aktion braucht.
-Man erstellt dann ein LogReg-Fenster und führt dessen Methode LogReg aus.
 
+LogReg Fenster
+    Dieses Fenster wird immer angezeigt, wenn der Benutzer nicht angemeldet ist und
+    ein Konto für seine nächste Aktion braucht.
+log_reg Funktion
+    Das wichtigste hierdrin ist dabei aber die Funktion log_reg(). Sie vereinfacht das ganze, indem sie selbst
+    nachschaut, ob das LogReg Fenster geöffnet werden muss oder ob der Benutzer bereits angemeldet ist.
 """
 
 from PyQt5.QtCore import *
