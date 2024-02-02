@@ -274,10 +274,15 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             altesAktivesItem.setActive(False)
 
         # Aktiv Setzen vom Set und der Hirarchie darüber
-        while item.parent():
-            item.setActive(True)
-            self.aktiveItems.append(item)
-            item = item.parent()
+        try:
+            while item.parent():
+                item.setActive(True)
+                self.aktiveItems.append(item)
+                item = item.parent()
+        except:
+            # Es kann ein "RuntimeError: wrapped C/C++ object [...] has been deleted" auftreten
+            # Welcher aber nichts zur Sache tut.
+            pass
 
         item.setActive(True)
         self.aktiveItems.append(item)
@@ -324,7 +329,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
             elif typ == "vociset":
                 query = "UPDATE vociset SET urordner_id = ? WHERE set_id = ?"
             else:
-                print("Fehler, DropItem hat kein korrekter Typ")
+                # print("Fehler, DropItem hat kein korrekter Typ")
                 return
 
             cursor.execute(query, (neue_id, id))
@@ -913,7 +918,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         sql = """DELETE FROM karte WHERE karte_id=?"""
 
         for karte_id in karte_ids:
-            print(karte_id)
+            # print(karte_id)
             cursor.execute(sql, (karte_id,))
 
         cursor.close()
