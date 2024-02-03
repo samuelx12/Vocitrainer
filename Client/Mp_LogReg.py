@@ -142,6 +142,7 @@ class MpLogReg(QDialog, Ui_mpLogReg):
         self.cmd_zuReg.clicked.connect(self.cmd_zuReg_clicked)
         self.cmd_log.clicked.connect(self.cmd_log_clicked)
         self.cmd_reg.clicked.connect(self.cmd_reg_clicked)
+        self.cmd_reg2.clicked.connect(self.cmd_reg2_clicked)
         self.txt_reg_email.editingFinished.connect(self.txt_reg_email_editingFinished)
         self.txt_log_email.editingFinished.connect(self.txt_log_email_editingFinished)
 
@@ -209,21 +210,43 @@ class MpLogReg(QDialog, Ui_mpLogReg):
 
             return
 
-        benutzername = self.txt_reg_benutzername.text()
-        email = self.txt_reg_email.text()
-        passwort = hash_passwort(self.txt_reg_passwort.text())
+        self.benutzername = self.txt_reg_benutzername.text()
+        self.email = self.txt_reg_email.text()
+        self.passwort = hash_passwort(self.txt_reg_passwort.text())
 
-        erfolg = self.net.user_registrieren(benutzername, email, passwort)
+        erfolg = self.net.user_registrieren(self.benutzername, self.email, self.passwort)
 
         if erfolg == 1:
             self.lbl_reg_fehler.setText("Benutzername nicht mehr verfügbar!")
         elif erfolg == 2:
             self.lbl_reg_fehler.setText("Diese E-Mail Adresse ist bereits registriert!")
+        elif erfolg == 3:
+            self.lbl_reg_fehler.setText("Fehler beim Versenden des Bestätigungcodes. Versuchen sie es später nochmals!")
+        else:
+            # Registierung erfolgreich angefordert, jetzt muss nur noch der Bestätigungscode gesendet werden.
+            self.stackedWidget.setCurrentIndex(2)
 
-        speichere_logindaten(benutzername, email, passwort)
+    def cmd_reg2_clicked(self):
+        """
+        Button 'Registierung abschliessen' wurde geklickt.
+        """
+        try:
+            code = int(self.txt_reg2_Code.text())
+        except:
+            self.lbl_reg2_Fehler.setText("Ungültiger Code!")
+            return
 
-        self.eingeloggt = True
-        self.close()
+        erfolg = self.net.registierung_abschliessen(code)
+
+        if not erfolg:
+            self.lbl_reg2_Fehler.setText("Falscher Code!")
+            return
+        else:
+            # Registierung korrekt abgeschlossen
+            speichere_logindaten(self.benutzername, self.email, self.passwort)
+
+            self.eingeloggt = True
+            self.close()
 
 
 if __name__ == "__main__":

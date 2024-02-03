@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>602</width>
-    <height>490</height>
+    <width>986</width>
+    <height>829</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -86,13 +86,20 @@
             <layout class="QVBoxLayout" name="verticalLayout">
              <item>
               <widget class="QLabel" name="lbl_log_email">
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
                <property name="text">
                 <string>E-Mail</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="txt_log_email"/>
+              <widget class="QLineEdit" name="txt_log_email">
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -121,6 +128,9 @@
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <item>
               <widget class="QLabel" name="lbl_log_passwort">
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
                <property name="text">
                 <string>Passwort</string>
                </property>
@@ -128,6 +138,9 @@
              </item>
              <item>
               <widget class="QLineEdit" name="txt_log_passwort">
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
                <property name="echoMode">
                 <enum>QLineEdit::Password</enum>
                </property>
@@ -180,11 +193,16 @@
             <widget class="QPushButton" name="cmd_zuReg">
              <property name="font">
               <font>
+               <family>MS Shell Dlg 2</family>
+               <pointsize>10</pointsize>
+               <weight>50</weight>
+               <italic>false</italic>
+               <bold>false</bold>
                <underline>true</underline>
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 255);</string>
+              <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="text">
               <string>Noch kein Konto?</string>
@@ -226,6 +244,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="cmd_log">
+             <property name="styleSheet">
+              <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
              <property name="text">
               <string>Login</string>
              </property>
@@ -350,13 +371,26 @@
             <layout class="QVBoxLayout" name="verticalLayout_7">
              <item>
               <widget class="QLabel" name="lbl_reg_benutzername">
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
                <property name="text">
                 <string>Benutzername (öffentlich sichtbar)</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="txt_reg_benutzername"/>
+              <widget class="QLineEdit" name="txt_reg_benutzername">
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="placeholderText">
+                <string>user1234</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QLabel" name="label_13">
@@ -367,13 +401,26 @@
              </item>
              <item>
               <widget class="QLabel" name="lbl_reg_email">
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
                <property name="text">
                 <string>E-Mail</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="txt_reg_email"/>
+              <widget class="QLineEdit" name="txt_reg_email">
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
+               <property name="placeholderText">
+                <string>email@example.com</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -402,6 +449,9 @@
             <layout class="QVBoxLayout" name="verticalLayout_8">
              <item>
               <widget class="QLabel" name="lbl_reg_passwort">
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
                <property name="text">
                 <string>Passwort</string>
                </property>
@@ -409,11 +459,17 @@
              </item>
              <item>
               <widget class="QLineEdit" name="txt_reg_passwort">
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+               </property>
                <property name="echoMode">
                 <enum>QLineEdit::Password</enum>
                </property>
+               <property name="placeholderText">
+                <string/>
+               </property>
                <property name="clearButtonEnabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -461,11 +517,16 @@
             <widget class="QPushButton" name="cmd_zuLog">
              <property name="font">
               <font>
+               <family>MS Shell Dlg 2</family>
+               <pointsize>10</pointsize>
+               <weight>50</weight>
+               <italic>false</italic>
+               <bold>false</bold>
                <underline>true</underline>
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">color: rgb(0, 0, 255);</string>
+              <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="text">
               <string>Du hast bereits ein Konto?</string>
@@ -507,6 +568,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="cmd_reg">
+             <property name="styleSheet">
+              <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
              <property name="text">
               <string>Registrieren</string>
              </property>
@@ -566,6 +630,221 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>157</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_reg2">
+      <layout class="QHBoxLayout" name="horizontalLayout_10">
+       <item>
+        <spacer name="horizontalSpacer_13">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>306</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_9">
+         <item>
+          <spacer name="verticalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbl_registrieren_2">
+           <property name="font">
+            <font>
+             <pointsize>20</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>E-Mail bestätigen</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="styleSheet">
+            <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Es wurde eine E-Mail mit einem Bestätigungscode an die angegebene Adresse versendent. (Überprüfen Sie allenfalls den Spamordner)</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbl_reg_fehler_2">
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <weight>50</weight>
+             <italic>true</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(170, 0, 0);</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="styleSheet">
+            <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Bestätigungscode:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="txt_reg2_Code">
+           <property name="styleSheet">
+            <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="inputMask">
+            <string/>
+           </property>
+           <property name="maxLength">
+            <number>6</number>
+           </property>
+           <property name="placeholderText">
+            <string>6-stelliger Bestätigungscode</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lbl_reg2_Fehler">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <item>
+            <spacer name="horizontalSpacer_17">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="cmd_reg2">
+             <property name="styleSheet">
+              <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Registierung abschliessen</string>
+             </property>
+             <property name="default">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_18">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_9">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_14">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>306</width>
            <height>20</height>
           </size>
          </property>

@@ -81,7 +81,7 @@ class Network:
 
     def user_registrieren(self, benutzername: str, email: str, passwort: bytes) -> int:
         """
-        Registriert einen neuen Benutzer beim Server
+        Fordert Registierung eines neuen Benutzers auf dem Server an.
         :param benutzername: Ein vom Benutzergewählter, öffentlich sichtbarer Nickname
         :param email: Die E-Mail des zu registrierenden Benutzers (Bereits auf Möglichkeit überprüft)
         :param passwort: Das bereits gehashte Passwort
@@ -89,8 +89,20 @@ class Network:
             0 = Erfolg
             1 = Benutzername bereits gewählt
             2 = E-Mail bereits registriert
+            3 = Fehler beim Versenden der E-Mail mit dem Verifikationscode
         """
         nachricht = [6, benutzername, email, passwort]
+        antwort = self.sendRecv(nachricht)
+
+        return antwort[1]
+
+    def registierung_abschliessen(self, bestaetigungscode: int):
+        """
+        Die Registierung wird erst abgeschlossen, wenn der Server den korrekten Verifikationscode erhält.
+        :param bestaetigungscode: Der Code, den der Benutzer bekommen hat bzw. eingegeben hat.
+        :return: Erfolg bool
+        """
+        nachricht = [7, bestaetigungscode]
         antwort = self.sendRecv(nachricht)
 
         return antwort[1]

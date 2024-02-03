@@ -345,7 +345,7 @@ class Session(threading.Thread):
                "Sie können die E-Mail einfach ignorieren"
         empfaenger = self.reg_email
 
-        email_versendet = email_helper.email_senden(betreff, text, empfaenger)
+        email_versendet = email_helper.email_senden(betreff, text, [empfaenger])
 
         if email_versendet:
             # Erfolg zurückmelden
