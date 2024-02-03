@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Einstellungen(object):
     def setupUi(self, Einstellungen):
         Einstellungen.setObjectName("Einstellungen")
-        Einstellungen.resize(695, 749)
+        Einstellungen.resize(897, 811)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/res/icons/settings_FILL0_wght400_GRAD0_opsz24.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Einstellungen.setWindowIcon(icon)
@@ -210,6 +210,9 @@ class Ui_Einstellungen(object):
         self.cmd_xxMelden = QtWidgets.QPushButton(self.frame_3)
         self.cmd_xxMelden.setObjectName("cmd_xxMelden")
         self.horizontalLayout_5.addWidget(self.cmd_xxMelden)
+        self.cmd_kontoLoeschen = QtWidgets.QPushButton(self.frame_3)
+        self.cmd_kontoLoeschen.setObjectName("cmd_kontoLoeschen")
+        self.horizontalLayout_5.addWidget(self.cmd_kontoLoeschen)
         spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem10)
         self.verticalLayout_3.addLayout(self.horizontalLayout_5)
@@ -289,6 +292,7 @@ class Ui_Einstellungen(object):
         self.label_16.setText(_translate("Einstellungen", "Profil (Marketplace)"))
         self.lbl_profilStatus.setText(_translate("Einstellungen", "Angemeldet / Abgemeldet"))
         self.cmd_xxMelden.setText(_translate("Einstellungen", "Abmelden"))
+        self.cmd_kontoLoeschen.setText(_translate("Einstellungen", "Konto löschen"))
         self.lbl_email.setText(_translate("Einstellungen", "E-Mail"))
         self.lbl_benutzername.setText(_translate("Einstellungen", "Benutzername"))
         self.lbl_passwort.setText(_translate("Einstellungen", "Passwort"))

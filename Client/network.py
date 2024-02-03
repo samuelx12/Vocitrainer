@@ -75,7 +75,10 @@ class Network:
         :return: Erfolg des einloggens (bool)
         """
         nachricht = [5, email, passwort]
-        antwort = self.sendRecv(nachricht)
+        try:
+            antwort = self.sendRecv(nachricht)
+        except:
+            return False
 
         return antwort[1]
 
@@ -144,6 +147,16 @@ class Network:
         :return: bool Erfolg
         """
         nachricht = [10, set_id, aktion]
+
+        antwort = self.sendRecv(nachricht)
+        return antwort[1]
+
+    def konto_loeschen(self):
+        """
+        Fordert den Server auf das Konto des momentan angemeldeten Users zu löschen
+        :return: bool Erfolg
+        """
+        nachricht = [11]
 
         antwort = self.sendRecv(nachricht)
         return antwort[1]

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>695</width>
-    <height>749</height>
+    <width>897</width>
+    <height>811</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -538,6 +538,13 @@ Ist diese Option aktiviert, werden zusätzliche Informationen wie Bemerkung und 
          <widget class="QPushButton" name="cmd_xxMelden">
           <property name="text">
            <string>Abmelden</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="cmd_kontoLoeschen">
+          <property name="text">
+           <string>Konto löschen</string>
           </property>
          </widget>
         </item>

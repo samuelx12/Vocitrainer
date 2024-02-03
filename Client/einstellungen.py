@@ -9,7 +9,8 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 from res.ui_einstellungen import Ui_Einstellungen
 from configobj import ConfigObj
-from Mp_LogReg import log_reg
+from Mp_LogReg import log_reg, msg_verbindungsFehler
+from network import Network
 
 
 class Einstellungen(QDialog, Ui_Einstellungen):
@@ -33,6 +34,7 @@ class Einstellungen(QDialog, Ui_Einstellungen):
         self.cmd_uebernehmen.clicked.connect(self.cmd_uebernehmen_clicked)
         self.cmd_anzeigen.clicked.connect(self.cmd_anzeigen_clicked)
         self.cmd_xxMelden.clicked.connect(self.cmd_xxMelden_clicked)
+        self.cmd_kontoLoeschen.clicked.connect(self.cmd_kontoLoeschen_clicked)
 
     def einstellungen_laden(self):
         """
@@ -71,9 +73,11 @@ class Einstellungen(QDialog, Ui_Einstellungen):
             if self.angemeldet:
                 self.lbl_profilStatus.setText("Angemeldet")
                 self.cmd_xxMelden.setText("Abmelden")
+                self.cmd_kontoLoeschen.setVisible(True)
             else:
                 self.lbl_profilStatus.setText("Abgemeldet")
                 self.cmd_xxMelden.setText("Anmelden")
+                self.cmd_kontoLoeschen.setVisible(False)
 
             self.lbl_email.setVisible(self.angemeldet)
             self.email = config['Login']['email']
@@ -202,6 +206,7 @@ class Einstellungen(QDialog, Ui_Einstellungen):
             self.angemeldet = False
             self.cmd_xxMelden.setText("Anmelden")
             self.lbl_profilStatus.setText("Abgemeldet")
+            self.cmd_kontoLoeschen.setVisible(False)
             self.lbl_email.setVisible(False)
             self.lbl_benutzername.setVisible(False)
             self.lbl_passwort.setVisible(False)
@@ -217,6 +222,7 @@ class Einstellungen(QDialog, Ui_Einstellungen):
                 self.angemeldet = bool(int(config['Login']['eingeloggt']))
                 self.lbl_profilStatus.setText("Angemeldet")
                 self.cmd_xxMelden.setText("Abmelden")
+                self.cmd_kontoLoeschen.setVisible(True)
 
                 self.lbl_email.setVisible(self.angemeldet)
                 self.email = config['Login']['email']
@@ -231,3 +237,68 @@ class Einstellungen(QDialog, Ui_Einstellungen):
                 self.lbl_passwort.setText("Passwort: *********")
             elif erfolg is False:
                 self.msg_verbindungsFehler()
+
+    def cmd_kontoLoeschen_clicked(self):
+        """'Konto löschen'-Button geklickt."""
+
+        # Warnung anzeigen, dass das Löschen entgültig ist
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Warning)
+        msg.setWindowIcon(QIcon(':/icons/res/icons/delete_forever_FILL0_wght400_GRAD0_opsz24.svg'))
+        msg.setWindowTitle("Endgültige Löschung des Kontos")
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg.setDefaultButton(QMessageBox.No)
+        msg.setText(
+            "Achtung! Die Löschung des Kontos ist endgültig!\nAlle von Ihnen hochgeladenen Sets werden gelöscht!\n\n"
+            "Wollen Sie Ihr Konto wirklich löschen?"
+        )
+        antwort = msg.exec_()
+
+        if antwort == QMessageBox.No:
+            # Abbruch
+            return
+
+        erfolg, net = log_reg()
+
+        if not erfolg:
+            msg_verbindungsFehler()
+            return
+
+        erfolg = net.konto_loeschen()
+
+        if not erfolg:
+            # Fehlermeldung anzeigen
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/error_FILL0_wght400_GRAD0_opsz24.svg'))
+            msg.setWindowTitle("Unerwarteter beim Löschen")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.setText(
+                "Es ist ein unerwarteter Fehler beim Löschen des Kontos aufgetreten."
+            )
+            antwort = msg.exec_()
+        else:
+            # Erfolgsmeldung anzeigen
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg'))
+            msg.setWindowTitle("Konto gelöscht")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.setText(
+                "Ihr Konto wurde gelöscht und die Einstellungen gespeichert."
+            )
+            antwort = msg.exec_()
+
+            # Abmelden
+            self.email = ""
+            self.benutzername = ""
+            self.passwort = ""
+            self.angemeldet = False
+            self.cmd_xxMelden.setText("Anmelden")
+            self.lbl_profilStatus.setText("Abgemeldet")
+            self.cmd_kontoLoeschen.setVisible(False)
+            self.lbl_email.setVisible(False)
+            self.lbl_benutzername.setVisible(False)
+            self.lbl_passwort.setVisible(False)
+
+            self.einstellungen_speichern()

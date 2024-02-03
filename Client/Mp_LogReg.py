@@ -11,6 +11,7 @@ log_reg Funktion
 """
 
 from PyQt5.QtCore import *
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
 from res.ui_mp_logreg import Ui_mpLogReg
 from network import Network
@@ -123,6 +124,21 @@ def lade_logindaten():
 
     return benutzername, email, passwort
 
+
+def msg_verbindungsFehler():
+    """
+    Zeigt eine MessageBox an, dass die Verbindung fehlgeschlagen sei.
+    :return: None
+    """
+    msg = QMessageBox()
+    msg.setIcon(QMessageBox.Critical)
+    msg.setWindowIcon(QIcon(':/icons/res/icons/wifi_off_FILL0_wght400_GRAD0_opsz24.svg'))
+    msg.setWindowTitle("Verbindung fehlgeschlagen")
+    msg.setText(
+        "Fehler bei der Verbindung mit dem Server!\n"
+        + "Überprüfen sie ihre Internetverbindung."
+    )
+    msg.exec_()
 
 class MpLogReg(QDialog, Ui_mpLogReg):
     """

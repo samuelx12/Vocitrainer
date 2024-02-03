@@ -110,8 +110,8 @@ class Session(threading.Thread):
 
             if kid == 1:
                 # Verbindung wird beendet
-                print("Verbindung wurde geschlossen")
-                pass
+                rprint("[cyan]Eine Verbindung wurde geschlossen.")
+
             elif kid == 2:
                 # Authentifizierung
                 pass
@@ -173,6 +173,13 @@ class Session(threading.Thread):
 
                 antwort = self.beantworte_kid10(nachricht)
 
+            elif kid == 11:
+                """
+                Kontolöschung wird angefordert
+                """
+
+                antwort = self.beantworte_kid11(nachricht)
+
             else:
                 antwort = ["FEHLER"]
                 rprint(f"[yellow]Ungültige Request vom Client empfangen.")
@@ -189,7 +196,7 @@ class Session(threading.Thread):
         def zaehle_treffer(titel: str) -> int:
             """
             Zählt die Anzahl Wörter im Titel, die im Suchbegriff vorkommen.
-            :param title: Der Titel in dem gesucht werden soll
+            :param titel: Der Titel in dem gesucht werden soll
             :return: Die Anzahl der Wörter im Titel, die im Suchbegriff vorkommen.
             """
             gesplitteter_titel = titel.split()
@@ -429,7 +436,7 @@ class Session(threading.Thread):
 
             return [8, True]
 
-        except Exception as e:
+        except:
             # Fehlermeldung zurückschicken
             return [8, False]
 
@@ -451,7 +458,7 @@ class Session(threading.Thread):
     def beantworte_kid10(self, nachricht: list) -> list:
         """
         Der Client fordert die Ausführung einer Aktion (löschen) angewendet auf das Set set_id auf dem Server.
-        :param nachricht: nachricht: [10, set_id, löschen]
+        :param nachricht: [10, set_id, löschen]
         :return: Erfolg True/False
         """
 
@@ -466,6 +473,9 @@ class Session(threading.Thread):
             # Query zum löschen
             # "AND user_id ..." bewirkt, dass der Eintrag nur gelöscht wird, wenn das Set dem eingeloggten User gehört,
             # was eigentlich immer der Fall ist, aber theoretisch könnte man das manipulieren.
+
+            self.CURSOR.execute("PRAGMA foreign_keys = ON")
+
             query = """
             DELETE FROM vociset WHERE set_id = ? AND user_id = ?
             """
@@ -477,3 +487,27 @@ class Session(threading.Thread):
             return [10, True]
 
         return [10, False]
+
+    def beantworte_kid11(self, nachricht: list) -> list:
+        """
+        Der Benutzer will sein Konto löschen
+        :param nachricht: [11]
+        :return: bool Erfolg
+        """
+        if self.eingeloggter_user_id is None:
+            # Niemand ist eingeloggt
+            return [11, False]
+
+        rprint(f"[cyan]Benutzer mit der ID {self.eingeloggter_user_id} löscht sein Konto.")
+
+        self.CURSOR.execute("PRAGMA foreign_keys = ON")
+
+        query = """
+        DELETE FROM user WHERE user_id = ?
+        """
+
+        self.CURSOR.execute(query, (self.eingeloggter_user_id,))
+
+        self.DBCONN.commit()
+
+        return [11, True]

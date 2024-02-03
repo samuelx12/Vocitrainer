@@ -34,7 +34,7 @@ cursor.execute('''
         sprache TEXT,
         user_id INTEGER,
         anz_downloads INTEGER,
-        FOREIGN KEY (user_id) REFERENCES user (user_id)
+        FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE
     )
 ''')
 

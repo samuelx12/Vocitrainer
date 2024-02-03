@@ -64,4 +64,9 @@ Ich versende in meiner Anwendung immer Python Listen in welcher das erste Elemen
 - 10-Antwort:
   - KID
   - Erfolg (True/False)
+- 11: Konto löschen:
+  - KID
+- 11-Antwort: Konto löschen
+  - KID
+  - Erfolg (bool)
 
