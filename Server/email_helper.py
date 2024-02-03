@@ -14,8 +14,6 @@ def email_senden(betreff: str, body: str, empfaenger: list) -> bool:
     :return bool Erfolg
     """
 
-    absender = SMTP_USERNAME
-
     msg = MIMEText(body)
     msg['Subject'] = betreff
     msg['From'] = "vocitrainer@barmet.ch"
@@ -24,7 +22,7 @@ def email_senden(betreff: str, body: str, empfaenger: list) -> bool:
     try:
         with smtplib.SMTP_SSL(SMTP_URL, SMTP_PORT) as verbindung:
             verbindung.login(SMTP_USERNAME, SMTP_PASSWORT)
-            verbindung.sendmail(absender, empfaenger, msg.as_string())
+            verbindung.sendmail(ABSENDER, empfaenger, msg.as_string())
         return True
     except:
         # Beim Senden ist ein Fehler aufgetreten

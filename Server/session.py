@@ -12,6 +12,8 @@ from typing import List
 from datetime import datetime
 import sqlite3
 from rich import print as rprint
+import email_helper
+import random
 
 
 class Session(threading.Thread):
@@ -24,6 +26,7 @@ class Session(threading.Thread):
         3. Je nach Kommunikations ID die ensprechende Funktion aufrufen, welche die Anforderung dann bearbeitet
         4. Antwort versenden
     """
+
     def __init__(self, conn, addr):
         super().__init__()
         self.conn = conn
@@ -33,6 +36,12 @@ class Session(threading.Thread):
         self.HEADER = 128
         self.FORMAT = 'utf-8'
         self.SALT = b'\xcd\xae\xd1C\xc0#a\x8ch\x83\x95\xc5%l\xc7\x14'
+
+        # Variabeln für Registrierungsinformationen falls sich der Benutzer registrieren möchte
+        self.reg_code: int = -1
+        self.reg_email = ""
+        self.reg_benutzername = ""
+        self.reg_passwort = ""
 
         self.eingeloggter_user_id = None
         self.verbunden = True
@@ -309,26 +318,62 @@ class Session(threading.Thread):
             1 = Benutzername bereits gewählt
             2 = E-Mail bereits registriert
         """
-        benutzername = nachricht[1]
-        email = nachricht[2]
-        passwort = str(nachricht[3])
+        self.reg_benutzername = nachricht[1]
+        self.reg_email = nachricht[2]
+        self.reg_passwort = str(nachricht[3])
 
         # Überprüfen ob der Benutzername bereits existiert
-        self.CURSOR.execute('SELECT COUNT(*) FROM user WHERE benutzername = ?', (benutzername,))
+        self.CURSOR.execute('SELECT COUNT(*) FROM user WHERE benutzername = ?', (self.reg_benutzername,))
         resultat = self.CURSOR.fetchone()
         if resultat[0] > 0:
             return [6, 1]
 
         # Überprüfen ob die E-Mail schon registriert ist
-        self.CURSOR.execute('SELECT COUNT(*) FROM user WHERE email = ?', (email,))
+        self.CURSOR.execute('SELECT COUNT(*) FROM user WHERE email = ?', (self.reg_email,))
         resultat = self.CURSOR.fetchone()
         if resultat[0] > 0:
             return [6, 2]
 
+        # Verifikationscode genierieren
+        self.reg_code = random.randint(100000, 999999)
+
+        betreff = "Bestätigungscode für Registierung des Vocitrainer-Accounts"
+        text = "Danke für ihre Registrierung bei Vocitrainer.\n" + \
+               "Das ist dein Bestätigungscode:\n" + \
+               str(self.reg_code) + "\n\n" + \
+               "Falls keine Regisrierung angefordert haben und nicht wissen warum sie diese E-Mail erhalten. " + \
+               "Sie können die E-Mail einfach ignorieren"
+        empfaenger = self.reg_email
+
+        email_versendet = email_helper.email_senden(betreff, text, empfaenger)
+
+        if email_versendet:
+            # Erfolg zurückmelden
+            return [6, 0]
+        else:
+            # Fehler beim Versenden der E-Mail
+            return [6, 3]
+
+    def beantworte_kid7(self, nachricht: list) -> list:
+        """
+        E-Mail Überprüfung
+        Der Client will die Registrierung abschliessen indem er den Code seiner E-Mail bestätigt.
+        :param nachricht: [kid, code]
+        :return: [kid, bool: erfolg]
+        """
+        code = nachricht[1]
+        if self.reg_code == -1:
+            # Keine Registierung angefordert.
+            return [7, False]
+
+        if code != self.reg_code:
+            # Bestätigungscode falsch
+            return [7, False]
+
         # Benutzer registrieren
         self.CURSOR.execute(
             f"INSERT INTO user (email, passwort, benutzername, gesperrt, erstellung) VALUES (?, ?, ?, 0, ?)",
-            [email, passwort, benutzername, datetime.now()]
+            [self.reg_email, self.reg_passwort, self.reg_benutzername, datetime.now()]
         )
 
         # Benutzer einloggen
@@ -338,21 +383,9 @@ class Session(threading.Thread):
         self.DBCONN.commit()
 
         # Info für das Terminal
-        rprint(f"[cyan]Ein neuer Benutzer mit der E-Mail '{email}' hat sich registriert.")
+        rprint(f"[cyan]Ein neuer Benutzer mit der E-Mail '{self.reg_email}' hat sich registriert.")
 
-        # Erfolg zurückmelden
-        return [6, 0]
-
-    def beantworte_kid7(self, nachricht: list) -> list:
-        """
-        E-Mail Überprüfung
-        :param nachricht: [kid, code]
-        :return: [kid, bool: erfolg]
-
-        Das hier wäre eine Mögliche Erweiterung um dem ganzen eine Überprüfung von Emails hinzuzufügen.
-        Allerdings wäre das viel Arbeit mit wenig Wirkung und steht nicht im Fokus meiner Arbeit.
-        """
-        pass
+        return [7, True]
 
     def beantworte_kid8(self, nachricht: list) -> list:
         """
@@ -426,7 +459,6 @@ class Session(threading.Thread):
         aktion = nachricht[2]
 
         if aktion == 0:
-
             # print("LÖSCH AUFTRAG GEGEBEN")
             # print(f"set_id: {set_id}")
             # print(f"self.eingeloggeter_user_id: {self.eingeloggter_user_id}")

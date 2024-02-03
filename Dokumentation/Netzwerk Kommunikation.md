@@ -34,9 +34,10 @@ Ich versende in meiner Anwendung immer Python Listen in welcher das erste Elemen
     - 0 = Erfolg
     - 1 = Benutzername bereits gewählt
     - 2 = E-Mail bereits registriert
+    - 3 = Bestätigungsemail konnte nicht versendet werden
 - 7: E-Mail-Überprüfung
   - KID
-  - Code
+  - Erfolg
 - 7-Antwort: E-Mail-Überprüfung
   - KID
   - Erfolg (True/False)
