@@ -229,5 +229,5 @@ class Einstellungen(QDialog, Ui_Einstellungen):
                 self.lbl_passwort.setVisible(self.angemeldet)
                 self.passwort = config['Login']['passwort']
                 self.lbl_passwort.setText("Passwort: *********")
-            else:
+            elif erfolg is False:
                 self.msg_verbindungsFehler()

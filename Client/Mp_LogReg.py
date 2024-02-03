@@ -20,12 +20,12 @@ import hashlib
 import typing
 
 
-def log_reg() -> typing.Tuple[bool, typing.Union[Network, None]]:
+def log_reg() -> typing.Tuple[typing.Union[bool, None], typing.Union[Network, None]]:
     """
     Versucht den Benutzer einzuloggen. Wenn möglich geschieht es mit seinen bereits gespeicherten Nutzerdaten
     in den Einstellungen, ansonsten wird ein Login/Registrierung (LogReg) Fenster aufgemacht
     :return: Ein Tuple aus
-        bool Erfolg
+        bool Erfolg, None wenn Abbruch
         Eingeloggten Network bzw. None bei Misserfolg
     """
     logindaten = lade_logindaten()
@@ -59,7 +59,7 @@ def log_reg() -> typing.Tuple[bool, typing.Union[Network, None]]:
     if fenster.eingeloggt:
         return True, fenster.net
     else:
-        return False, None
+        return None, None
 
 
 def hash_passwort(passwort):

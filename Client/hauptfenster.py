@@ -1026,8 +1026,11 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
         erfolg, net = log_reg()
 
-        if not erfolg:
+        if erfolg is False:
             self.msg_verbindungsFehler()
+            return
+
+        if erfolg is None:
             return
 
         offenes_set = self.kartenModel.geladenesSet
@@ -1039,8 +1042,11 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         """Das Fenster um hochgeladene Sets zu verwalten öffnen"""
         erfolg, net = log_reg()
 
-        if not erfolg:
+        if erfolg is False:
             self.msg_verbindungsFehler()
+            return
+
+        if erfolg is None:
             return
 
         self.mp_hochgeladeneVerwalten = MpHochgeladeneVerwalten(net)

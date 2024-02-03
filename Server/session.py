@@ -341,8 +341,8 @@ class Session(threading.Thread):
         text = "Danke für ihre Registrierung bei Vocitrainer.\n" + \
                "Das ist dein Bestätigungscode:\n" + \
                str(self.reg_code) + "\n\n" + \
-               "Falls keine Regisrierung angefordert haben und nicht wissen warum sie diese E-Mail erhalten. " + \
-               "Sie können die E-Mail einfach ignorieren"
+               "Falls keine Regisrierung angefordert haben und nicht wissen, warum sie diese E-Mail erhalten, " + \
+               "können sie die E-Mail einfach ignorieren."
         empfaenger = self.reg_email
 
         email_versendet = email_helper.email_senden(betreff, text, [empfaenger])
