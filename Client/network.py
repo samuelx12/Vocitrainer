@@ -15,7 +15,7 @@ class Network:
     Die wichtigste Funktion ist sendRecv. Die anderen stellen vorallem eine Zwischenstufe dar, damit man sich nicht
     mitten im Programm mit KIDs und der Ordnung der Argumente beschäftigen muss.
     """
-    def __init__(self, ADDR=("localhost", 4647)):
+    def __init__(self, ADDR=("admuel.ddns.net", 4647)):
         self.ADDR = ADDR
         self.HEADER = 128
         self.FORMAT = 'utf-8'

@@ -12,6 +12,7 @@ import ssl
 from rich import traceback
 from rich import print as rprint
 from session import Session
+import server_konfiguration
 
 # Server Version
 VERSION = "v0.1.0-pre"
@@ -19,8 +20,8 @@ VERSION = "v0.1.0-pre"
 # Für Debugzwecke: Schönes Traceback installieren
 traceback.install()
 
-PORT = 4647
-SERVER = "localhost"
+PORT = server_konfiguration.PORT
+SERVER = server_konfiguration.ADDRESS
 ADDR = (SERVER, PORT)
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

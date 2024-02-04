@@ -12,7 +12,6 @@ from PyQt5.QtWidgets import *
 from res.ui_einstellungen import Ui_Einstellungen
 from configobj import ConfigObj
 from Mp_LogReg import log_reg, msg_verbindungsFehler
-from network import Network
 
 
 class Einstellungen(QDialog, Ui_Einstellungen):
