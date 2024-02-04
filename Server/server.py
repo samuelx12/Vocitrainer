@@ -15,7 +15,7 @@ from session import Session
 import server_konfiguration
 
 # Server Version
-VERSION = "v0.1.0-pre"
+VERSION = "v0.2.0"
 
 # Für Debugzwecke: Schönes Traceback installieren
 traceback.install()
