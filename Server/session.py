@@ -216,7 +216,7 @@ class Session(threading.Thread):
         gesplitteter_prompt = prompt.split()
 
         # # Ausgeführte Befehle für Debug Printen
-        self.DBCONN.set_trace_callback(trace_callback)
+        # self.DBCONN.set_trace_callback(trace_callback)
 
         # Suchquery erstellen
         # Die 'LIKE's suchen alle sets heraus, welche eines der Wörter des Suchprompts im Namen haben
