@@ -3,6 +3,8 @@
 einstellungen.py
 Hier kann der Benutzer verschiedene Sachen einstellen.
 """
+import os
+import shutil
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QIcon
@@ -32,6 +34,7 @@ class Einstellungen(QDialog, Ui_Einstellungen):
         self.cmd_ok.clicked.connect(self.cmd_ok_clicked)
         self.cmd_abbrechen.clicked.connect(self.cmd_abbrechen_clicked)
         self.cmd_uebernehmen.clicked.connect(self.cmd_uebernehmen_clicked)
+        self.cmd_DatenbankExportieren.clicked.connect(self.cmd_DatenbankExportieren_clicked)
         self.cmd_anzeigen.clicked.connect(self.cmd_anzeigen_clicked)
         self.cmd_xxMelden.clicked.connect(self.cmd_xxMelden_clicked)
         self.cmd_kontoLoeschen.clicked.connect(self.cmd_kontoLoeschen_clicked)
@@ -302,3 +305,75 @@ class Einstellungen(QDialog, Ui_Einstellungen):
             self.lbl_passwort.setVisible(False)
 
             self.einstellungen_speichern()
+
+    def cmd_DatenbankExportieren_clicked(self):
+        """
+        Der Benutzer möchte die vocitrainer.db exportieren.
+        """
+
+        # Gewünschter Speicherort in Erfahrung bringen.
+        file_dialog = QFileDialog(parent=self)
+        file_dialog.setAcceptMode(QFileDialog.AcceptSave)  # Einstellen auf Speichermodus
+
+        # Setzen Sie den vorgeschlagenen Dateinamen und den Filter für die Dateierweiterung
+        file_dialog.setDefaultSuffix('vocidb')
+        file_dialog.setNameFilter("Datenbank (*.db);;Alle Dateien (*.*)")
+
+        # Anpassen des Dialogtitels
+        file_dialog.setWindowTitle("Exportieren")
+        file_dialog.setLabelText(QFileDialog.Accept, "Exportieren")
+
+        # Dialog anzeigen und das Ergebnis überprüfen
+        result = file_dialog.exec_()
+        if result == QFileDialog.Accepted:
+            ziel = file_dialog.selectedFiles()[0]
+            print("Zielpfade:", ziel)
+        else:
+            return
+
+        ursprung = os.path.join(os.getcwd(), "vocitrainerdb.db")
+
+        try:
+            shutil.copy(ursprung, ziel)
+
+            # Erfolgsmeldung
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/info_FILL0_wght400_GRAD0_opsz24.svg'))
+            msg.setWindowTitle("Erfolg")
+            msg.setText(
+                "Die Datenbank wurde erfolgreich exportiert!"
+            )
+            msg.exec_()
+        except FileNotFoundError:
+            # Fehlermeldung
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/error_FILL0_wght400_GRAD0_opsz24.svg'))
+            msg.setWindowTitle("Fehler")
+            msg.setText(
+                "Die Datenbank wurde nicht gefunden und konnte deshalb nicht exportiert werden\n" +
+                "Möglicherweise ist ihre Installation beschädigt!"
+            )
+            msg.exec_()
+        except PermissionError:
+            # Fehlermeldung
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/error_FILL0_wght400_GRAD0_opsz24.svg'))
+            msg.setWindowTitle("Zugriff verweigert")
+            msg.setText(
+                "Der Zugriff auf den Zielordner wurde verweigert. "
+                "Stellen sie sicher, dass sie die nötigen Berechtigungen haben."
+            )
+            msg.exec_()
+        except Exception as e:
+            # Fehlermeldung
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setWindowIcon(QIcon(':/icons/res/icons/error_FILL0_wght400_GRAD0_opsz24.svg'))
+            msg.setWindowTitle("Unerwarteter Fehler")
+            msg.setText(
+                "Ein unerwarteter Fehler ist aufgetreten:\n" + str(e)
+            )
+            msg.exec_()
