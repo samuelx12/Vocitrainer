@@ -1,0 +1,1 @@
+pyinstaller Vocitrainer.spec -y
