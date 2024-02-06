@@ -36,12 +36,13 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
     Datei ohne Gefahr neu überschrieben werden kann.
     """
 
-    def __init__(self, versionen: dict, *args, **kwargs):
+    def __init__(self, versionen: dict, q_app: QApplication, *args, **kwargs):
         super(Hauptfenster, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Vocitrainer")
         # self.setWindowIcon(QIcon("res/icons/note_stack_FILL0_wght500_GRAD0_opsz40.svg"))
         self.versionen = versionen
+        self.q_app = q_app
 
         self.set_angezeigt = False
         self.liste_sichtbar(False)
@@ -481,7 +482,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
     def einstellungen_oeffnen(self):
         """Diese Funktion öffneet die Einstellungen."""
-        einstellungen = Einstellungen()
+        einstellungen = Einstellungen(self.q_app)
         einstellungen.setModal(True)
         einstellungen.exec_()
 

@@ -76,7 +76,7 @@
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Stil (Neustart erforderlich):</string>
+           <string>Stil:</string>
           </property>
          </widget>
         </item>
@@ -90,6 +90,11 @@
           <item>
            <property name="text">
             <string>Windows</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Nostalgisch</string>
            </property>
           </item>
          </widget>

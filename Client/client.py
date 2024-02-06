@@ -7,7 +7,7 @@ Signalen und Slots weiter.
 """
 
 from rich import traceback
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QStyleFactory
 import sys
 from hauptfenster import Hauptfenster
 import exception
@@ -31,10 +31,15 @@ except:
     stil = "Vocitrainer"
 
 app = QApplication(sys.argv)
+
 if stil == "Vocitrainer":
     app.setStyle("fusion")
+elif stil == "Windows":
+    app.setStyle("WindowsVista")
+elif stil == "Nostalgisch":
+    app.setStyle("Windows")
 
-window = Hauptfenster(versionen)
+window = Hauptfenster(versionen, app)
 window.show()
 
 # Start der Event loop

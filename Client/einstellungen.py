@@ -18,13 +18,15 @@ class Einstellungen(QDialog, Ui_Einstellungen):
     """
     Einstellungen
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, q_app: QApplication, *args, **kwargs):
         super(Einstellungen, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setModal(True)
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)  # Hilfebutton ausblenden
         self.angemeldet = False
         self.frame_willkommenEinstellungen.setVisible(False)
+
+        self.q_app = q_app
 
         # Einstellungen laden
         self.einstellungen_laden()
@@ -133,6 +135,14 @@ class Einstellungen(QDialog, Ui_Einstellungen):
             'willkommenMeldung': int(self.box_willkommenMeldung.isChecked()),
             'neuesSetSprache': self.cmb_sprache.currentText()
         }
+
+        # Stil setzen
+        if self.cmb_stil.currentText() == "Vocitrainer":
+            self.q_app.setStyle("fusion")
+        elif self.cmb_stil.currentText() == "Windows":
+            self.q_app.setStyle("WindowsVista")
+        elif self.cmb_stil.currentText() == "Nostalgisch":
+            self.q_app.setStyle("Windows")
 
         # Sektion Lernen
         mz_ui = self.cmb_mz.currentText()
