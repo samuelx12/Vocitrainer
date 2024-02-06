@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="icons">
+    <file>res/icons/close_FILL1_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/open_in_browser_FILL1_wght400_GRAD0_opsz24.svg</file>
+    <file>res/icons/license_FILL0_wght400_GRAD0_opsz40.svg</file>
     <file>res/icons/Vocitrainer1.png</file>
     <file>res/icons/Vocitrainer_Logo.png</file>
     <file>res/icons/Vocitrainer_Icon.svg</file>

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>447</width>
+    <width>465</width>
     <height>424</height>
    </rect>
   </property>
@@ -58,7 +58,7 @@
        <item>
         <widget class="QLabel" name="lbl_vocitrainer">
          <property name="styleSheet">
-          <string notr="true">font: 75 14pt &quot;MS Shell Dlg 2&quot;;</string>
+          <string notr="true">font: 75 16pt &quot;MS Shell Dlg 2&quot;;</string>
          </property>
          <property name="text">
           <string>Vocitrainer</string>
@@ -67,6 +67,9 @@
        </item>
        <item>
         <widget class="QLabel" name="lbl_text">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+         </property>
          <property name="text">
           <string>Vocitrainer ist ein Projekt von Samuel Barmet, umgesetzt im Rahmen der Maturaarbeit.</string>
          </property>
@@ -77,8 +80,11 @@
        </item>
        <item>
         <widget class="QLabel" name="lbl_version_vocitrainer">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+         </property>
          <property name="text">
-          <string>Vocitrainer: 1.0</string>
+          <string>Vocitrainer: &lt;version&gt;</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -90,24 +96,60 @@
        </item>
        <item>
         <widget class="QLabel" name="lbl_version_qt">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+         </property>
          <property name="text">
-          <string>Qt: </string>
+          <string>Qt: &lt;version&gt;</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="lbl_version_pyqt">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+         </property>
          <property name="text">
-          <string>PyQt:</string>
+          <string>PyQt: &lt;version&gt;</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+         </property>
          <property name="text">
           <string>Icons von Google Fonts.</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="styleSheet">
+            <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Updates und mehr Informationen auf der Webseite</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
        <item>
         <spacer name="verticalSpacer_2">
@@ -158,9 +200,38 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="cmd_Lizenz">
+       <property name="text">
+        <string>Lizenzinformationen</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/res/icons/license_FILL0_wght400_GRAD0_opsz40.svg</normaloff>:/icons/res/icons/license_FILL0_wght400_GRAD0_opsz40.svg</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cmd_ZurWebseite">
+       <property name="text">
+        <string>Webseite</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/res/icons/open_in_browser_FILL1_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/open_in_browser_FILL1_wght400_GRAD0_opsz24.svg</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="cmd_Schliessen">
        <property name="text">
         <string>Schliessen</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../ressources.qrc">
+         <normaloff>:/icons/res/icons/close_FILL1_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/close_FILL1_wght400_GRAD0_opsz24.svg</iconset>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
