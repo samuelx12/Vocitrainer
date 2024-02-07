@@ -73,7 +73,7 @@
  [],
  False,
  False,
- 1707253006,
+ 1707324791,
  [('runw.exe',
    'C:\\Users\\Samuel\\PycharmProjects\\Vocitrainer\\venv\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',
    'EXECUTABLE')],

@@ -15,7 +15,7 @@ class Network:
     Die wichtigste Funktion ist sendRecv. Die anderen stellen vorallem eine Zwischenstufe dar, damit man sich nicht
     mitten im Programm mit KIDs und der Ordnung der Argumente beschäftigen muss.
     """
-    def __init__(self, ADDR=("vocitrainer.admuel.ch", 4647)):
+    def __init__(self, ADDR=("localhost", 4647)):
         self.ADDR = ADDR
         self.HEADER = 128
         self.FORMAT = 'utf-8'
@@ -54,19 +54,25 @@ class Network:
             self.CONN.send(chunk)
 
         alle_chunks = []
-
+        DEBUG_COUNTER = 0
         # Empfangen wie viele Chunks kommen
         anz_chunks = int(self.CONN.recv(self.HEADER))
+        DEBUG_COUNTER += 1
+        print("DC: ", DEBUG_COUNTER, " Anzahl zu empfangende Chunks: ", anz_chunks)
 
         for i in range(anz_chunks):
             response_length = self.CONN.recv(self.HEADER).decode(self.FORMAT)
-            print("Response_Length: ", response_length)
+            DEBUG_COUNTER += 1
+            print("DC: ", DEBUG_COUNTER, "Response_Length: ", response_length)
             response = self.CONN.recv(int(response_length))
 
             # Zweiter Teil den Chunks hinzufügen
             alle_chunks.append(response)
 
-        ganze_antwort = pickle.loads(b''.join(alle_chunks))
+        ganze_antwort = b''.join(alle_chunks)
+        print("\n\n\n=======================================================")
+        print(ganze_antwort)
+        ganze_antwort = pickle.loads(ganze_antwort)
         return ganze_antwort
 
     def vociset_suche(self, prompt: str, anzahl_resultate: int, sprache: str = "Alle") -> list:

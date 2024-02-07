@@ -175,7 +175,7 @@ class MpHerunterladen(QDialog, Ui_mpHerunterladen):
         try:
             vociset_datensatz, karten_datensaetze = self.net.vociset_herunterladen(set_id)
         except Exception as e:
-            # raise e
+            raise e
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
             msg.setWindowIcon(QIcon(':/icons/res/icons/wifi_off_FILL0_wght400_GRAD0_opsz24.svg'))

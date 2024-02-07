@@ -99,17 +99,25 @@ class Session(threading.Thread):
             chunk = msg[i:i + chunk_size]
             chunks.append(chunk)
 
+        DEBUG_COUNTER = 0
         # Zähle die Anzahl der Teilstücke
         anz_chunks = len(chunks)
 
         # Sende die Anzahl Chunks
         anz_chunks_b = str(anz_chunks).encode(self.FORMAT)
         anz_chunks_b += b' ' * (self.HEADER - len(anz_chunks_b))
+
+        DEBUG_COUNTER += 1
+        print("DC: ", DEBUG_COUNTER, "Anzahl zu Sendende Chunks: ", anz_chunks)
+
         self.conn.send(anz_chunks_b)
 
         for chunk in chunks:
             # Länge der Nachricht ermitteln und zuerst diese senden
             msg_length = len(chunk)
+            DEBUG_COUNTER += 1
+            print("DC: ", DEBUG_COUNTER, "Send_Lenght: ", msg_length)
+
             send_length = str(msg_length).encode(self.FORMAT)
             send_length += b' ' * (self.HEADER - len(send_length))
             self.conn.send(send_length)
@@ -237,7 +245,7 @@ class Session(threading.Thread):
                 sum([wort.lower() in titel_teil.lower() for titel_teil in gesplitteter_titel])
                 for wort in gesplitteter_prompt
             )
-            print("Titel: ", titel, " Prompt: ", gesplitteter_prompt, " Anzahl Treffer: ", anz_treffer)
+            # print("Titel: ", titel, " Prompt: ", gesplitteter_prompt, " Anzahl Treffer: ", anz_treffer)
             return anz_treffer
 
         def trace_callback(statement):
