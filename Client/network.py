@@ -15,7 +15,7 @@ class Network:
     Die wichtigste Funktion ist sendRecv. Die anderen stellen vorallem eine Zwischenstufe dar, damit man sich nicht
     mitten im Programm mit KIDs und der Ordnung der Argumente beschäftigen muss.
     """
-    def __init__(self, ADDR=("admuel.ddns.net", 4647)):
+    def __init__(self, ADDR=("vocitrainer.admuel.ch", 4647)):
         self.ADDR = ADDR
         self.HEADER = 128
         self.FORMAT = 'utf-8'
@@ -27,17 +27,47 @@ class Network:
         Eine Funktion, welche eine Anfrage an den Server senden und dessen Antwort zurückgibt.
         """
 
-        liste = pickle.dumps(liste)
-        msg_length = len(liste)
-        send_length = str(msg_length).encode(self.FORMAT)
-        send_length += b' ' * (self.HEADER - len(send_length))
-        self.CONN.send(send_length)
-        self.CONN.send(liste)
+        chunks = []
+        chunk_size = 2048
 
-        response_length = self.CONN.recv(self.HEADER).decode(self.FORMAT)
-        response = self.CONN.recv(int(response_length))
-        response = pickle.loads(response)
-        return response
+        liste = pickle.dumps(liste)
+
+        # Teile den Byte-String in Teilstücke à 2048 Bytes auf
+        for i in range(0, len(liste), chunk_size):
+            chunk = liste[i:i + chunk_size]
+            chunks.append(chunk)
+
+        # Zähle die Anzahl der Teilstücke
+        anz_chunks = len(chunks)
+
+        # Sende die Anzahl Chunks
+        anz_chunks_b = str(anz_chunks).encode(self.FORMAT)
+        anz_chunks_b += b' ' * (self.HEADER - len(anz_chunks_b))
+        self.CONN.send(anz_chunks_b)
+
+        for chunk in chunks:
+            msg_length = len(chunk)
+            send_length = str(msg_length).encode(self.FORMAT)
+            send_length += b' ' * (self.HEADER - len(send_length))
+            self.CONN.send(send_length)
+            print("Send_Length: ", send_length)
+            self.CONN.send(chunk)
+
+        alle_chunks = []
+
+        # Empfangen wie viele Chunks kommen
+        anz_chunks = int(self.CONN.recv(self.HEADER))
+
+        for i in range(anz_chunks):
+            response_length = self.CONN.recv(self.HEADER).decode(self.FORMAT)
+            print("Response_Length: ", response_length)
+            response = self.CONN.recv(int(response_length))
+
+            # Zweiter Teil den Chunks hinzufügen
+            alle_chunks.append(response)
+
+        ganze_antwort = pickle.loads(b''.join(alle_chunks))
+        return ganze_antwort
 
     def vociset_suche(self, prompt: str, anzahl_resultate: int, sprache: str = "Alle") -> list:
         """

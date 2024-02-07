@@ -50,39 +50,72 @@ class Session(threading.Thread):
         """
         Funktion für das Empfangen von Nachrichten vom Server. Gibt die fertig entpickelte Liste zurück
         """
-        # Erste Nachricht empfangen, welche die Grösse der zweiten Nachricht enthaltet
-        msg_length = self.conn.recv(self.HEADER)
+        alle_chunks = []
 
-        if msg_length == b'':
+        # Empfangen wie viele Chunks kommen
+        anz_chunks = int(self.conn.recv(self.HEADER).decode(self.FORMAT))
+        if anz_chunks == b'':
             # Client hat die Verbindung geschlossen
             self.CURSOR.close()
             self.DBCONN.close()
             self.verbunden = False
             return [1]
 
-        msg_length = msg_length.decode(self.FORMAT)
-        msg_length = int(msg_length)
+        for i in range(anz_chunks):
+            # Erste Nachricht empfangen, welche die Grösse der zweiten Nachricht enthaltet
+            msg_length = self.conn.recv(self.HEADER)
 
-        # Zweite Nachricht empfangen
-        msg = self.conn.recv(msg_length)
-        msg = pickle.loads(msg)
+            if msg_length == b'':
+                # Client hat die Verbindung geschlossen
+                self.CURSOR.close()
+                self.DBCONN.close()
+                self.verbunden = False
+                return [1]
 
-        return msg
+            msg_length = msg_length.decode(self.FORMAT)
+            msg_length = int(msg_length)
+
+            # Zweite Nachricht empfangen
+            msg = self.conn.recv(msg_length)
+
+            # Zweiter Teil den Chunks hinzufügen
+            alle_chunks.append(msg)
+
+        ganze_nachricht = pickle.loads(b''.join(alle_chunks))
+
+        return ganze_nachricht
 
     def senden(self, msg) -> None:
-        # Funktion die eine gepickelte Liste an server_conn sendet
+        """Funktion die eine gepickelte Liste an server_conn sendet"""
 
         # Nachricht pickeln
         msg = pickle.dumps(msg)
 
-        # Länge der Nachricht ermitteln und zuerst diese senden
-        msg_length = len(msg)
-        send_length = str(msg_length).encode(self.FORMAT)
-        send_length += b' ' * (self.HEADER - len(send_length))
-        self.conn.send(send_length)
+        chunks = []
+        chunk_size = 2048
 
-        # Nachricht selbst senden
-        self.conn.send(msg)
+        # Teile den Byte-String in Teilstücke à 2048 Bytes auf
+        for i in range(0, len(msg), chunk_size):
+            chunk = msg[i:i + chunk_size]
+            chunks.append(chunk)
+
+        # Zähle die Anzahl der Teilstücke
+        anz_chunks = len(chunks)
+
+        # Sende die Anzahl Chunks
+        anz_chunks_b = str(anz_chunks).encode(self.FORMAT)
+        anz_chunks_b += b' ' * (self.HEADER - len(anz_chunks_b))
+        self.conn.send(anz_chunks_b)
+
+        for chunk in chunks:
+            # Länge der Nachricht ermitteln und zuerst diese senden
+            msg_length = len(chunk)
+            send_length = str(msg_length).encode(self.FORMAT)
+            send_length += b' ' * (self.HEADER - len(send_length))
+            self.conn.send(send_length)
+
+            # Nachricht selbst senden
+            self.conn.send(chunk)
 
         return
 
