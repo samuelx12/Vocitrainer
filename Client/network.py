@@ -34,10 +34,19 @@ class Network:
         self.CONN.send(send_length)
         self.CONN.send(liste)
 
-        response_length = self.CONN.recv(self.HEADER).decode(self.FORMAT)
-        response = self.CONN.recv(int(response_length))
-        print("Response Length: ", response_length, " Tatsächliche angekommen: ", len(response))
-        response = pickle.loads(response)
+        response_length = self.CONN.recv(self.HEADER)
+        print("Response_Length String: ", response_length)
+        response_length = response_length.decode(self.FORMAT)
+
+        komplett = False
+        ganze_nachricht = b''
+        while not komplett:
+            ganze_nachricht += self.CONN.recv(int(response_length))
+            print("Response Length: ", response_length, " Tatsächliche angekommen: ", len(ganze_nachricht))
+            if len(ganze_nachricht) == int(response_length):
+                komplett = True
+
+        response = pickle.loads(ganze_nachricht)
         return response
 
     def vociset_suche(self, prompt: str, anzahl_resultate: int, sprache: str = "Alle") -> list:

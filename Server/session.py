@@ -63,10 +63,15 @@ class Session(threading.Thread):
         msg_length = msg_length.decode(self.FORMAT)
         msg_length = int(msg_length)
 
-        # Zweite Nachricht empfangen
-        msg = self.conn.recv(msg_length)
-        print("Response Length: ", msg_length, " Tatsächliche angekommen: ", len(msg))
-        msg = pickle.loads(msg)
+        komplett = False
+        ganze_nachricht = b''
+        while not komplett:
+            # Zweite Nachricht empfangen
+            ganze_nachricht += self.conn.recv(msg_length)
+            if len(ganze_nachricht) == int(msg_length):
+                komplett = True
+
+        msg = pickle.loads(ganze_nachricht)
 
         return msg
 
