@@ -65,6 +65,7 @@ class Session(threading.Thread):
 
         # Zweite Nachricht empfangen
         msg = self.conn.recv(msg_length)
+        print("Response Length: ", msg_length, " Tatsächliche angekommen: ", len(msg))
         msg = pickle.loads(msg)
 
         return msg

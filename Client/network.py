@@ -36,6 +36,7 @@ class Network:
 
         response_length = self.CONN.recv(self.HEADER).decode(self.FORMAT)
         response = self.CONN.recv(int(response_length))
+        print("Response Length: ", response_length, " Tatsächliche angekommen: ", len(response))
         response = pickle.loads(response)
         return response
 
