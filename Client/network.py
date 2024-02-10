@@ -27,53 +27,18 @@ class Network:
         Eine Funktion, welche eine Anfrage an den Server senden und dessen Antwort zurückgibt.
         """
 
-        chunks = []
-        chunk_size = 2048
-
         liste = pickle.dumps(liste)
+        msg_length = len(liste)
+        send_length = str(msg_length).encode(self.FORMAT)
+        send_length += b' ' * (self.HEADER - len(send_length))
+        self.CONN.send(send_length)
+        self.CONN.send(liste)
 
-        # Teile den Byte-String in Teilstücke à 2048 Bytes auf
-        for i in range(0, len(liste), chunk_size):
-            chunk = liste[i:i + chunk_size]
-            chunks.append(chunk)
-
-        # Zähle die Anzahl der Teilstücke
-        anz_chunks = len(chunks)
-
-        # Sende die Anzahl Chunks
-        anz_chunks_b = str(anz_chunks).encode(self.FORMAT)
-        anz_chunks_b += b' ' * (self.HEADER - len(anz_chunks_b))
-        self.CONN.send(anz_chunks_b)
-
-        for chunk in chunks:
-            msg_length = len(chunk)
-            send_length = str(msg_length).encode(self.FORMAT)
-            send_length += b' ' * (self.HEADER - len(send_length))
-            self.CONN.send(send_length)
-            print("Send_Length: ", send_length)
-            self.CONN.send(chunk)
-
-        alle_chunks = []
-        DEBUG_COUNTER = 0
-        # Empfangen wie viele Chunks kommen
-        anz_chunks = int(self.CONN.recv(self.HEADER))
-        DEBUG_COUNTER += 1
-        print("DC: ", DEBUG_COUNTER, " Anzahl zu empfangende Chunks: ", anz_chunks)
-
-        for i in range(anz_chunks):
-            response_length = self.CONN.recv(self.HEADER).decode(self.FORMAT)
-            DEBUG_COUNTER += 1
-            print("DC: ", DEBUG_COUNTER, "Response_Length: ", response_length)
-            response = self.CONN.recv(int(response_length))
-
-            # Zweiter Teil den Chunks hinzufügen
-            alle_chunks.append(response)
-
-        ganze_antwort = b''.join(alle_chunks)
-        print("\n\n\n=======================================================")
-        print(ganze_antwort)
-        ganze_antwort = pickle.loads(ganze_antwort)
-        return ganze_antwort
+        response_length = self.CONN.recv(self.HEADER).decode(self.FORMAT)
+        response = self.CONN.recv(int(response_length))
+        print("Response Length: ", response_length, " Tatsächliche angekommen: ", len(response))
+        response = pickle.loads(response)
+        return response
 
     def vociset_suche(self, prompt: str, anzahl_resultate: int, sprache: str = "Alle") -> list:
         """
