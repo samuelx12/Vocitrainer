@@ -67,7 +67,7 @@ class Session(threading.Thread):
         ganze_nachricht = b''
         while not komplett:
             # Zweite Nachricht empfangen
-            ganze_nachricht += self.conn.recv(msg_length)
+            ganze_nachricht += self.conn.recv(msg_length - len(ganze_nachricht))
             if len(ganze_nachricht) == int(msg_length):
                 komplett = True
 
