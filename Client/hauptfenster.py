@@ -26,6 +26,7 @@ from Mp_LogReg import log_reg
 from karte_tuple import Karte
 from einstellungen import Einstellungen
 from configobj import ConfigObj
+from setupdb import updateDB
 import ressources_rc
 from rich import print as rprint
 
@@ -66,9 +67,12 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         except:
             pass
 
+        # Datenbankverbindung erstellen und allenfalls DB updaten
+        self.dbconn = sqlite3.connect('vocitrainerdb.db')
+        updateDB(self.dbconn)
+
         # ---------- Model ----------
         # Tabellen Model erstellen und zuweisen
-        self.dbconn = sqlite3.connect('vocitrainerdb.db')
         self.kartenModel = KartenModel(dbconn=self.dbconn)
 
         # Tabellen Model Daten laden
