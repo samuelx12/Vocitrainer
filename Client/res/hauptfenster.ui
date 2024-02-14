@@ -430,6 +430,7 @@ selection-color: rgb(0, 0, 0);]</string>
      <string>Importieren</string>
     </property>
     <addaction name="mn_CSV_importieren"/>
+    <addaction name="mn_QuizletImportieren"/>
    </widget>
    <widget class="QMenu" name="menuSet">
     <property name="title">
@@ -796,6 +797,15 @@ selection-color: rgb(0, 0, 0);]</string>
    </property>
    <property name="statusTip">
     <string>Set löschen</string>
+   </property>
+  </action>
+  <action name="mn_QuizletImportieren">
+   <property name="icon">
+    <iconset resource="../ressources.qrc">
+     <normaloff>:/icons/res/icons/language_FILL1_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/language_FILL1_wght400_GRAD0_opsz24.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Von Quizlet importieren</string>
    </property>
   </action>
  </widget>

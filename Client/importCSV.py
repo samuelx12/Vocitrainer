@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Mp_herunterladen.py
-Hier ist das Herunterladen Fenster des Menu Marketplace.
+importCSV.py
+Dieses Fenster bietet den CSV import an und alle dazugehörigen Einstellungen.
 """
-
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 from res.ui_importCSV import Ui_ImportCSV
 import sqlite3
@@ -15,10 +15,11 @@ class ImportCSV(QDialog, Ui_ImportCSV):
     """
     In diesem Fenster befinden sich die Einstellungen, damit danach ein Vociset aus einer Datei importiert werden kann.
     """
-    def __init__(self, hauptfenster, *args, obj=None, **kwargs):
+    def __init__(self, hauptfenster, *args, **kwargs):
         super(ImportCSV, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.hauptfenster = hauptfenster
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)  # Hilfebutton ausblenden
 
         self.int_spalteWort.setValue(2)
         self.int_spalteFremdwort.setValue(1)
@@ -150,7 +151,7 @@ class ImportCSV(QDialog, Ui_ImportCSV):
                 self.CURSOR.execute(query, [spalteWort, spalteFremdwort, spalteDefinition, spalteBemerkung])
                 self.DBCONN.commit()
 
-        except Exception as e:
+        except Exception:
             # Änderungen rückgängig machen
             self.DBCONN.rollback()
             msg = QMessageBox()

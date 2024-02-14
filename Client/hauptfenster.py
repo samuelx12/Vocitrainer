@@ -20,6 +20,7 @@ from Mp_hochgeladeneVerwalten import MpHochgeladeneVerwalten
 from ueber import Ueber as Ueber_Fenster
 from neuesWort import NeuesWort
 from importCSV import ImportCSV
+from importQuizlet import ImportQuizlet
 from typing import List, Union
 from Mp_LogReg import log_reg
 from karte_tuple import Karte
@@ -134,6 +135,7 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
 
         # Menü 'Importieren'
         self.mn_CSV_importieren.triggered.connect(self.mn_CSV_importieren_triggered)
+        self.mn_QuizletImportieren.triggered.connect(self.mn_QuizletImportieren_triggered)
 
         # Kontextmenü
         self.kontextmn_Aktualisieren.triggered.connect(self.kontextmn_Aktualisieren_triggered)
@@ -1066,6 +1068,13 @@ class Hauptfenster(QMainWindow, Ui_MainWindow):
         self.importCSV.setModal(True)
 
         self.importCSV.exec_()
+
+    def mn_QuizletImportieren_triggered(self):
+        """Dieses Menü öffnet das Fenster um ein Quizlet-Set zu importieren."""
+        self.importQuizlet = ImportQuizlet(self)
+        self.importQuizlet.setModal(True)
+
+        self.importQuizlet.exec_()
 
     # --------------- KONTEXTMENÜ ---------------
     def kontextmn_Aktualisieren_triggered(self):
