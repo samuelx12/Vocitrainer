@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>585</width>
-    <height>423</height>
+    <width>668</width>
+    <height>413</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="frage_page">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -146,49 +146,150 @@ border-radius: 3px;
 border-color: rgb(201, 220, 225);</string>
          </property>
          <property name="text">
-          <string>TextLabel</string>
+          <string>FEHLER BEIM LADEN</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="a_lbl_deineAntwort_beschreibung">
-         <property name="text">
-          <string>Deine Antwort:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="a_lbl_deineAntwort_wort">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(225, 171, 171);
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_10">
+             <item>
+              <widget class="QLabel" name="a_lbl_deineAntwort_beschreibung">
+               <property name="text">
+                <string>Deine Antwort:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="a_spacer_deineAntwort">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>41</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="a_lbl_deineAntwort_wort">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(225, 171, 171);
 border: 3px solid;
 border-radius: 3px;
 border-color: rgb(225, 171, 171);</string>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
+             </property>
+             <property name="text">
+              <string>FEHLER BEIM LADEN</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <widget class="QLabel" name="a_lbl_trotzdemRichtig">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="a_cmd_trotzdemRichtig">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>» ✅</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QLabel" name="a_lbl_fremdsprache_beschreibung">
-         <property name="text">
-          <string>Fremdsprache:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="a_lbl_fremdsprache_wort">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(197, 225, 196);
+        <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_12">
+             <item>
+              <widget class="QLabel" name="a_lbl_fremdsprache_beschreibung">
+               <property name="text">
+                <string>Fremdsprache:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="a_lbl_fremdsprache_wort">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(197, 225, 196);
 border: 3px solid;
 border-radius: 3px;
 border-color: rgb(197, 225, 196);</string>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
+             </property>
+             <property name="text">
+              <string>FEHLER BEIM LADEN</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_10">
+           <item>
+            <widget class="QLabel" name="a_lbl_trotzdemFalsch">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="a_cmd_trotzdemFalsch">
+             <property name="styleSheet">
+              <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>» ❌</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QLabel" name="a_lbl_definition_beschreibung">
@@ -200,7 +301,7 @@ border-color: rgb(197, 225, 196);</string>
        <item>
         <widget class="QLabel" name="a_lbl_definition_wort">
          <property name="text">
-          <string>DEFINTION DEFINITION DEFINTION aösdlfkjasdfljasdlöfkj aölskdjf alökdsfj aölsfj aösldkfj aösdlkfj alösdkfj aölsdkfj aölsdkfj aölsdkfj aölsdkfj aölkdsfj aöllskdjf aölskdfj aölskdfj aölskdjf aölsdkfj aölskdfj aölskdfj aöldkfj </string>
+          <string>&lt;definition&gt;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -217,7 +318,7 @@ border-color: rgb(197, 225, 196);</string>
        <item>
         <widget class="QLabel" name="a_lbl_bemerkung_wort">
          <property name="text">
-          <string>BEMERKUNG BEMERKUNG BEMERKUNG</string>
+          <string>&lt;bemerkung&gt;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -242,7 +343,7 @@ border-color: rgb(197, 225, 196);</string>
          <item>
           <widget class="QLabel" name="a_lbl_schwierigkeit">
            <property name="text">
-            <string>Schwierigkeit</string>
+            <string>&lt;schwierigkeit&gt;</string>
            </property>
           </widget>
          </item>
@@ -263,6 +364,9 @@ border-color: rgb(197, 225, 196);</string>
           <widget class="QPushButton" name="a_cmd_weiter">
            <property name="text">
             <string>Weiter</string>
+           </property>
+           <property name="default">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -460,6 +564,17 @@ border-color: rgb(184, 225, 210);</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>f_txt_fremdsprache</tabstop>
+  <tabstop>f_cmd_pruefen</tabstop>
+  <tabstop>f_cmd_abbrechen</tabstop>
+  <tabstop>a_cmd_weiter</tabstop>
+  <tabstop>a_cmd_abbrechen</tabstop>
+  <tabstop>a_cmd_trotzdemRichtig</tabstop>
+  <tabstop>a_cmd_trotzdemFalsch</tabstop>
+  <tabstop>z_cmd_weiter</tabstop>
+  <tabstop>z_cmd_abbrechen</tabstop>
+ </tabstops>
  <resources>
   <include location="../ressources.qrc"/>
  </resources>

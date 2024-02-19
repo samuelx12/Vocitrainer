@@ -9,6 +9,7 @@ from typing import Iterable
 from rich import print as rprint
 from sqlite3 import Connection
 from configobj import ConfigObj
+import copy
 
 
 class TC_Einfach:
@@ -18,6 +19,8 @@ class TC_Einfach:
     def __init__(self, lernliste):
         self.lernliste = lernliste
         self.i = 0  # Counter
+        self.altes_i = 0
+        self.alte_lernliste = self.lernliste
 
     def frage(self) -> (Karte, bool):
         """
@@ -32,10 +35,17 @@ class TC_Einfach:
 
         return neues_wort, False
 
-    def antwort(self, resultat: bool):
+    def antwort(self, resultat: bool, neubewertung: bool = False):
         """
         Mit dieser Funktion wird der Trainingscontroller informiert, ob die Frage richtig beantwortet wurde
         """
+        if neubewertung:
+            self.lernliste = self.alte_lernliste
+            self.i = self.altes_i
+        else:
+            self.alte_lernliste = copy.deepcopy(self.lernliste)
+            self.altes_i = self.i
+
         karte = self.lernliste[self.i]
 
         if resultat:
@@ -93,6 +103,8 @@ class TC_Intelligent:
 
         # Countervariable
         self.i = 0
+        self.altes_i = 0
+        self.gespeichert_aenderungen = []
 
         try:
             config = ConfigObj('settings.ini')
@@ -109,7 +121,7 @@ class TC_Intelligent:
         self.ungelernt = []
 
         # Liste für die Vokabeln, welche gerade gelernt werden.
-        self.lernend = [None for i in range(self.MZ)]
+        self.lernend = [None for _ in range(self.MZ)]
 
         # Liste für die gelernten Vokabeln.
         self.gelernt = []
@@ -210,13 +222,26 @@ class TC_Intelligent:
             # Fragen
             return self.lernend[self.i], False
 
-    def antwort(self, richtig_beantwortet: bool) -> Karte:
+    def antwort(self, richtig_beantwortet: bool, neubewertung: bool = False) -> Karte:
         """
         Diese Funktion wird vom Fenster aufgerufen, um den Controller über das Resultat der letzten Abfrage
         zu informieren
+        :param neubewertung: Ob eine neue Karte bewertet wird oder wieder die alte.
         :param richtig_beantwortet: Boolean, ob der Benutzer die Frage richtig beantwortet hatte.
         :return: Die Karte mit der aktualisierten Schwierigkeit
         """
+
+        # if neubewertung:
+        #     print("neubewertung", self.alte_karte)
+        #     self.lernend[self.i] = copy.deepcopy(self.alte_karte)
+        #     self.i = self.altes_i
+        # else:
+        #     self.lernend[self.i] = copy.deepcopy(self.neue_karte)
+        #     self.alte_karte = copy.deepcopy(self.lernend[self.i])
+        if neubewertung:
+            self.stand_speicherung(wiederherstellung=True)
+        else:
+            self.stand_speicherung()
 
         # Erste abfrage eines Vocis -> nicht mehr unbekannt
         if self.lernend[self.i].schwierigkeit_max == -1:
@@ -269,20 +294,61 @@ class TC_Intelligent:
 
         return aktualisierte_karte
 
-    def update_lernfortschritt(self, karte_id: int, neuer_lernfortschritt: int):
+    def stand_speicherung(self, wiederherstellung: bool = False):
+        """
+        Speichert oder stellt den gespeicherten Lernstand wieder her.
+        """
+        if not wiederherstellung:
+            # Speichern
+            self.gespeichert_ungelernt = copy.deepcopy(self.ungelernt)
+            self.gespeichert_lernend = copy.deepcopy(self.lernend)
+            self.gespeichert_gelernt = copy.deepcopy(self.gelernt)
+            self.gespeichert_i = self.i
+            self.gespeichert_aenderungen = []
+        else:
+            # Wiederherstellen
+            self.ungelernt = copy.deepcopy(self.gespeichert_ungelernt)
+            self.lernend = copy.deepcopy(self.gespeichert_lernend)
+            self.gelernt = copy.deepcopy(self.gespeichert_gelernt)
+            self.i = self.gespeichert_i
+
+            # Änderungen rückgängig machen
+            for aenderung in self.gespeichert_aenderungen:
+                if aenderung[0] == "lernfortschritt":
+                    self.update_lernfortschritt(aenderung[1], aenderung[2], registrieren=False)
+                elif aenderung[0] == "schwierigkeit":
+                    self.update_schwierigkeit_max(aenderung[1], aenderung[2], registrieren=False)
+            self.gespeichert_aenderungen = []
+
+    def update_lernfortschritt(self, karte_id: int, neuer_lernfortschritt: int, registrieren: bool = True):
         """Kleine Funktion um auch in der Datenbank die Werte upzudaten."""
         if self.training_speichern:
             cursor = self.DBCONN.cursor()
+            if registrieren:
+                # Alterlernfortschritt herausfinden
+                sql = "SELECT lernfortschritt FROM main.karte WHERE karte_id=?"
+                cursor.execute(sql, (karte_id,))
+                alter_lernfortschritt = cursor.fetchone()[0]
+                self.gespeichert_aenderungen.append(["lernfortschritt", karte_id, alter_lernfortschritt])
+
             sql = """
             UPDATE karte SET lernfortschritt=? WHERE karte_id=?"""
             cursor.execute(sql, (neuer_lernfortschritt, karte_id))
             cursor.close()
             self.DBCONN.commit()
 
-    def update_schwierigkeit_max(self, karte_id: int, neue_schwierigkeit: int):
+    def update_schwierigkeit_max(self, karte_id: int, neue_schwierigkeit: int, registrieren: bool = True):
         """Kleine Funktion um auch in der Datenbank die Werte upzudaten."""
         if self.training_speichern:
             cursor = self.DBCONN.cursor()
+
+            if registrieren:
+                # Alterlernfortschritt herausfinden
+                sql = "SELECT schwierigkeit FROM main.karte WHERE karte_id=?"
+                cursor.execute(sql, (karte_id,))
+                alte_schwierigkeit = cursor.fetchone()[0]
+                self.gespeichert_aenderungen.append(["schwierigkeit", karte_id, alte_schwierigkeit])
+
             sql = """
             UPDATE karte SET schwierigkeit=? WHERE karte_id=?"""
             cursor.execute(sql, (neue_schwierigkeit, karte_id))

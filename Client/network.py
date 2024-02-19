@@ -15,7 +15,7 @@ class Network:
     Die wichtigste Funktion ist sendRecv. Die anderen stellen vorallem eine Zwischenstufe dar, damit man sich nicht
     mitten im Programm mit KIDs und der Ordnung der Argumente beschäftigen muss.
     """
-    def __init__(self, ADDR=("vocitrainer.admuel.ch", 4647)):
+    def __init__(self, ADDR=("localhost", 4647)):
         self.ADDR = ADDR
         self.HEADER = 128
         self.FORMAT = 'utf-8'
@@ -35,14 +35,14 @@ class Network:
         self.CONN.send(liste)
 
         response_length = self.CONN.recv(self.HEADER)
-        print("Response_Length String: ", response_length)
+        # print("Response_Length String: ", response_length)
         response_length = response_length.decode(self.FORMAT)
 
         komplett = False
         ganze_nachricht = b''
         while not komplett:
             ganze_nachricht += self.CONN.recv(int(response_length) - len(ganze_nachricht))
-            print("Response Length: ", response_length, " Tatsächliche angekommen: ", len(ganze_nachricht))
+            # print("Response Length: ", response_length, " Tatsächliche angekommen: ", len(ganze_nachricht))
             if len(ganze_nachricht) == int(response_length):
                 komplett = True
 

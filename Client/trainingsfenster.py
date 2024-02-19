@@ -16,6 +16,7 @@ from sqlite3 import Connection
 from typing import List
 from configobj import ConfigObj
 import ressources_rc
+from rich import print as rprint
 
 
 class Trainingsfenster(QDialog, Ui_Trainingsfenster):
@@ -53,6 +54,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.schliessen_ohne_kommentar = False
         self.oeffnen = True
         self.DBCONN = dbconn
+        self.CURSOR = self.DBCONN.cursor()
         self.controller_typ = controller_typ
 
         # Einstellung Fokusmodus und Definition lernen laden
@@ -84,6 +86,8 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.f_cmd_abbrechen.clicked.connect(self.f_cmd_abbrechen_clicked)
         self.a_cmd_weiter.clicked.connect(self.a_cmd_weiter_clicked)
         self.a_cmd_abbrechen.clicked.connect(self.a_cmd_abbrechen_clicked)
+        self.a_cmd_trotzdemRichtig.clicked.connect(self.a_cmd_trotzdemRichtig_clicked)
+        self.a_cmd_trotzdemFalsch.clicked.connect(self.a_cmd_trotzdemFalsch_clicked)
         self.z_cmd_weiter.clicked.connect(self.z_cmd_weiter_clicked)
         self.z_cmd_abbrechen.clicked.connect(self.z_cmd_abbrechen_clicked)
 
@@ -125,13 +129,77 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.phase1()
 
     @staticmethod
-    def antwort_pruefen(antwort, loesung) -> bool:
+    def wortbereinigung(wort: str) -> str:
+        """Bereinig das Wort: Löscht überflüssige Leerzeichen."""
+
+        # Entferne überflüssige Leerzeichen
+        bereinigtes_wort = " ".join(wort.split())
+
+        return bereinigtes_wort
+
+    def antwort_pruefen(self, antwort: str, loesung: str, karte_id: int) -> (bool, bool):
         """
         Hier wird die Antwort überprüft.
         Eine mögliche Verbesserung wäre hier, dass zum Beispiel bei gegebener Loesung
         "to listen (verb)" auch einfach "to listen" als Antwort akzeptiert wird.
+        :return: ist_korrekt, ist_zweitloesung
         """
-        return antwort == loesung
+        def klammerentfernung(text: str) -> str:
+            """Entfernt den Teil des Strings, der sich in Klammern befindet."""
+
+            # Finde die Indexe der öffnenden und schließenden Klammern
+            opening_bracket = text.find('(')
+            closing_bracket = text.find(')')
+
+            # Überprüfe, ob sowohl öffnende als auch schließende Klammern gefunden wurden
+            if opening_bracket != -1 and closing_bracket != -1:
+                # Entferne den Teil des Strings zwischen den Klammern und die Klammern selbst
+                bereinigter_text = text[:opening_bracket] + text[closing_bracket + 1:]
+            else:
+                # Wenn keine Klammern gefunden wurden, bleibt der Text unverändert
+                bereinigter_text = text
+
+            return self.wortbereinigung(bereinigter_text.strip())
+
+        # Bereinigung von Loesung und antwort
+        antwort = self.wortbereinigung(antwort)
+        loesung = self.wortbereinigung(loesung)
+
+        if antwort == loesung:
+            # Antwort stimmt exakt
+            return True, False
+
+        # --- Wenns weiter geht, ist die Sache komplizierter (oder falsch) ---
+
+        # Zweitlösungen laden
+        sql = """SELECT fremdwort, korrekt FROM loesung WHERE karte_id = ?"""
+        self.CURSOR.execute(sql, (karte_id,))
+        zweitloesungen = self.CURSOR.fetchall()
+
+        # Lösungen auftrennen und sortieren
+        richtige_zweitloesungen = []
+        falsche_zweitloesungen = []
+        for zweitloesung in zweitloesungen:
+            if bool(zweitloesung[1]):
+                richtige_zweitloesungen.append(zweitloesung[0])
+            else:
+                falsche_zweitloesungen.append(zweitloesung[0])
+
+        print("Zweitloesungen:")
+        rprint(richtige_zweitloesungen, falsche_zweitloesungen)
+
+        klammerlose_loesung = klammerentfernung(loesung)
+        if antwort == klammerlose_loesung and klammerlose_loesung not in falsche_zweitloesungen:
+            # Ohne die Klammern richtig und in den Zweitlösungen ist nichts anderes registriert.
+            # Gilt nicht als Zweitlösung
+            return True, False
+
+        if antwort in richtige_zweitloesungen:
+            # Antwort ist eine richtige Zweitlösung
+            return True, True
+
+        # Sonst ist die lösung Falsch
+        return False, False
 
     def zeige_schwierigkeit(self, karte: Karte, seite: str):
         """
@@ -258,24 +326,66 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         """
         # --- Antwort überprüfen ---
         user_antwort = self.f_txt_fremdsprache.text()
-        antwort_korrekt = self.antwort_pruefen(user_antwort, self.aktive_karte.fremdwort)
+        antwort_korrekt, ist_zweitloesung = self.antwort_pruefen(
+            user_antwort, self.aktive_karte.fremdwort, self.aktive_karte.ID)
 
         # --- Kontroller soll über das Resultat informiert werden ---
         self.aktive_karte = self.controller.antwort(antwort_korrekt)
+
+        self.antwortseite_laden(antwort_korrekt, user_antwort, ist_zweitloesung)
+
+        # --- Antwortsseite anzeigen ---
+        self.stackedWidget.setCurrentIndex(1)
+
+    def neubewertung(self, trotzdemWahrheitswert: bool):
+        """
+        Funktion um eine Neubewertung vorzunehmen.
+        Dabei wird die neue Lösung auch in der Datenbank gespeichert.
+        """
+        user_antwort = self.f_txt_fremdsprache.text()
+        self.aktive_karte = self.controller.antwort(trotzdemWahrheitswert, neubewertung=True)
+
+        # Allenfalls dazu existierende Lösungen oder nicht Lösungen löschen
+        query = """
+            DELETE FROM loesung WHERE fremdwort = ? AND karte_id = ?
+        """
+        self.CURSOR.execute(query, (user_antwort, self.aktive_karte.ID))
+
+        # Neue Lösung erstellen
+        query = """
+            INSERT INTO loesung (karte_id, korrekt, fremdwort) VALUES (?, ?, ?)
+        """
+        self.CURSOR.execute(query, (self.aktive_karte.ID, int(trotzdemWahrheitswert), user_antwort))
+        self.DBCONN.commit()
+
+        self.antwortseite_laden(trotzdemWahrheitswert, user_antwort, ist_zweitloesung=True)
+
+        return
+
+    def antwortseite_laden(self, antwort_korrekt: bool, benutzer_antwort: str, ist_zweitloesung: bool = False):
+        """
+        Teil von phase2 aber ausgelagert um Neubewertungen möglich zu machen
+        """
 
         # --- Antwortsseite laden ---
         # Deutsches Wort:
         self.a_lbl_deutsch_wort.setText(self.aktive_karte.wort)
 
         # Fremdwort mit allfälliger Korrektur
-        self.a_lbl_fremdsprache_wort.setText(self.aktive_karte.fremdwort)
-        if antwort_korrekt:
-            self.a_lbl_deineAntwort_beschreibung.setVisible(False)
-            self.a_lbl_deineAntwort_wort.setVisible(False)
+        if antwort_korrekt and ist_zweitloesung:
+            self.a_lbl_fremdsprache_wort.setText(benutzer_antwort)
         else:
-            self.a_lbl_deineAntwort_beschreibung.setVisible(True)
-            self.a_lbl_deineAntwort_wort.setVisible(True)
-            self.a_lbl_deineAntwort_wort.setText(user_antwort)
+            self.a_lbl_fremdsprache_wort.setText(self.aktive_karte.fremdwort)
+        self.a_lbl_deineAntwort_beschreibung.setVisible(not antwort_korrekt)
+        self.a_lbl_deineAntwort_wort.setVisible(not antwort_korrekt)
+        self.a_lbl_trotzdemFalsch.setVisible(antwort_korrekt and ist_zweitloesung)
+        self.a_cmd_trotzdemFalsch.setVisible(antwort_korrekt and ist_zweitloesung)
+        self.a_lbl_trotzdemRichtig.setVisible(not antwort_korrekt)
+        self.a_cmd_trotzdemRichtig.setVisible(not antwort_korrekt)
+        if antwort_korrekt:
+            pass
+        else:
+            self.a_lbl_deineAntwort_wort.setText(benutzer_antwort)
 
         self.a_lbl_deutsch_beschreibung.setText("Deutsch:")
         # Allenfalls Definition zeigen
@@ -316,9 +426,6 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
 
         # Fokusmodus umsetzen falls aktiviert
         self.fokusmodus()
-
-        # --- Antwortsseite anzeigen ---
-        self.stackedWidget.setCurrentIndex(1)
 
     def closeEvent(self, event: QCloseEvent):
         """
@@ -382,7 +489,8 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
 
     def training_beenden(self):
         """Wenn das Training beendet werden soll, wird diese Funktion aufgerufen."""
-        pass
+        self.CURSOR.close()
+        # self.DBCONN.close()
 
     # --------------------------------
     # ---------- FRAGESEITE ----------
@@ -411,6 +519,14 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         """ABBRECHEN GEKLICKT"""
         # Fenster schliessen
         self.close()
+
+    def a_cmd_trotzdemRichtig_clicked(self):
+        """Trotzdem Richtig geklickt"""
+        self.neubewertung(trotzdemWahrheitswert=True)
+
+    def a_cmd_trotzdemFalsch_clicked(self):
+        """Trotzdem Falsch geklickt"""
+        self.neubewertung(trotzdemWahrheitswert=False)
 
     # ---------------------------------------------
     # ---------- Zeigeseite (Neues Wort) ----------

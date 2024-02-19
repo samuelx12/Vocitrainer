@@ -30,11 +30,13 @@ def get_quizlet_set(link: str) -> tuple:
         raise QuizletExportFehler
 
     try:
+
         browser.get(link)
 
         # Titel laden
-        titel_element = browser.find_element(By.CLASS_NAME, "SetPage-setTitle")
-        titel = titel_element.text
+        oberer_bereich = browser.find_element(By.ID, "setPageSetIntroWrapper")
+        # titel_element = browser.find_element(By.CLASS_NAME, "SetPage-setTitle")
+        titel = oberer_bereich.find_element(By.TAG_NAME, "h1").text
 
         # Set laden
         liste = browser.find_element(By.CLASS_NAME, "SetPageTerms-termsList")
@@ -58,6 +60,8 @@ def get_quizlet_set(link: str) -> tuple:
     except:
         browser.quit()
         raise QuizletExportFehler
+
+    browser.quit()
 
     return titel, set_liste
 
