@@ -8,7 +8,7 @@ import pyinstaller_versionfile
 
 pyinstaller_versionfile.create_versionfile(
     output_file="versionfile.txt",
-    version="0.2.0",
+    version="1.0.0",
     company_name="admuel",
     file_description="Vocitrainer",
     internal_name="vocitrainer",

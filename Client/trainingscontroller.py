@@ -40,7 +40,7 @@ class TC_Einfach:
         Mit dieser Funktion wird der Trainingscontroller informiert, ob die Frage richtig beantwortet wurde
         """
         if neubewertung:
-            self.lernliste = self.alte_lernliste
+            self.lernliste = copy.deepcopy(self.alte_lernliste)
             self.i = self.altes_i
         else:
             self.alte_lernliste = copy.deepcopy(self.lernliste)

@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import *
 from res.ui_importCSV import Ui_ImportCSV
 import sqlite3
 import csv
+import io
 from explorer_item import ExplorerItem
 
 
@@ -35,12 +36,26 @@ class ImportCSV(QDialog, Ui_ImportCSV):
         self.cmd_durchsuchen.clicked.connect(self.cmd_durchsuchen_clicked)
         self.txt_pfad.textChanged.connect(self.txt_pfad_textChanged)
         self.cmd_importieren.clicked.connect(self.cmd_importieren_clicked)
+        self.gruppe_direkt.toggled.connect(self.gruppe_direkt_toggled)
+        self.gruppe_datei.toggled.connect(self.gruppe_datei_toggled)
 
         # Einige Widgets ausblenden
         self.lbl_Warnung.setVisible(False)
         self.lbl_FehlerPfad.setVisible(False)
         self.txt_Vorschau.setVisible(False)
         self.lbl_Vorschau.setVisible(False)
+
+        # Quelle einstellen
+        self.gruppe_datei.setChecked(False)
+        self.gruppe_direkt.setChecked(True)
+
+    def gruppe_direkt_toggled(self):
+        """Gruppe geändert"""
+        self.gruppe_datei.setChecked(not self.gruppe_direkt.isChecked())
+
+    def gruppe_datei_toggled(self):
+        """Gruppe geändert"""
+        self.gruppe_direkt.setChecked(not self.gruppe_datei.isChecked())
 
     def txt_pfad_textChanged(self):
         """Der Pfad wurde geändert -> Vorschau aktualisieren"""
@@ -89,21 +104,39 @@ class ImportCSV(QDialog, Ui_ImportCSV):
         """
 
         daten = []
-        try:
-            with open(self.txt_pfad.text(), newline='') as csv_file:
-                csv_reader = csv.reader(csv_file, delimiter=self.txt_trennzeichen.text())
+        if self.gruppe_datei.isChecked():
+            # Quelle Datei
+            try:
+                with open(self.txt_pfad.text(), newline='') as csv_file:
+                    csv_reader = csv.reader(csv_file, delimiter=self.txt_trennzeichen.text())
+                    for row in csv_reader:
+                        daten.append(row)
+            except:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Critical)
+                msg.setWindowTitle("Vocitrainer - Fehler")
+                msg.setText(
+                    "Fehler beim öffnen bzw. lesen der Datei.\n\n"
+                    "Bitte überprüfen Sie den angegebenen Pfad und stellen Sie sicher, dass die Datei nicht beschädigt ist."
+                )
+                msg.exec_()
+                return
+        else:
+            # Quelle Direkt
+            try:
+                import_daten = self.txt_direktInput.toPlainText()
+                csv_reader = csv.reader(io.StringIO(import_daten), delimiter=self.txt_trennzeichen.text())
                 for row in csv_reader:
                     daten.append(row)
-        except:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Critical)
-            msg.setWindowTitle("Vocitrainer - Fehler")
-            msg.setText(
-                "Fehler beim öffnen bzw. lesen der Datei.\n\n"
-                "Bitte überprüfen Sie den angegebenen Pfad und stellen Sie sicher, dass die Datei nicht beschädigt ist."
-            )
-            msg.exec_()
-            return
+            except:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Critical)
+                msg.setWindowTitle("Vocitrainer - Fehler")
+                msg.setText(
+                    "Fehler beim Laden der Daten. Überprüfe dein Input."
+                )
+                msg.exec_()
+                return
 
         try:
             # Verbindung mit der Datenbank aufnehmen.

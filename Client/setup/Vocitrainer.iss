@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Vocitrainer"
-#define MyAppVersion "v0.2.0"
+#define MyAppVersion "v1.0.0-alpha"
 #define MyAppPublisher "Samuel Barmet"
 #define MyAppURL "https://vocitrainer.admuel.ch"
 #define MyAppExeName "Vocitrainer.exe"
@@ -27,7 +27,7 @@ InfoAfterFile=C:\Users\Samuel\PycharmProjects\Vocitrainer\Client\setup\info_nach
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
 OutputDir=C:\Users\Samuel\PycharmProjects\Vocitrainer\Client\setup
-OutputBaseFilename=Vocitrainer-v0.2.0-Setup
+OutputBaseFilename=Vocitrainer-v1.0.0-alpha-Setup
 SetupIconFile=C:\Users\Samuel\PycharmProjects\Vocitrainer\Client\res\icons\Vocitrainer_Icon2.ico
 Compression=lzma
 SolidCompression=yes

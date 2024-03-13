@@ -19,7 +19,7 @@ traceback.install()
 
 # VERSION HIER ANPASSEN
 versionen = {
-    "vocitrainer": "v0.2.0",
+    "vocitrainer": "v1.0.0-alpha",
     "qt": QT_VERSION_STR,
     "pyqt": PYQT_VERSION_STR
 }

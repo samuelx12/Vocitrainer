@@ -131,27 +131,80 @@ font: 75 8pt &quot;MS Shell Dlg 2&quot;;</string>
      <widget class="QWidget" name="antwort_page">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="a_lbl_deutsch_beschreibung">
-         <property name="text">
-          <string>Deutsch:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="a_lbl_deutsch_wort">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(201, 220, 225);
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QLabel" name="a_lbl_deutsch_beschreibung">
+               <property name="text">
+                <string>Deutsch:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="a_lbl_deutsch_wort">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(201, 220, 225);
 border: 3px solid;
 border-radius: 3px;
 border-color: rgb(201, 220, 225);</string>
-         </property>
-         <property name="text">
-          <string>FEHLER BEIM LADEN</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
+             </property>
+             <property name="text">
+              <string>FEHLER BEIM LADEN</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_11">
+           <item>
+            <widget class="QLabel" name="a_lbl_trotzdemRichtig_2">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="toolButton">
+             <property name="text">
+              <string>...</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../ressources.qrc">
+               <normaloff>:/icons/res/icons/rund_star_FILL0_wght400_GRAD0_opsz24.svg</normaloff>
+               <normalon>:/icons/res/icons/rund_star_FILL1_wght400_GRAD0_opsz24.svg</normalon>
+               <activeoff>:/icons/res/icons/rund_star_FILL1_wght400_GRAD0_opsz24.svg</activeoff>
+               <selectedon>:/icons/res/icons/rund_star_FILL1_wght400_GRAD0_opsz24.svg</selectedon>:/icons/res/icons/rund_star_FILL0_wght400_GRAD0_opsz24.svg</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_9">
