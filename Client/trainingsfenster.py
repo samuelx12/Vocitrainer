@@ -84,10 +84,12 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         # Signale mit Slots verbinden
         self.f_cmd_pruefen.clicked.connect(self.f_cmd_pruefen_clicked)
         self.f_cmd_abbrechen.clicked.connect(self.f_cmd_abbrechen_clicked)
+        self.f_cmd_markiert.clicked.connect(self.f_cmd_markiert_clicked)
         self.a_cmd_weiter.clicked.connect(self.a_cmd_weiter_clicked)
         self.a_cmd_abbrechen.clicked.connect(self.a_cmd_abbrechen_clicked)
         self.a_cmd_trotzdemRichtig.clicked.connect(self.a_cmd_trotzdemRichtig_clicked)
         self.a_cmd_trotzdemFalsch.clicked.connect(self.a_cmd_trotzdemFalsch_clicked)
+        self.a_cmd_markiert.clicked.connect(self.a_cmd_markiert_clicked)
         self.z_cmd_weiter.clicked.connect(self.z_cmd_weiter_clicked)
         self.z_cmd_abbrechen.clicked.connect(self.z_cmd_abbrechen_clicked)
 
@@ -301,6 +303,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             self.stackedWidget.setCurrentIndex(2)
         else:
             # --- Frageseite laden ---
+            self.f_cmd_markiert.setChecked(self.aktive_karte.markiert)
             if self.definition_lernen and self.aktive_karte.definition != "":
                 self.f_lbl_deutsch_beschreibung.setText("Definition:")
                 self.f_lbl_deutsch_wort.setText(self.aktive_karte.definition)
@@ -370,6 +373,9 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         # --- Antwortsseite laden ---
         # Deutsches Wort:
         self.a_lbl_deutsch_wort.setText(self.aktive_karte.wort)
+
+        # Markier Button
+        self.a_cmd_markiert.setChecked(self.aktive_karte.markiert)
 
         # Fremdwort mit allfälliger Korrektur
         if antwort_korrekt and ist_zweitloesung:
@@ -487,6 +493,13 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         self.z_lbl_bemerkung_wort.setVisible(False)
         self.z_lbl_bemerkung_beschreibung.setVisible(False)
 
+    def markieren(self, markiert: bool):
+        """Das aktuelle Wort (ent)markieren"""
+        id = self.aktive_karte.ID
+
+        sql = """UPDATE karte SET markiert=? WHERE karte_id=?"""
+        self.CURSOR.execute(sql, (int(markiert), id))
+
     def training_beenden(self):
         """Wenn das Training beendet werden soll, wird diese Funktion aufgerufen."""
         self.CURSOR.close()
@@ -505,6 +518,10 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         """ABBRECHEN GEKLICKT"""
         # Fenster schliessen
         self.close()
+
+    def f_cmd_markiert_clicked(self):
+        """Markieren Button geklickt"""
+        self.markieren(self.f_cmd_markiert.isChecked())
 
     # ----------------------------------
     # ---------- Antwortseite ----------
@@ -527,6 +544,10 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
     def a_cmd_trotzdemFalsch_clicked(self):
         """Trotzdem Falsch geklickt"""
         self.neubewertung(trotzdemWahrheitswert=False)
+
+    def a_cmd_markiert_clicked(self):
+        """Markieren Button geklickt"""
+        self.markieren(self.a_cmd_markiert.isChecked())
 
     # ---------------------------------------------
     # ---------- Zeigeseite (Neues Wort) ----------
