@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>res/icons/refresh_FILL0_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/language_FILL1_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/close_FILL1_wght400_GRAD0_opsz24.svg</file>
     <file>res/icons/open_in_browser_FILL1_wght400_GRAD0_opsz24.svg</file>

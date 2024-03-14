@@ -65,7 +65,7 @@ class Ui_mpHerunterladen(object):
         self.cmd_refresh = QtWidgets.QPushButton(mpHerunterladen)
         self.cmd_refresh.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("res/icons/refresh_FILL0_wght500_GRAD0_opsz40.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/icons/res/icons/refresh_FILL0_wght400_GRAD0_opsz24.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.cmd_refresh.setIcon(icon1)
         self.cmd_refresh.setFlat(False)
         self.cmd_refresh.setObjectName("cmd_refresh")

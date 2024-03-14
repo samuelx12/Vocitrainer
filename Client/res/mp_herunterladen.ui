@@ -131,8 +131,8 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>res/icons/refresh_FILL0_wght500_GRAD0_opsz40.svg</normaloff>res/icons/refresh_FILL0_wght500_GRAD0_opsz40.svg</iconset>
+          <iconset resource="../ressources.qrc">
+           <normaloff>:/icons/res/icons/refresh_FILL0_wght400_GRAD0_opsz24.svg</normaloff>:/icons/res/icons/refresh_FILL0_wght400_GRAD0_opsz24.svg</iconset>
          </property>
          <property name="flat">
           <bool>false</bool>

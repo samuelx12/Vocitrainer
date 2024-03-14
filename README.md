@@ -43,7 +43,7 @@ Dafür musst du einige Bibliotheken installieren:
 - `configobj`
 - `rich`
 - `validate-email-wt`
-- `PyQt5`
+- `Selenium`
 
 ### Variante 2: Portable Version herunterladen (Windows)
 Die zweite Option ist, das Programm direkt über eine exe-Datei zu starten. Diese steht ebenfalls hier auf GitHub als Download zur Verfügung.
