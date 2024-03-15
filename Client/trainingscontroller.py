@@ -3,6 +3,7 @@
 trainingscontroller.py
 Hierhin kommen die Kontroll-Klassen für das Training
 """
+from PyQt5.QtGui import QColor
 
 from karte_tuple import Karte
 from typing import Iterable
@@ -18,9 +19,12 @@ class TC_Einfach:
     """
     def __init__(self, lernliste):
         self.lernliste = lernliste
+        self.groesse_urlernliste = len(self.lernliste)
         self.i = 0  # Counter
         self.altes_i = 0
+        self.aktuelles_i = 0
         self.alte_lernliste = self.lernliste
+        self.resultat = False
 
     def frage(self) -> (Karte, bool):
         """
@@ -33,12 +37,15 @@ class TC_Einfach:
             # Wenn das Training fertig ist wird das über die Exception gemeldet
             raise TrainingFertig
 
+        self.aktuelles_i = self.i
+
         return neues_wort, False
 
     def antwort(self, resultat: bool, neubewertung: bool = False):
         """
         Mit dieser Funktion wird der Trainingscontroller informiert, ob die Frage richtig beantwortet wurde
         """
+        self.resultat = resultat
         if neubewertung:
             self.lernliste = copy.deepcopy(self.alte_lernliste)
             self.i = self.altes_i
@@ -62,6 +69,32 @@ class TC_Einfach:
             pass
 
         return karte
+
+    def fortschritt(self) -> list:
+        """
+        Gibt eine Tupel zurück, in der alle Daten enthalten sind, um den Fortschrittsbalken zu zeichnen.
+        """
+        fortschritts_daten = []
+
+        # Grüner Balken für gelernte Wörter
+        anteil_gelernte = (self.groesse_urlernliste - len(self.lernliste)) / self.groesse_urlernliste
+        farbe_gelernte = QColor(197, 225, 196)  # Sanftes Grün
+        eintrag_gelernte = (farbe_gelernte, 0, anteil_gelernte)
+        fortschritts_daten.append(eintrag_gelernte)
+
+        # Roter Balken für ungelernte Wörter
+        farbe_ungelernte = QColor(225, 171, 171)  # Sanftes Rot
+        eintrag_ungelernte = (farbe_ungelernte, anteil_gelernte, 1)
+        fortschritts_daten.append(eintrag_ungelernte)
+
+        # Gelb für das gerade Lernende Wort
+        beginn_lernende = anteil_gelernte + self.aktuelles_i / self.groesse_urlernliste
+        schluss_lernende = anteil_gelernte + (self.aktuelles_i + 1) / self.groesse_urlernliste
+        farbe_lernende = QColor(252, 186, 3)  # Gelb
+        eintrag_lernende = (farbe_lernende, beginn_lernende, schluss_lernende)
+        fortschritts_daten.append(eintrag_lernende)
+
+        return fortschritts_daten
 
 
 # noinspection PyUnresolvedReferences
@@ -137,6 +170,9 @@ class TC_Intelligent:
                 # Hier könnte man jetzt die anderen Karten hinzufügen, allerdings bring das eh nichts.
                 # Im Gegenteil, sonst ist es nicht möglich, am Schluss einfach len(self.gelernt) zu nehmen
                 # um herauszufinden, wie viele Vocis gelernt wurden.
+
+                # Ist jetzt trotzdem gemacht für die Fortschrittsanzeige
+                self.gelernt.append(karte)
                 pass
 
         # Falls es nichts zu lernen gibt
@@ -162,6 +198,31 @@ class TC_Intelligent:
 
         rprint("[blue]gelernt:")
         rprint(self.gelernt)
+
+    def fortschritt(self) -> list:
+        """
+        Gibt eine Tupel zurück, in der alle Daten enthalten sind, um den Fortschrittsbalken zu zeichnen.
+        """
+        anz_gesamt = len(self.ungelernt) + sum(1 for element in self.lernend if element is not None) + len(self.gelernt)
+        fortschritts_daten = []
+
+        # Zuerst im Hintergrund Gelb
+        farbe_lernende = QColor(252, 186, 3)  # Gelb
+        fortschritts_daten.append((farbe_lernende, 0, 1))
+
+        # Grüner Balken für gelernte Wörter
+        anteil_gelernte = len(self.gelernt) / anz_gesamt
+        farbe_gelernte = QColor(197, 225, 196)  # Sanftes Grün
+        eintrag_gelernte = (farbe_gelernte, 0, anteil_gelernte)
+        fortschritts_daten.append(eintrag_gelernte)
+
+        # Roter Balken für ungelernte Wörter
+        anteil_ungelernte = len(self.ungelernt) / anz_gesamt
+        farbe_ungelernte = QColor(225, 171, 171)  # Sanftes Rot
+        eintrag_ungelernte = (farbe_ungelernte, 1 - anteil_ungelernte, 1)
+        fortschritts_daten.append(eintrag_ungelernte)
+
+        return fortschritts_daten
 
     def set_MZ(self, MZ: int) -> int:
         """

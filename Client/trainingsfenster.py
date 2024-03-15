@@ -130,6 +130,46 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
         # Erste Frage laden
         self.phase1()
 
+    def paintEvent(self, *args, **kwargs):
+        """
+        Hier wird der Statusbalken oben gezeichnet
+        """
+        painter = QPainter(self)
+
+        pen = QPen(Qt.NoPen)
+        painter.setPen(pen)
+
+        fortschritt_daten = self.controller.fortschritt()
+
+        for fortschritt_eintrag in fortschritt_daten:
+            painter.setBrush(QBrush(fortschritt_eintrag[0]))
+
+            # Dimensionen des Rechtecks
+            rect_width = int(self.width() * (fortschritt_eintrag[2] - fortschritt_eintrag[1]))
+            rect_height = 10
+
+            # Positionierung des Rechtecks
+            rect_x = int(self.width() * fortschritt_eintrag[1])
+            rect_y = 0
+
+            painter.drawRect(rect_x, rect_y, rect_width, rect_height)
+
+        # painter.setBrush(QBrush(QColor(255, 0, 0)))
+        #
+        # pen = QPen(Qt.NoPen)
+        # painter.setPen(pen)
+        #
+        # # Dimensionen des Rechtecks
+        # rect_width = int(self.width() / 2)
+        # rect_height = 10
+        #
+        # # Positionierung des Rechtecks
+        # rect_x = 0
+        # rect_y = 0
+        #
+        # # Zeichne das Rechteck
+        # painter.drawRect(rect_x, rect_y, rect_width, rect_height)
+
     @staticmethod
     def wortbereinigung(wort: str) -> str:
         """Bereinig das Wort: Löscht überflüssige Leerzeichen."""
@@ -320,7 +360,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
             # Frageseite anzeigen
             self.stackedWidget.setCurrentIndex(0)
 
-        return
+        self.repaint()
 
     def phase2(self):
         """
@@ -339,6 +379,8 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
 
         # --- Antwortsseite anzeigen ---
         self.stackedWidget.setCurrentIndex(1)
+
+        self.repaint()
 
     def neubewertung(self, trotzdemWahrheitswert: bool):
         """
@@ -363,7 +405,7 @@ class Trainingsfenster(QDialog, Ui_Trainingsfenster):
 
         self.antwortseite_laden(trotzdemWahrheitswert, user_antwort, ist_zweitloesung=True)
 
-        return
+        self.repaint()
 
     def antwortseite_laden(self, antwort_korrekt: bool, benutzer_antwort: str, ist_zweitloesung: bool = False):
         """
